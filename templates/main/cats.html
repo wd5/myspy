@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load catalog_filters %}
+{% block site_wrapper %}
+    {% cart_box request %} <!-- Корзина -->
+    Список категорий:
+    {% category_list request.path %} <!-- Категории -->
+{% endblock %}

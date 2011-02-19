@@ -1,0 +1,21 @@
+from django import template
+from catalog.models import Sections
+from cart import cart
+
+register = template.Library()
+
+@register.inclusion_tag("tags/sidebar.html")
+def category_list(request_path):
+    active_sections = Sections.objects.all()
+    return {
+        'request_path': request_path,
+        'sections': active_sections
+}
+
+@register.inclusion_tag("cart/cart_box.html")
+def cart_box(request):
+    box_count = cart.cart_distinct_item_count(request)
+    active_sections = Sections.objects.all()
+    return {
+        'box_count': box_count,
+}

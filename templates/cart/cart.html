@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% if cart_items %}
+    {% for item in cart_items %}
+        {{ item.name }} - Название<br>
+        {{ item.get_absolute_url }} - URL<br>
+        {{ item.price }} - Цена<br>
+        {{ item.quantity }} - Количество<br>
+        <img src="{{ item.product.productsphoto_set.all.0.image.thumb_url }}" height="100"/> - Картинка<br>
+        <form method="post" action="" class="cart"> {% csrf_token %}
+            <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" />
+            <input type="hidden" name="item_id" value="{{ item.id }}" />
+            <input class="reload" type="submit" name="Update" value="Обновить"/>
+        </form>
+         <form method="post" action="" class="cart_d"> {% csrf_token %}
+             <input type="hidden" name="item_id" value="{{ item.id }}" />
+             <input class="del" type="submit" name="Remove" value="Удалить"/>
+         </form>
+    {% endfor %}
+    {{ discount }} - Скидка<br>
+    {{ cart_subtotal }} - Цена всей корзины с учетом скидки<br>
+    <a href="{{ request.META.HTTP_REFERER }}">Продолжить покупки</a>
+    <p>Пожалуйста, заполните контактную информацию:</p>
+    <p>Области, отмеченные звёздочкой, должны быть заполнены.</p>
+    <form method="post" action="" class="cart"> {% csrf_token %}
+        {{ form.as_table }}
+        <input class="send_button" type="submit" value="сделать заказ" name="Good" alt="сделать заказ" />
+    </form>
+{% else %}{% if is_order %}
+     Спасибо за заказ, в ближайшее время мы с вами свяжемся.
+    {% else %}
+    Ваша корзина пуста.
+{% endif %}{% endif %}
+
+</body>
+</html>

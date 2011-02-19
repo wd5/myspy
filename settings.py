@@ -1,3 +1,4 @@
+import os
 # Django settings for myspy project.
 
 DEBUG = True
@@ -45,12 +46,13 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'static')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/static/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -58,7 +60,7 @@ MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '&ln9*1sxc3%v#831od%wif4ly@y&9yfw4q1fzxnj-gd@zj9k^h'
+SECRET_KEY = 'yx)uu52&+i@o&i-d7$k8^p9sji$qc^zkqti#xij9^-xh$u!i#i'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -77,7 +79,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'myspy.urls'
 
-TEMPLATE_DIRS = ('/Users/freebsdstuff/PycharmProjects/myspy/templates',)
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_PATH, 'templates')
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -87,6 +91,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'myspy.catalog',
+    'myspy.cart',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

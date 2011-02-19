@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+{% for product in products %}
+   {{ product.name }} - Название<br>
+   {{ product.get_absolute_url }} - Url
+    <a href="{{product.get_absolute_url}}">УРЛ</a><br><br>
+   <!-- Характеристики -->
+    Характеристики:<br>
+   {% for feature in product.features_set.all %}
+    {{ feature.name }}: {{ feature.value }} <br>
+   {% endfor %}<br>
+    Мини описание в html:<br>
+    {{ product.mini_html_description|safe }}<br><br>
+    Цена:<br>
+    {{ product.price }} руб.<br><br>
+    Все фотки товара:<br>
+    {% if product.productsphoto_set.all %}
+        {% for item in product.productsphoto_set.all %}
+            <img src="{{ item.image.url }}"/>
+		{% endfor %}
+    {% else %}
+        Фотография товара отсутствует
+    {% endif %}<br><br>
+    Первое фото в списке фоток:<br>
+    <img src="{{ product.productsphoto_set.all.0.image.url }}"/>
+    <form method="post" action="" class="cart"> {% csrf_token %}
+        <input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" /> <br />
+        <input id="buy" type="submit" value="Купить" name="submit" alt="Купить" />
+    </form>
+{% endfor %}
+
+</body>
+</html>
