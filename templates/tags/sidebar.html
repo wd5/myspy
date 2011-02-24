@@ -1,13 +1,28 @@
-{% for section in sections %}
-        <li> <a href="{{ section.get_absolute_url }}" title="">{{ section.name }}</a>
-            <ul class="sidebar_menu">
-                {% for category in section.categories_set.all %}
-                    <li>
-                        <a href="{{ category.get_absolute_url }}" title="">{{ category.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-{% endfor %}
-<li> <a href="/cats/all-goods" title="">Все товары</a><br><br>
-
+		<ul id="menu-menu" class="mnav dropdown fix">
+			<li><a href="index.htm">Главная</a></li>
+			<li class="current-menu-item"><a href="/cats">Каталог товара</a>
+				<ul class="sub-menu">
+					{% for section in sections %}
+       				 <li> <a href="{{ section.get_absolute_url }}" title="">{{ section.name }}</a>
+          				  <ul class="sub-menu">
+               				 {% for category in section.categories_set.all %}
+                    			<li>
+                      				  <a href="{{ category.get_absolute_url }}" title="">{{ category.name }}</a>
+                    			</li>
+              			  	{% endfor %}
+          				  </ul>
+      			 	 </li>
+					{% endfor %}
+				</ul>
+			</li>
+			<li><a href="dostavka.htm">Доставка и оплата</a></li>
+			<li><a href="about.htm">О Нас</a></li>
+			<li><a href="blog.htm">Блог</a></li>
+		</ul>
+		
+		<form method="get" class="searchform" action="">
+			<span class="left"></span>
+			<input type="text" value="Поиск" name="s" class="s" onfocus="if (this.value == 'Поиск') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поиск';}" />
+			<span class="right"></span>
+			<input type="submit" class="searchsubmit" value="Go" />
+		</form>

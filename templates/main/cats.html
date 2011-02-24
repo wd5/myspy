@@ -1,7 +1,79 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
-    {% cart_box request %} <!-- Корзина -->
-    Список категорий:
     {% category_list request.path %} <!-- Категории -->
+		
+		<div class="clear"></div>
+	<div><div><!-- /nav -->
+
+
+		
+		<div class="basket">
+			<div class="subnav2">
+				<dl>
+					<dt><a href="#" title="Жучки">Жучки</a></dt>
+					<dt><a href="#" title="Миникамеры">Миникамеры</a></dt>
+					<dt><a href="#" title="GPS мониторинг">GPS мониторинг</a></dt>
+					<dt><a href="#" title="Все товары">Все товары</a></dt>
+					<dt><a href="#" title="Защита от прослушки">Защита от прослушки</a></dt>
+				</dl><div class="clear"></div>
+			</div>
+			<a class="bask-a" href="#"><img src="{{ MEDIA_URL}}res/img/basket.png" alt="123"></a>
+			<div class="bask">
+				В вашей корзине 0 товар (а)
+			</div>
+		</div>
+		
+		<div id="maincontent">
+			<div id="content">
+				<div class="postwrap fix">
+					<table>
+						<tr>
+
+
+
+						
+						{% for product in products %}
+							<td>
+								<table class="item-table"><tr>
+									<td class="item-img">
+									    {% if product.productsphoto_set.all %}
+     								   {% for item in product.productsphoto_set.all %}
+           										 <img src="{{ product.productsphoto_set.all.0.image.url }}"/>
+										{% endfor %}
+   										 {% else %}
+     								   Фотография товара отсутствует
+    									{% endif %}									
+									</td>
+									<td class="item-desc">
+										<a class="item-head" href="#"><h2>{{ product.name }}</h2></a>
+										 {{ product.mini_html_description|safe }}
+										<p><a class="additional_description_span" href="{{product.get_absolute_url}}">Дополнительная информация</a></p>
+										<div class="wpsc_product_price"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></p></div>
+										<input type='image' src='{{ MEDIA_URL}}res/img/atc.gif' id='product_26_submit_button' class='wpsc_buy_button' name='Buy'  value="Добавить в корзину" />
+										    <form method="post" action="" class="cart"> {% csrf_token %}
+      											<input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" /> <br />
+      										    <input id="buy" type="submit" value="Купить" name="submit" alt="Купить" />
+  										    </form>
+									</td>
+								</tr></table>
+							</td>
+						{% endfor %}
+							
+							
+							
+							
+							
+
+						
+					</tr>	
+						
+				</table>
+				<div class="clear"/></div>
+			</div>
+		</div>
+	
+		
+  </div>
+</div>
 {% endblock %}

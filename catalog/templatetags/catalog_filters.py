@@ -1,6 +1,7 @@
 from django import template
 from catalog.models import Sections
 from cart import cart
+from decimal import *
 
 register = template.Library()
 
@@ -19,3 +20,7 @@ def cart_box(request):
     return {
         'box_count': box_count,
 }
+
+@register.filter
+def div(value, arg):
+    return value % arg

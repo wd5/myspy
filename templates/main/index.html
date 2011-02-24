@@ -1,6 +1,131 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
-    {% cart_box request %} <!-- Корзина -->
-    {% category_list request.path %} <!-- Категории -->
+		{% category_list request.path %}			
+	<div class="clear"></div>
+	<div><!-- /nav --><br>
+			<div class="basket">
+			<a class="bask-a" href="#"><img src="{{ MEDIA_URL}}res/img/basket.png" alt="123"></a>
+			<div class="bask">
+				В вашей корзине 0 товар (а)
+			</div>
+		</div>
+	<div id="container" class="fix ">
+		<div id="feature">
+			<div class="postwrap fix">
+				<div class="hentry fix">
+					<div id="cycle" class="fix">
+						
+						<div id="Жучки" class="fcontainer">
+							<div class="fcontent">
+								<div class="fheading"><h1 class="ftitle">Жучки</h1></div>
+								<div class="ftext">
+									<p>
+										В продаже миниатюрные и надежные жучки. 
+										Разнообразные <strong>прослушивающие устройства купить</strong> можно в нашем магазине. 
+										GSM жучки из "Магазина домашней безопасности" будут работать везде, где есть сотовое покрытие. 
+									</p>
+									<a class="featurelink" href="#">Жучки</a><br>
+									<a class="featurelink" href="#">Все товары</a>
+								</div>
+							</div>
+							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/zhuchki0.png" alt="Жучки" /></div>
+							<div class="clear"></div>
+						</div>
+						
+						<div id="Миникамеры" class="fcontainer">
+							<div class="fcontent">
+								<div class="fheading"><h1 class="ftitle">Шпионские камеры</h1></div>
+								<div class="ftext">
+									<p>
+										У нас вы можете <strong>купить шпионские камеры</strong> для любых нужд, будь то камера с детектором движения или мини камера для спорта, чтобы запечатлеть яркие моменты вашей жизни.
+									</p>
+									<a class="featurelink" href="#">Мини камеры</a><br>
+									<a class="featurelink" href="#">Все товары</a>
+								</div>
+							</div>
+							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/minicame.png" alt="Миникамеры" /></div>
+							<div class="clear"></div>
+						</div>
+						
+						<div id="GPS_Мониторинг" class="fcontainer">
+							<div class="fcontent">
+								<div class="fheading"><h1 class="ftitle">GPS мониторинг</h1>										</div>
+								<div class="ftext">
+									<p>
+										GPS слежение за людьми или GPS мониторинг автомобилей - для этих и любых других целей, где требуется постоянный контроль за чем либо, вы можете <strong>купить шпионские штучки</strong> - GPS трекеры.
+									</p>
+									<a class="featurelink" href="#">GPS трекеры</a><br>
+									<a class="featurelink" href="#">Все товары</a>
+								</div>
+							</div>
+							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/gps00000.png" alt="GPS мониторинг" /></div>
+							<div class="clear"></div>
+						</div>
+						
+					</div>
+				</div>
+			<div class="hl"></div>
+			<div id="feature-footer" class="fix">
+				<div id="featurenav" class=""> 
+			
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	
+	<div class="fboxes fix">
+		<div class="fboxdividers fix">
+			
+			<div class="fbox">
+				<div class="fboxcopy">
+					<div class="fboxtitle"><h3>Шпионская техника</h3></div>
+					<div class="fboxtext">
+						<p>Хотите почувствовать себя агентом 007, или просто заботитесь о безопасности? Теперь <strong>шпионские штучки купить</strong> не проблема! Наш интернет магазин представляет большой каталог товаров на любой вкус.</p>
+						<p>К нам постоянно приходят покупатели по таким запросам, как <strong>шпионское оборудование продажа</strong> или <strong>купить прослушивающее устройство</strong>, а это означает, что на качество наших товаров можно положиться.
+							</p>
+						<p><strong>Шпионские штучки купить</strong> Вы можете уже сегодня!</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="fbox">
+				<div class="fboxcopy">
+					<div class="fboxtitle"><h3>Наши контакты</h3></div>
+					<div class="fboxtext">
+						<p>Позвоните или напишите нам и мы ответим на любые ваши вопросы</p>
+						<b><p>С 9:00 до 23:00 без выходных.</p></b>
+						<b>Тел:+7 (915) 122-52-91 </b><br>
+						<b>Email: <a href="mailto:myspyshop@gmail.com">myspyshop@gmail.com</a></b><br>
+						<b>ICQ:</b> 606232807 <img src="test_files/online00.gif"><br>
+						Доставка по Москве курьером <span style="color: #ff0000;">бесплатно!</span><br><br>
+						Доставка в регионы осуществляется посылкой с наложенным платежом.
+					</div>
+				</div>
+			</div>
+			
+			<div class="fbox">
+				<div class="fboxcopy">
+					<div class="fboxtitle"><h3>Безопасность</h3></div>
+					<div class="fboxtext">
+						<p>Хотите проверить, что происходит на даче? Не забрался ли вор?</p>
+						<p>Шпионские штучки магазин продает в большом ассортименте. У нас всегда можно купить прослушивающее устройство или шпионские камеры.</p>
+						<p><strong>Шпионская техника</strong> из "Магазина Домашней Безопасности" даст Вам почувствовать уверенность за спокойствие дома.</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="clear"></div>
+  </div>
+</div>
+<script type='text/javascript' src='{{ MEDIA_URL}}res/js/jquery-cycle.js'></script>
+
+    
+    
+    
+    
 {% endblock %}

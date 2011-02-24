@@ -1,13 +1,75 @@
-<html>
-	<head>
-        <title>{% block title %}{% if page_title %}{{ page_title }}{% endif %}
-            {{ site_name }}{% endblock %}</title>
-		<link href="{{ MEDIA_URL }}style.css" type="text/css" rel="stylesheet" />
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <meta name="keywords" content="{{ meta_keywords }}" />
-        <meta name="description" content="{{ meta_description }}" />
-	</head>
-	<body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8;" />
+<link rel="shortcut icon" href="{{ MEDIA_URL}}res/img/my-spy.ico" type="image/x-icon" />	
+<title>Магазин домашней безопасности, шпионские штучки</title>
+<link rel="stylesheet" href="{{ MEDIA_URL}}res/css/style.css" type="text/css" media="screen" />	
+<!--[if IE 6]>
+	<script src="{{ MEDIA_URL}}res/js/belatedpng.js"></script>
+	<script>
+	  DD_belatedPNG.fix('.pngbg, a.home, #nav,.searchform .left, .searchform .right, .searchform .s, .fcol_pad img, .fbox img, #respond h3, #cred.pagelines a, .post .date, .headerimage, #sidebar div ul li a');
+	 </script>	
+	<style>
+		#header #blogtitle .sheen {display: none;height: 1px;}
+		#featurenav a span.nav_thumb span.nav_overlay {background: transparent;display:none}
+		 #nav ul li {background: transparent}
+		.fbox {overflow:hidden}
+	</style>
+<![endif]-->	
+<!--[if lte IE 7]>
+<link rel='stylesheet' href='{{ MEDIA_URL}}res/css/ie7.css' type='text/css' media='all' />
+<![endif]-->
+<script type='text/javascript' src='{{ MEDIA_URL}}res/js/jquery1.4.2.js'></script>
+<script type='text/javascript' src='{{ MEDIA_URL}}res/js/jquery1.7.2.js'></script>
+<script type='text/javascript' src='{{ MEDIA_URL}}res/js/dropdown.js'></script>
+<meta name="description" content="Интернет магазин, где можно купить шпионские штучки, камеры, прослушивающие устройств. Так же у нас в продаже шпионская техника, оборудование, глушилка мобильных телефонов, мини камера." />
+<meta name="keywords" content="шпионские штучки магазин, шпионские штучки купить, прослушивающие устройства купить, купить прослушивающее устройство, шпионская техника,
+шпионские камеры, шпионское оборудование продажа,
+интернет магазин шпионских штучек, шпионская техника купить, шпионские мини камеры, шпионские камеры купить, мини камера купить, купить шпионское оборудование, интернет магазин шпионского оборудования, купить шпионские гаджеты, магазин шпионских товаров, шпионские купить гаджеты, 
+глушилка мобильных телефонов купить, шпионские товары" />
+<script type="text/javascript">
+/* <![CDATA[ */
+	var $j = jQuery.noConflict();
+	$j(document).ready(function () {	
+			$j('#cycle').cycle({ 
+			    fx: 'fade',
+				sync: 1,
+				timeout: 15000,
+			    speed:  1500, 
+				pager:  '#featurenav',
+				cleartype:  true,
+    			cleartypeNoBg:  true
+			 });
+			$j("div#featurenav").children("a").each(function() {
+				if($j(this).html() == "1") { $j(this).html("Жучки");}
+				if($j(this).html() == "2") { $j(this).html("Миникамеры");}
+				if($j(this).html() == "3") { $j(this).html("GPS Мониторинг");}
+			});
+	});
+/* ]]> */
+</script>
+</head>
+<body class="home page page-id-8 page-template page-template-page-feature-php">
+    <div id="page" class="fix">
+  <div id="wrapper" class="fix" >
+	
+    <div id="header" class="fix">
+		<a href=""><img class="headerimage" src="{{ MEDIA_URL}}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
+		<div class="icons">
+			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
+			<a href='mailto:myspyshop@gmail.com'>myspyshop@gmail.com</a>
+		</div>	
+	</div>
+	
+	<div id="nav" class="fix">
+		<ul class="fix homebutton">
+			<li class="page_item navfirst">
+				<a class="home" href="index.htm" title="Home" style="background-image: url('{{ MEDIA_URL}}res/img/home-icon.png');">Home</a>
+			</li>
+		</ul>
+	
+
         {% block site_wrapper %}
         {% endblock %}
     </body>
