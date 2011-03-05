@@ -54,7 +54,7 @@
 										</td>
 										<td><span class="pricedisplay">{{ item.price }} Руб</span></td>
 										<td>
-											<form action="#" method="post" class="adjustform">
+											<form action="#" method="post" class="adjustform">{% csrf_token %}
 												<input type="hidden" name="item_id" value="{{ item.id }}" />
 												<button class='remove_button' type="submit" name="Remove"><span>Удалить</span></button><br />
 											</form>
