@@ -1,3 +1,4 @@
+          # -*- coding: utf-8 -*-
 from django.db import models
 from catalog.models import Products
 
@@ -37,3 +38,7 @@ class Clients(models.Model):
     address = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     cart = models.CharField(max_length=50)
+    ordered_at = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.name
