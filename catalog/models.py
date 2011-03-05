@@ -49,7 +49,7 @@ class Products(models.Model):
     mini_html_description = models.TextField(validators=[validate_even], help_text='Максимальное количество символов: 140.',
                                         verbose_name='Мини описание в HTML')
     html_description = models.TextField(blank=True, verbose_name='Описание', help_text='Описание в HTML')
-    thumbnail_image = ThumbnailImageField(upload_to='products_image')
+    thumbnail_image = ThumbnailImageField(upload_to='products_image', thumb_width=200, thumb_height=200, completion="thumb" )
     # Метаданные товара
     is_active = models.BooleanField(default=True, verbose_name='Активный')
     is_discount = models.BooleanField(default=True, verbose_name='Скидка')
@@ -71,7 +71,7 @@ class Products(models.Model):
 
 class ProductsPhoto(models.Model):
     item = models.ForeignKey(Products)
-    image = ThumbnailImageField(upload_to='products_image')
+    image = ThumbnailImageField(upload_to='products_image', thumb_width=460, thumb_height=350, completion="resized" )
 
     class Meta:
         ordering = ['item']
