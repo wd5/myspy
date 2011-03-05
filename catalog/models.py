@@ -51,9 +51,8 @@ class Products(models.Model):
     html_description = models.TextField(blank=True, verbose_name='Описание', help_text='Описание в HTML')
     # Метаданные товара
     is_active = models.BooleanField(default=True, verbose_name='Активный')
-    is_bestseller = models.BooleanField(default=False, verbose_name='Лидер продаж')
-    is_special_price = models.BooleanField(default=False, verbose_name='Специальная цена')
     is_discount = models.BooleanField(default=True, verbose_name='Скидка')
+    in_stock = models.BooleanField(default=True, verbose_name='В наличии')
     # Временные отметки
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -8,10 +8,6 @@ from django.http import HttpResponseRedirect
 from cart import cart
 
 def index(request):
-    # На главную отдаю только последние 3 тавара со спец ценой
-    special_prices = Products.objects.filter(is_special_price=True)[0:3]
-    # На главную отдаю только последние 3 тавара бестселлера
-    bestsellers = Products.objects.filter(is_bestseller=True)[0:3]
     page_title = "topDJshop - интернет магазин аудио оборудования"
     meta_keywords = page_title
     meta_description = "Наушники - для DJ, топовые модели Топовые наушники по доступным ценам. Dr.dre Beats, Pioneer HDJ, Bose."
