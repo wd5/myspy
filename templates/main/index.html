@@ -1,15 +1,31 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
-		{% category_list request.path %}			
+    <div id="page" class="fix">
+  <div id="wrapper" class="fix" >
+	
+    <div id="header" class="fix">
+		<a href="/" style="float:left"><img class="headerimage" src="{{ MEDIA_URL}}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
+		<div class="basket" style="float:left">
+			{% cart_box request %}
+		</div>
+		<div class="icons">
+			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
+			<a href='mailto:myspyshop@gmail.com'>myspyshop@gmail.com</a>
+		</div>	
+	</div>
+	
+	<div id="nav" class="fix">
+		<ul class="fix homebutton">
+			<li class="page_item navfirst">
+				<a class="home" href="/" title="Home" style="background-image: url('{{ MEDIA_URL}}res/img/home-icon.png');">Home</a>
+			</li>
+		</ul>
+
+		{% category_list request.path %}	
+		</div>		
 	<div class="clear"></div>
 	<div><!-- /nav --><br>
-			<div class="basket">
-			<a class="bask-a" href="#"><img src="{{ MEDIA_URL}}res/img/basket.png" alt="123"></a>
-			<div class="bask">
-				В вашей корзине 0 товар (а)
-			</div>
-		</div>
 	<div id="container" class="fix ">
 		<div id="feature">
 			<div class="postwrap fix">

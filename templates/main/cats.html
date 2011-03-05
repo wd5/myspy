@@ -1,14 +1,34 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
+    <div id="page" class="fix">
+  <div id="wrapper" class="fix" >
+	
+    <div id="header" class="fix">
+		<a href="/" style="float:left"><img class="headerimage" src="{{ MEDIA_URL}}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
+		<div class="basket" style="float:left">
+			{% cart_box request %}
+		</div>
+		<div class="icons">
+			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
+			<a href='mailto:myspyshop@gmail.com'>myspyshop@gmail.com</a>
+		</div>	
+	</div>
+	
+	<div id="nav" class="fix">
+		<ul class="fix homebutton">
+			<li class="page_item navfirst">
+				<a class="home" href="/" title="Home" style="background-image: url('{{ MEDIA_URL}}res/img/home-icon.png');">Home</a>
+			</li>
+		</ul>
+	
     {% category_list request.path %} <!-- Категории -->
-		
+    	</div>
 		<div class="clear"></div>
 	<div><div><!-- /nav -->
 
 
 		
-		<div class="basket">
 			<div class="subnav2">
 				<dl>
 					<dt><a href="#" title="Жучки">Жучки</a></dt>
@@ -18,11 +38,6 @@
 					<dt><a href="#" title="Защита от прослушки">Защита от прослушки</a></dt>
 				</dl><div class="clear"></div>
 			</div>
-			<a class="bask-a" href="#"><img src="{{ MEDIA_URL}}res/img/basket.png" alt="123"></a>
-			<div class="bask">
-				В вашей корзине 0 товар (а)
-			</div>
-		</div>
 		
 		<div id="maincontent">
 			<div id="content">
@@ -38,9 +53,7 @@
 								<table class="item-table"><tr>
 									<td class="item-img">
 									    {% if product.productsphoto_set.all %}
-     								   {% for item in product.productsphoto_set.all %}
-           										 <img src="{{ product.productsphoto_set.all.0.image.url }}"/>
-										{% endfor %}
+           										 <img src="{{ product.productsphoto_set.all.0.image.url }}" alt="{{ product.name }}" />
    										 {% else %}
      								   Фотография товара отсутствует
     									{% endif %}									

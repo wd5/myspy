@@ -46,30 +46,29 @@
 				if($j(this).html() == "2") { $j(this).html("Миникамеры");}
 				if($j(this).html() == "3") { $j(this).html("GPS Мониторинг");}
 			});
+	$j('.prew_img_tov').click(function()
+			{
+				$j('.main_img_tov').attr('src',$j(this).attr('src'));		
+			});
+			
+			$j('#img_full').click(function(event){
+				if (event.target == this){	
+				$j('#opac_bg').hide();		
+				$j('#img_full').hide();
+				}
+			});	
+				
+			$j('.item-img-big a').click(function(){
+				alert('@');
+				$j('#opac_bg').show();
+				$j('#img_full').show();
+				return false;
+			});
 	});
 /* ]]> */
 </script>
 </head>
 <body class="home page page-id-8 page-template page-template-page-feature-php">
-    <div id="page" class="fix">
-  <div id="wrapper" class="fix" >
-	
-    <div id="header" class="fix">
-		<a href=""><img class="headerimage" src="{{ MEDIA_URL}}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
-		<div class="icons">
-			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
-			<a href='mailto:myspyshop@gmail.com'>myspyshop@gmail.com</a>
-		</div>	
-	</div>
-	
-	<div id="nav" class="fix">
-		<ul class="fix homebutton">
-			<li class="page_item navfirst">
-				<a class="home" href="index.htm" title="Home" style="background-image: url('{{ MEDIA_URL}}res/img/home-icon.png');">Home</a>
-			</li>
-		</ul>
-	
-
         {% block site_wrapper %}
         {% endblock %}
     </body>

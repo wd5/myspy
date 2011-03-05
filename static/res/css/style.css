@@ -1609,7 +1609,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 	#feature {margin-bottom:15px;}
 	#cycle {
 		overflow: hidden;
-		height: 385px;
 	}
 	#feature .hentry , #highlight .hentry{
 		background:#fff url(../img/post-bg-.png) repeat-x left bottom;
@@ -1620,7 +1619,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 	#feature .postwrap {background: #fff;}
 	#feature .hentry {
 		background: #fff;
-		height: 390px;
 		overflow: hidden;
 	}
 	#feature .fcontainer{
@@ -1636,7 +1634,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 	#feature .fmedia{
 	    width:  478px;  
 		margin-left: 480px;
-	    height:   390px;
 		float:right;
 
 	}
@@ -1647,7 +1644,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 		padding: 20px 80px 20px 50px;
 		z-index: 100;
 		margin: 20px -500px 0px 0px;
-		height: 300px;
 	}
 	#feature .fheading{
 
@@ -2811,7 +2807,11 @@ sub {font-size:.7em;vertical-align: bottom;}
 		table.wpsc_checkout_table tr td{
 		 text-align: left;
 		 }
-
+		
+		table.wpsc_checkout_table tr th{
+		 text-align: left;
+		 }
+		
 		div#checkout_login_box{
 		  display: none;
 		/*  border: 1px solid #339933;
@@ -3482,14 +3482,15 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 
 .subnav2 {
-	position: absolute;
+	position: relative;
 	left: 0;
 	bottom: 0px;
+	padding-top: 20px;
 }
 
 .basket {
 	position: relative;
-	width: 960px;
+	width: 300px;
 	height: 60px;
 }
 
@@ -3507,4 +3508,61 @@ sub {font-size:.7em;vertical-align: bottom;}
 
 .wpsc_checkout_table td{
 	padding:3px 0;
+}
+
+.wpsc_checkout_table th{
+	padding:3px 0;
+}
+
+#img_full {
+    display: none;
+    height: 90%;
+    padding: 5%;
+    position: absolute;
+    width: 90%;
+    z-index: 150;
+}
+#opac_bg {
+    background: none repeat scroll 0 0 black;
+    display: none;
+    height: 200%;
+    left: -50%;
+    opacity: 0.7;
+    position: fixed;
+    top: -25%;
+    width: 200%;
+    z-index: 15;
+}
+#img_full #img_full_in {
+    -moz-box-shadow: 3px 3px 3px 3px #666666;
+    background: none repeat scroll 0 0 white;
+    max-width: 800px;
+    min-width: 400px;
+    padding-bottom: 20px;
+    position: relative;
+    z-index: 200;
+}
+.prew_img_tov {
+    border: 1px dotted #666666;
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 3px;
+}
+.main_img_tov {
+    margin-bottom: 20px;
+}
+.clr {
+    clear: both;
+}
+.errorlist{
+	position: absolute;
+	left:400px;
+	color:red;
+	font-size: 10px;
+}
+.errorlist li{
+	background: none;
+}
+.send_input input{
+	position: relative;
 }

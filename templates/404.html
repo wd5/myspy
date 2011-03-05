@@ -1,10 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load catalog_filters %}
+{% block site_wrapper %}
+    {% category_list request.path %} <!-- Категории -->
+		
+		<div class="clear"></div>
+	<div><div><!-- /nav -->
 
-</body>
-</html>
+
+		
+			<div class="subnav2">
+		<!--		<dl>
+					<dt><a href="#" title="Жучки">Жучки</a></dt>
+					<dt><a href="#" title="Миникамеры">Миникамеры</a></dt>
+					<dt><a href="#" title="GPS мониторинг">GPS мониторинг</a></dt>
+					<dt><a href="#" title="Все товары">Все товары</a></dt>
+					<dt><a href="#" title="Защита от прослушки">Защита от прослушки</a></dt>
+				</dl> --><div class="clear"></div>
+			</div>
+		
+
+		<div id="maincontent">
+			<div id="content">
+				<div class="postwrap fix">
+					404- not found :(
+				<div class="clear"/></div>
+			</div>
+		</div>
+	
+		
+  </div>
+</div>
+{% endblock %}
