@@ -105,7 +105,7 @@ class Subtotal:
                 discount_quantity += cart_item.quantity
                 cart_discount_total += cart_item.product.price * cart_item.quantity
             cart_total += cart_item.product.price * cart_item.quantity
-        if len(cart_products) >= 2:
+        if discount_quantity >= 2:
             self.discount = (cart_discount_total * 10)/100
         cart_total -= self.discount
         return cart_total
