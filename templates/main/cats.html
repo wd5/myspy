@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
-    <div id="page" class="fix">
+  <div id="page" class="fix">
   <div id="wrapper" class="fix" >
 	
     <div id="header" class="fix">
@@ -23,7 +23,7 @@
 		</ul>
 	
     {% category_list request.path %} <!-- Категории -->
-    	</div>
+    </div>
 		<div class="clear"></div>
 	<div><div><!-- /nav -->
 
@@ -51,7 +51,7 @@
 						{% for product in products %}
 							<td>
 								<table class="item-table"><tr>
-									<td class="item-img">
+									<td class="item-img" style="width:50%;">
 									    {% if product.productsphoto_set.all %}
            										 <img src="{{ product.productsphoto_set.all.0.image.url }}" alt="{{ product.name }}" />
    										 {% else %}
