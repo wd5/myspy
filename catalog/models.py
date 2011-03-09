@@ -38,8 +38,8 @@ class Categories(models.Model):
         return ('catalog-page', [str(self.slug)])
 
 def validate_even(value):
-        if len(value) > 500:
-            raise ValidationError(u'Количество символов: %s. Максимально разрешенное: 500'% len(value) )
+        if len(value) > 620:
+            raise ValidationError(u'Количество символов: %s. Максимально разрешенное: 620'% len(value) )
 
 class Products(models.Model):
     category = models.ForeignKey(Categories, verbose_name='Категория')
