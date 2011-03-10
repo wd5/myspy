@@ -1,7 +1,7 @@
 import os
 # Django settings for myspy project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
