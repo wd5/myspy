@@ -129,7 +129,7 @@ def save_client(request, form):
 def send_admin_email(cart_items, form, cart_subtotal, discount):
     products_for_email = ""
     for item in cart_items:
-        products_for_email += u"%s:%s шт  http://topdjshop.ru%s\n" % (item.product.name,
+        products_for_email += u"%s:%s шт  http://my-spy.ru%s\n" % (item.product.name,
                                           item.quantity, item.product.get_absolute_url())
     t = threading.Thread(target= send_mail, args=[
         u'Заказ от %s %s' % (form.cleaned_data['name'], form.cleaned_data['surname'] ),
@@ -144,11 +144,11 @@ def send_admin_email(cart_items, form, cart_subtotal, discount):
 def send_client_email(cart_items, form, cart_subtotal):
     products_for_email = ""
     for item in cart_items:
-        products_for_email += u"%s:%s шт  http://topdjshop.ru%s\n" % (item.product.name,
+        products_for_email += u"%s:%s шт  http://my-spy.ru%s\n" % (item.product.name,
                                           item.quantity, item.product.get_absolute_url())
     t = threading.Thread(target= send_mail, args=[
-        u'Ваш заказ от topdjshop',
-        u'Здравствуйте %s,\n\nВы оформили у нас заказ на:\n%s\nВсего на сумму: %s руб\n\nВ ближайшее время наш менеджер с вами свяжется.\nС Уважением, topdjshop.ru' %
+        u'Ваш заказ от my-spy',
+        u'Здравствуйте %s,\n\nВы оформили у нас заказ на:\n%s\nВсего на сумму: %s руб\n\nВ ближайшее время наш менеджер с вами свяжется.\nС Уважением, my-spy.ru' %
         (form.cleaned_data['name'], products_for_email, cart_subtotal ),
         settings.EMAIL_HOST_USER, [form.cleaned_data['email']], 'fail_silently=False'])
     t.setDaemon(True)
