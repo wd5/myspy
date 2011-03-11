@@ -3,10 +3,12 @@ from models import CartItem, Clients
 from catalog.models import *
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
-import threading
+import threading, urllib2, urllib
+from hashlib import md5
 import decimal
 import random
 import settings
+from django.utils.encoding import smart_str, smart_unicode
 
 CART_ID_SESSION_KEY = 'cart_id'
 
@@ -153,3 +155,16 @@ def send_client_email(cart_items, form, cart_subtotal):
         settings.EMAIL_HOST_USER, [form.cleaned_data['email']], 'fail_silently=False'])
     t.setDaemon(True)
     t.start()
+
+def send_sms(cart_items, form):
+    login = 'palv1@yandex.ru'
+    password = 'gflibq'
+    phones = ["79151225291", "79267972292"]
+    from_phone = form.cleaned_data['phone']
+    products = ""
+    for item in cart_items:
+        products += "%sx%s" % (item.product.slug, item.quantity)
+    msg = "%s %s %s" % (form.cleaned_data['name'], form.cleaned_data['city'], products)
+    msg = urllib.urlencode({'msg': msg.encode('cp1251')})
+    for to_phone in phones:
+        urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + password + to_phone).hexdigest()) )
