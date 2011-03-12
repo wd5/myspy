@@ -158,7 +158,7 @@ def send_client_email(cart_items, form, cart_subtotal):
 
 def send_sms(cart_items, form):
     login = 'palv1@yandex.ru'
-    password = 'gflibq'
+    password = '97ajhJaj9zna'
     phones = ["79151225291", "79267972292"]
     from_phone = form.cleaned_data['phone']
     products = ""
@@ -167,4 +167,4 @@ def send_sms(cart_items, form):
     msg = "%s %s %s" % (form.cleaned_data['name'], form.cleaned_data['city'], products)
     msg = urllib.urlencode({'msg': msg.encode('cp1251')})
     for to_phone in phones:
-        urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + password + to_phone).hexdigest()) )
+        urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )
