@@ -65,7 +65,7 @@ def all_goods(request):
         cart.add_to_cart(request)
         url = urlresolvers.reverse('show_cart')
         return HttpResponseRedirect(url)
-    products = Products.objects.all()
+    products = Products.objects.filter(is_active=True)
     return render_to_response("main/catalog.html", locals(), context_instance=RequestContext(request))
 
 def about(request):
