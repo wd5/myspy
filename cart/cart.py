@@ -164,7 +164,7 @@ def send_sms(cart_items, form):
     products = ""
     for item in cart_items:
         products += "%sx%s" % (item.product.slug, item.quantity)
-    msg = "%s %s %s" % (form.cleaned_data['name'], form.cleaned_data['city'], products)
+    msg = "%s,%s %s" % (form.cleaned_data['name'], form.cleaned_data['city'], products)
     msg = urllib.urlencode({'msg': msg.encode('cp1251')})
     for to_phone in phones:
         urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )

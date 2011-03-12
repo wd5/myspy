@@ -5,6 +5,7 @@
 				<ul class="sub-menu">
 					{% for section in sections %}
        				 <li> <a href="{{ section.get_absolute_url }}" title="">{{ section.name }}</a>
+                          {% if not section.categories_set.all.0.name == section.name %}
           				  <ul class="sub-menu">
                				 {% for category in section.categories_set.all %}
                                 {% if not category.name == section.name %}
@@ -14,6 +15,7 @@
                                 {% endif %}
               			  	{% endfor %}
           				  </ul>
+                          {% endif %}
       			 	 </li>
 					{% endfor %}
                     <li> <a href="/cats/all-goods/" title="">Все товары</a>
