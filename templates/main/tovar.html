@@ -66,9 +66,10 @@
 										</div>
 									</div>
 								</div> 
-								<div class="fmedia"><center><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ product.name }}" /></center>
+								<div class="fmedia"><center style="height:450px;"><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ product.name }}" /></center>
 								<div class="clr"></div>
 								<center>
+								<div>
 								 {% if product.productphoto_set.all %}
      													 {% for item in product.productphoto_set.all %}
      															 <div class="item-img-sm"><a href="#"><img class="product_image" src="{{ item.image.thumb_url }}"/></a></div>
@@ -76,6 +77,7 @@
    														 {% else %}
    									
    														 {% endif %}
+   									</div>
    									</center>
    														
    								</div> 
@@ -132,6 +134,7 @@
 		$j('.product_image').click(function()
 			{
 				$j('.fmedia>center>img').attr('src',$j(this).attr('src'));		
+				return false;
 		});
 	</script>
 {% endblock %}

@@ -46,9 +46,10 @@
 				if($j(this).html() == "2") { $j(this).html("Миникамеры");}
 				if($j(this).html() == "3") { $j(this).html("GPS Мониторинг");}
 			});
-	$j('.prew_img_tov').click(function()
+		$j('.prew_img_tov').click(function()
 			{
-				$j('.main_img_tov').attr('src',$j(this).attr('src'));		
+				$j('.main_img_tov').attr('src',$j(this).attr('src'));	
+				return false;	
 			});
 			
 			$j('#img_full').click(function(event){
@@ -56,6 +57,7 @@
 				$j('#opac_bg').hide();		
 				$j('#img_full').hide();
 				}
+				return false;
 			});	
 				
 			$j('.item-img-big a').click(function(){
