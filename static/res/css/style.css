@@ -3226,7 +3226,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 
 		/*  LEVEL THREE */
 		#nav ul.dropdown ul ul 			{ left: 100%; top: 0; }
-		#nav ul.dropdown li:hover > ul 	{ display: block; }
+		/*#nav ul.dropdown li:hover > ul 	{ display: block; }*/
 		
 		/*
 		Generalised theme compatibility fixes, the shopping cart does not need bullets
