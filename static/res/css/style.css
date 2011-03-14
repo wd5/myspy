@@ -34,7 +34,7 @@ ul{list-style:disc;}
 /* Inputs */
 input{
 
-	background: #fff url(../img/form-fie.gif) no-repeat;
+	background: #fff;
 	border-top: 1px solid #ccc;
 	border-right: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
@@ -2298,7 +2298,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 
 		 input.wpsc_buy_button {
 		/* 	text-indent:-9999px; */
-			background-image: url(../img/atc00000.gif);
 			border: none;
 			width: 152px;
 			height: 50px;
@@ -3168,7 +3167,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 				border: 1px solid #222;
 				border-top: none;
 
-			    background: #444 url(../img/bg_dropd.png) repeat-x left bottom;
+			    background: #444;
 				text-shadow: none;
 				padding-bottom: 5px;
 				-moz-border-radius-bottomleft: 5px;
@@ -3329,7 +3328,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 		}
 
 		#wrapper #nav ul.dropdown ul{
-		    background: #000 url(../img/bg_dropd.png) repeat-x left bottom;
+		    background: #000;
 		}
 
 		.page-nav, .wp-pagenavi{
