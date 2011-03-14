@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from catalog.models import Products, ProductsPhoto, Categories, Sections, Features, FeaturesName
+from catalog.models import Product, ProductPhoto, Category, Section, Feature, FeatureName
 from cart.models import Clients
 
 class PhotoInline(admin.StackedInline):
-    model = ProductsPhoto
+    model = ProductPhoto
 
 class FeaturesInline(admin.StackedInline):
-    model = Features
+    model = Feature
 
-admin.site.register(ProductsPhoto)
+admin.site.register(ProductPhoto)
 
 class ProductsAdmin(admin.ModelAdmin):
     inlines = [PhotoInline, FeaturesInline]
@@ -20,7 +20,7 @@ class ProductsAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description']
     prepopulated_fields = {'slug' : ('name',)}
 
-admin.site.register(Products, ProductsAdmin)
+admin.site.register(Product, ProductsAdmin)
 
 class CategoriesAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at', 'updated_at',)
@@ -30,14 +30,14 @@ class CategoriesAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description',]
     prepopulated_fields = {'slug' : ('name',)}
 
-admin.site.register(Categories, CategoriesAdmin)
+admin.site.register(Category, CategoriesAdmin)
 
 class SectionsAdmin(admin.ModelAdmin):
         prepopulated_fields = {'slug' : ('name',)}
 
-admin.site.register(Sections, SectionsAdmin)
+admin.site.register(Section, SectionsAdmin)
 
-admin.site.register(FeaturesName)
+admin.site.register(FeatureName)
 
 class ClientsAdmin(admin.ModelAdmin):
     ordering = ['ordered_at']

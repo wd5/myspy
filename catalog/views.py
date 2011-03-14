@@ -2,7 +2,7 @@
 from django.shortcuts import get_object_or_404, render_to_response
 from django.core import urlresolvers
 from django.template import RequestContext
-from catalog.models import Categories, Products, Sections
+from catalog.models import Category, Product, Section
 from catalog.forms import ProductAddToCartForm
 from django.http import HttpResponseRedirect
 from cart import cart
@@ -23,20 +23,20 @@ def show_category(request, category_slug):
         return HttpResponseRedirect(url)
     else:
         try:
-            category = Categories.objects.get(slug=category_slug)
-            products = category.products_set.filter(is_active=True)
+            category = Category.objects.get(slug=category_slug)
+            products = category.product_set.filter(is_active=True)
         except :
-            section = Sections.objects.get(slug=category_slug)
-            category = section.categories_set.filter(is_active=True)
+            section = Section.objects.get(slug=category_slug)
+            category = section.category_set.filter(is_active=True)
             products = []
             for cat in category:
-                products += cat.products_set.filter(is_active=True)
+                products += cat.product_set.filter(is_active=True)
     return render_to_response("main/catalog.html", locals(), context_instance=RequestContext(request))
 
 def show_product(request, product_slug):
-    product = get_object_or_404(Products, slug=product_slug)
-    photos = product.productsphoto_set.all()
-    features = product.features_set.all()
+    product = get_object_or_404(Product, slug=product_slug)
+    photos = product.productphoto_set.all()
+    features = product.feature_set.all()
     # evaluate the HTTP method, change as needed
     if request.method == 'POST':
         #create the bound form
@@ -65,7 +65,7 @@ def all_goods(request):
         cart.add_to_cart(request)
         url = urlresolvers.reverse('show_cart')
         return HttpResponseRedirect(url)
-    products = Products.objects.filter(is_active=True)
+    products = Product.objects.filter(is_active=True)
     return render_to_response("main/catalog.html", locals(), context_instance=RequestContext(request))
 
 def about(request):

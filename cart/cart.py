@@ -46,7 +46,7 @@ def add_to_cart(request):
 #    quantity = postdata.get('quantity',1)
     quantity = 1
     # fetch the product or return a missing page error
-    p = get_object_or_404(Products, slug=product_slug)
+    p = get_object_or_404(Product, slug=product_slug)
     #get products_image in cart
     cart_products = get_cart_items(request)
     product_in_cart = False

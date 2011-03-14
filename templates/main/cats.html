@@ -52,8 +52,8 @@
 							<td>
 								<table class="item-table"><tr>
 									<td class="item-img" style="width:50%;">
-									    {% if product.productsphoto_set.all %}
-           										 <img src="{{ product.productsphoto_set.all.0.image.url }}" alt="{{ product.name }}" />
+									    {% if product.productphoto_set.all %}
+           										 <img src="{{ product.productphoto_set.all.0.image.url }}" alt="{{ product.name }}" />
    										 {% else %}
      								   Фотография товара отсутствует
     									{% endif %}									

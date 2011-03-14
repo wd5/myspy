@@ -71,7 +71,7 @@
 										 {{ product.mini_html_description|safe }}
 										 <p>		
 																	Технические характеристики:<br /> 
-																 {% for feature in product.features_set.all %}																 
+																 {% for feature in product.feature_set.all %}
  																	 - {{ feature.name }}: {{ feature.value }} <br> 																	 
 																 {% endfor %}
 																

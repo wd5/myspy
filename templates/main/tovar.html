@@ -24,13 +24,13 @@
 	
 					<center id="img_full">
 					<div id="img_full_in">
-						{% if product.productsphoto_set.all.0.image.url %}
-                                            <img class="main_img_tov" class="marketfull_image" src="{{ product.productsphoto_set.all.0.image.thumb_url }}" alt="{{ page_title }}" height="400px" />
+						{% if product.productphoto_set.all.0.image.url %}
+                                            <img class="main_img_tov" class="marketfull_image" src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ page_title }}" height="400px" />
                                             {% else %}
                                                 Фото товара отсутствует
                                             {% endif %}     
                                             <div class="clr"></div>                                  
-					{% for item in product.productsphoto_set.all %}
+					{% for item in product.productphoto_set.all %}
 						<img class="prew_img_tov" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}" height="150px"/>
 
 					{% endfor %}
@@ -66,11 +66,11 @@
 										</div>
 									</div>
 								</div> 
-								<div class="fmedia"><center><img src="{{ product.productsphoto_set.all.0.image.thumb_url }}" alt="{{ product.name }}" /></center>
+								<div class="fmedia"><center><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ product.name }}" /></center>
 								<div class="clr"></div>
 								<center>
-								 {% if product.productsphoto_set.all %}
-     													 {% for item in product.productsphoto_set.all %}
+								 {% if product.productphoto_set.all %}
+     													 {% for item in product.productphoto_set.all %}
      															 <div class="item-img-sm"><a href="#"><img class="product_image" src="{{ item.image.thumb_url }}"/></a></div>
      														 {% endfor %}
    														 {% else %}
@@ -113,7 +113,7 @@
 															</p>
 															<p>		
 																	Технические характеристики:<br /> 
-																 {% for feature in product.features_set.all %}																 
+																 {% for feature in product.feature_set.all %}
  																	 - {{ feature.name }}: {{ feature.value }} <br> 																	 
 																 {% endfor %}
 																

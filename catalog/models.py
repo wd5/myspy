@@ -3,7 +3,7 @@ from django.db import models
 from catalog.fields import ThumbnailImageField
 from django.core.exceptions import ValidationError
 
-class Sections(models.Model):
+class Section(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
@@ -18,10 +18,10 @@ class Sections(models.Model):
     def get_absolute_url(self):
         return ('catalog-page', [str(self.slug)])
 
-class Categories(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True)
-    section = models.ForeignKey(Sections)
+    section = models.ForeignKey(Section)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -41,8 +41,8 @@ def validate_even(value):
         if len(value) > 500:
             raise ValidationError(u'Количество символов: %s. Максимально разрешенное: 500'% len(value) )
 
-class Products(models.Model):
-    category = models.ForeignKey(Categories, verbose_name='Категория')
+class Product(models.Model):
+    category = models.ForeignKey(Category, verbose_name='Категория')
     name = models.CharField(max_length=255, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='Ссылка')
     price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена')
@@ -69,8 +69,8 @@ class Products(models.Model):
         ordering = ['-created_at']
         verbose_name_plural = 'Товар'
 
-class ProductsPhoto(models.Model):
-    item = models.ForeignKey(Products)
+class ProductPhoto(models.Model):
+    item = models.ForeignKey(Product)
     image = ThumbnailImageField(upload_to='products_image', thumb_width=460, thumb_height=350, completion="resized" )
 
     class Meta:
@@ -84,7 +84,7 @@ class ProductsPhoto(models.Model):
     def get_absolute_url(self):
         return ('item_detail', None, {'object_id': self.id})
 
-class FeaturesName(models.Model):
+class FeatureName(models.Model):
     name = models.CharField(max_length=50)
 
     def __unicode__(self):
@@ -93,7 +93,7 @@ class FeaturesName(models.Model):
     class Meta:
         verbose_name_plural = 'Характеристики товара'
 
-class Features(models.Model):
-    name = models.ForeignKey(FeaturesName, verbose_name='Характеристика')
+class Feature(models.Model):
+    name = models.ForeignKey(FeatureName, verbose_name='Характеристика')
     value = models.CharField(max_length=100, verbose_name='Значение')
-    item = models.ForeignKey(Products)
+    item = models.ForeignKey(Product)
