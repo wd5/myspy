@@ -1188,7 +1188,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 
 
 		.button:hover, input[type="submit"]:hover{
-			background: #e5e5e5 url(../img/nav-spri.png) repeat-x 0 -108px;
+			background: #aaa url(../img/nav-spri.png) repeat-x 0 -108px;
 			cursor: pointer;
 		}
 		.button:active, input[type="submit"]:active{
@@ -3566,4 +3566,19 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .send_input input{
 	position: relative;
+}
+.back_to_shop{
+	background: url("../img/nav-spri.png") repeat-x scroll 0 -144px #E5E5E5;
+    border: 1px solid #AAAAAA;
+    color: #333333;
+    font-family: arial,helvetica;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 5px 4px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.back_to_shop:hover{
+	background: #aaa url(../img/nav-spri.png) repeat-x 0 -108px;
+	cursor: pointer;
+	text-decoration: none;
 }

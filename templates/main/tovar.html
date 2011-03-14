@@ -32,7 +32,6 @@
                                             <div class="clr"></div>                                  
 					{% for item in product.productphoto_set.all %}
 						<img class="prew_img_tov" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}" height="150px"/>
-
 					{% endfor %}
 					
 					</div>
@@ -66,9 +65,9 @@
 										</div>
 									</div>
 								</div> 
-								<div class="fmedia"><center style="height:450px;"><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ product.name }}" /></center>
-								<div class="clr"></div>
-								<center>
+								
+								<div class="fmedia">
+																<center>
 								<div>
 								 {% if product.productphoto_set.all %}
      													 {% for item in product.productphoto_set.all %}
@@ -79,6 +78,10 @@
    														 {% endif %}
    									</div>
    									</center>
+   									<div class="clr"></div>
+								<center><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ product.name }}"/></center>
+								
+
    														
    								</div> 
 								<div class="clear"></div> 
