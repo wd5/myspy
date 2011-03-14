@@ -1,7 +1,6 @@
 		<ul id="menu-menu" class="mnav dropdown fix">
 			<li {% if request_path == '/' %} class="current-menu-item" {% endif %}><a href="/">Главная</a></li>
-<!--			<li class="current-menu-item"><a href="{{ section.get_absolute_url }}/cats">Каталог товара</a> -->
-            <li {% if request_path == '/cats/' %} class="current-menu-item" {% endif %}><a href="{{ section.get_absolute_url }}/cats">Каталог товара</a>
+            <li {% if request_path == '/cats/' %} class="current-menu-item" {% endif %}><a href="/cats">Каталог товара</a>
 				<ul class="sub-menu">
 					{% for section in sections %}
        				 <li> <a href="{{ section.get_absolute_url }}" title="">{{ section.name }}</a>
@@ -18,12 +17,12 @@
                           {% endif %}
       			 	 </li>
 					{% endfor %}
-                    <li> <a href="/cats/all-goods/" title="">Все товары</a>
+                    <li> <a href="{% url catalog.views.all_goods %}" title="">Все товары</a>
 				</ul>
 			</li>
-			<li {% if request_path == '/delivery' %} class="current-menu-item" {% endif %}><a href="{{ section.get_absolute_url }}/delivery">Доставка и оплата</a></li>
-			<li {% if request_path == '/about' %} class="current-menu-item" {% endif %}><a href="{{ section.get_absolute_url }}/about">О Нас</a></li>
-			<li {% if request_path == '/blog' %} class="current-menu-item" {% endif %}><a href="{{ section.get_absolute_url }}/blog">Блог</a></li>
+			<li {% if request_path == '/delivery' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
+			<li {% if request_path == '/about' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
+			<li {% if request_path == '/blog' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.blog %}">Блог</a></li>
 		</ul>
 		
 		<form method="get" class="searchform" action="">
