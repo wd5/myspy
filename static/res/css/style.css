@@ -3428,12 +3428,15 @@ sub {font-size:.7em;vertical-align: bottom;}
 .item-head, .item-desc h2{
 	font-size: 18px;
 	color:#ff3800;
-}
-
-.item-head {
 	text-decoration: underline;
 }
-
+.item-desc h2:hover{
+	text-decoration: none;
+	background: #abfb0c;
+}
+.item-head {
+	
+}
 .item-desc h2{
 	border-bottom: 1px #c8d2de solid;
 	margin-bottom: 10px;
