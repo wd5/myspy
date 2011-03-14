@@ -1,5 +1,5 @@
           # -*- coding: utf-8 -*-
-from models import CartItem, Clients
+from models import CartItem, Client
 from catalog.models import *
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
@@ -115,7 +115,7 @@ class Subtotal:
 def save_client(request, form):
     cart_id = _cart_id(request)
 
-    ci = Clients()
+    ci = Client()
     ci.cart = cart_id
 
     ci.name = form.cleaned_data['name']

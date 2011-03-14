@@ -9,7 +9,7 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, unique=False)
 
     class Meta:
-        db_table = 'cart_items'
+        db_table = 'cart_item'
         ordering = ['date_added']
 
     def total(self):
@@ -28,7 +28,7 @@ class CartItem(models.Model):
         self.quantity = self.quantity + int(quantity)
         self.save()
 
-class Clients(models.Model):
+class Client(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50, null=True, blank=True)
     patronymic = models.CharField(max_length=50, null=True, blank=True)

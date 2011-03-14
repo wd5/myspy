@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from catalog.models import Product, ProductPhoto, Category, Section, Feature, FeatureName
-from cart.models import Clients
+from cart.models import Client
 
 class PhotoInline(admin.StackedInline):
     model = ProductPhoto
@@ -43,4 +43,4 @@ class ClientsAdmin(admin.ModelAdmin):
     ordering = ['ordered_at']
     list_display = ('ordered_at', 'name')
 
-admin.site.register(Clients, ClientsAdmin)
+admin.site.register(Client, ClientsAdmin)
