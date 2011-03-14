@@ -44,8 +44,8 @@
 									</tr>
 									{% for item in cart_items %}
 									<tr class="product_row">
-										<td class="firstcol"><img src='{{ item.product.productphoto_set.all.0.image.thumb_url }}' alt='{{ item.name }}' title='{{ item.name }}' style="height:48px" /></td>
-										<td class="firstcol"><a href='#'>{{ item.name }}</a></td><td>
+										<td class="firstcol"><img src='{{ item.product.thumbnail_image.thumb_url }}' alt='{{ item.name }}' title='{{ item.name }}' style="height:48px" /></td>
+										<td class="firstcol"><a href='{{ item.product.get_absolute_url }}'>{{ item.name }}</a></td><td>
 											<form action="" method="post" class="adjustform">{% csrf_token %}
 												<input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" />
 												<input type="hidden" name="item_id" value="{{ item.id }}" />
