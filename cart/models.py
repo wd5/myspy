@@ -28,6 +28,12 @@ class CartItem(models.Model):
         self.quantity = self.quantity + int(quantity)
         self.save()
 
+STATUS_CHOICES = (
+    ('BACK', 'Вернуть'),
+    ('POSTSEND', 'Отправить почтой'),
+    ('POSTSENDED', 'Отправлено почтой'),
+)
+
 class Client(models.Model):
     surname = models.CharField(max_length=50, null=True, blank=True, verbose_name="Фамилия")
     name = models.CharField(max_length=50, verbose_name="Имя")
@@ -41,6 +47,8 @@ class Client(models.Model):
     ordered_at = models.DateTimeField(auto_now_add=True )
     subtotal = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Сумма")
     discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
+    tracking_number = models.CharField(max_length=20, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус")
 
     def get_order(self):
         cart_items = CartItem.objects.filter(cart_id = self.cart)
