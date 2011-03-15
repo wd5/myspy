@@ -28,3 +28,9 @@ def store(request):
 
 def cash(request):
     pass
+
+@login_required
+def edit_client(request, id):
+    client = Client.objects.get(id=id)
+    return render_to_response("myadmin/edit_client.html", locals(), context_instance=RequestContext(request))
+
