@@ -34,7 +34,7 @@
 			{{ client.id }}
 		</td>
         <td rowspan="2">
-        	&nbsp
+            {{ client.get_status_display }}
         </td>
         <td>
             {{ client.ordered_at }}
@@ -55,7 +55,7 @@
             {{ client.discount }} руб.
         </td>
         <td>
-        	&nbsp
+            {{ client.tracking_number }}
         </td>
         <td style="background:#cccccc;" rowspan="2">
 			<a href="/myadmin/client/{{ client.id }}/">Редактировать</a>
