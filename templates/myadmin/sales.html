@@ -1,3 +1,26 @@
-{% for client in all_clients %}
-{{ client.id }} {{ client.surname }} {{ client.name }} {{ client.patronymic }} {{ client.get_order }}<br>
-{% endfor %}
+<table border="1px" cellpadding="5px" cellspacing="1px">
+	<tr style="background:#cccccc;">
+		<td>
+			ID
+		</td>
+		<td>
+			ФИО
+		</td>
+		<td>
+			Заказ
+		</td>
+	<tr>
+	{% for client in all_clients %}
+	<tr>
+		<td>
+			{{ client.id }}
+		</td>
+		<td>
+			{{ client.surname }} {{ client.name }} {{ client.patronymic }}
+		</td>
+		<td>
+			{{ client.get_order }}
+		</td>
+	</tr>
+	{% endfor %}
+</table>
