@@ -114,6 +114,7 @@ class Subtotal:
 
 def save_client(request, form):
     cart_id = _cart_id(request)
+    subtotal_class = Subtotal(request)
 
     ci = Client()
     ci.cart = cart_id
@@ -126,6 +127,8 @@ def save_client(request, form):
     ci.phone = form.cleaned_data['phone']
     ci.address = form.cleaned_data['address']
     ci.email = form.cleaned_data['email']
+    ci.subtotal = subtotal_class.subtotal()
+    ci.discount = subtotal_class.discount
     ci.save()
 
 def send_admin_email(cart_items, form, cart_subtotal, discount):

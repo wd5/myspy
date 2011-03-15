@@ -39,6 +39,8 @@ class Client(models.Model):
     email = models.EmailField(null=True, blank=True)
     cart = models.CharField(max_length=50)
     ordered_at = models.DateTimeField(auto_now_add=True)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.DecimalField(max_digits=10, decimal_places=2)
 
     def get_order(self):
         cart_items = CartItem.objects.filter(cart_id = self.cart)

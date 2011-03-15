@@ -9,9 +9,21 @@
 		<td>
 			ФИО
 		</td>
+        <td>
+            Телефон
+        </td>
 		<td>
 			Заказ
 		</td>
+        <td>
+            Сумма
+        </td>
+        <td>
+            Скидка
+        </td>
+        <td>
+            Tracking number
+        </td>
 	<tr>
 	{% for client in all_clients %}
 	<tr>
@@ -24,9 +36,20 @@
 		<td>
 			{{ client.surname }} {{ client.name }} {{ client.patronymic }}
 		</td>
+        <td>
+            {{ client.phone }}
+        </td>
 		<td>
 			{{ client.get_order }}
 		</td>
+        <td>
+            {{ client.subtotal }} руб.
+        </td>
+        <td>
+            {{ client.discount }} руб.
+        </td>
+        <td>
+        </td>
 	</tr>
 	{% endfor %}
 </table>
