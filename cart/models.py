@@ -29,18 +29,18 @@ class CartItem(models.Model):
         self.save()
 
 class Client(models.Model):
-    name = models.CharField(max_length=50)
-    surname = models.CharField(max_length=50, null=True, blank=True)
-    patronymic = models.CharField(max_length=50, null=True, blank=True)
-    city = models.CharField(max_length=50, null=True, blank=True)
-    postcode = models.IntegerField(null=True)
-    phone = models.CharField(max_length=20)
-    address = models.CharField(max_length=50, null=True, blank=True)
+    surname = models.CharField(max_length=50, null=True, blank=True, verbose_name="Фамилия")
+    name = models.CharField(max_length=50, verbose_name="Имя")
+    patronymic = models.CharField(max_length=50, null=True, blank=True, verbose_name="Отчество")
+    city = models.CharField(max_length=50, null=True, blank=True, verbose_name="Город")
+    postcode = models.IntegerField(null=True, blank=True, verbose_name="Индекс")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    address = models.CharField(max_length=50, null=True, blank=True, verbose_name="Адрес")
     email = models.EmailField(null=True, blank=True)
     cart = models.CharField(max_length=50)
-    ordered_at = models.DateTimeField(auto_now_add=True)
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.DecimalField(max_digits=10, decimal_places=2)
+    ordered_at = models.DateTimeField(auto_now_add=True )
+    subtotal = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Сумма")
+    discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
 
     def get_order(self):
         cart_items = CartItem.objects.filter(cart_id = self.cart)
