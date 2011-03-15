@@ -44,7 +44,7 @@ class Client(models.Model):
         cart_items = CartItem.objects.filter(cart_id = self.cart)
         products = ""
         for item in cart_items:
-            products += u"|%s - %sшт|" % (item.product.slug, item.quantity )
+            products += u"%s - %sшт;" % (item.product.slug, item.quantity )
         return products
 
     def __unicode__(self):
