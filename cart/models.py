@@ -40,5 +40,12 @@ class Client(models.Model):
     cart = models.CharField(max_length=50)
     ordered_at = models.DateTimeField(auto_now_add=True)
 
+    def get_order(self):
+        cart_items = CartItem.objects.filter(cart_id = self.cart)
+        products = ""
+        for item in cart_items:
+            products += u"|%s - %sшт|" % (item.product.slug, item.quantity )
+        return products
+
     def __unicode__(self):
         return self.name
