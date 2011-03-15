@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^', include('myspy.catalog.urls')),
     (r'^cart/', include('myspy.cart.urls')),
+    (r'^myadmin/', include('myspy.myadmin.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
 
