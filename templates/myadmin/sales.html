@@ -30,7 +30,7 @@
 	<tr>
 	{% for client in all_clients %}
 	<tr>
-		<td>
+		<td style="background:#cccccc;" rowspan="2">
 			{{ client.id }}
 		</td>
         <td>
@@ -55,6 +55,12 @@
         </td>
         <td>
         </td>
+	</tr>
+	<tr>
+
+		<td colspan="7">
+			Адрес тут
+		</td>
 	</tr>
 	{% endfor %}
 </table>
