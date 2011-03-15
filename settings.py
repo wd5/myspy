@@ -4,6 +4,8 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+LOGIN_URL = '/myadmin/'
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -93,6 +95,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'myspy.catalog',
     'myspy.cart',
+    'myspy.myadmin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
