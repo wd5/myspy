@@ -47,5 +47,8 @@ class Client(models.Model):
             products += u"%s - %sшт; " % (item.product.slug, item.quantity )
         return products
 
+    class Meta:
+        ordering = ['-ordered_at']
+
     def __unicode__(self):
         return self.name
