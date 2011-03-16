@@ -8,9 +8,10 @@ from django.http import HttpResponseRedirect
 from cart import cart
 
 def index(request):
-    page_title = "topDJshop - интернет магазин аудио оборудования"
+    page_title = "my-SPY - магазин шпионских товаров"
     meta_keywords = page_title
-    meta_description = "Наушники - для DJ, топовые модели Топовые наушники по доступным ценам. Dr.dre Beats, Pioneer HDJ, Bose."
+    meta_description = """Gsm жучки, радио жучки, подслушивающие устройства.
+     Оборудование для поиска прослушки, камер и жучков. Обнаружители. Подавители сигналов сотовой и радио связи"""
     return render_to_response("main/index.html", locals(), context_instance=RequestContext(request))
 
 def cats(request):
@@ -25,12 +26,18 @@ def show_category(request, category_slug):
         try:
             category = Category.objects.get(slug=category_slug)
             products = category.product_set.filter(is_active=True)
+            if category.section.name == category.name:
+                page_title = "%s" % category.section
+            else:
+                page_title = "%s %s" % (category.section, category)
         except :
             section = Section.objects.get(slug=category_slug)
             category = section.category_set.filter(is_active=True)
+            page_title = "%s" % section
             products = []
             for cat in category:
                 products += cat.product_set.filter(is_active=True)
+    meta_keywords = page_title
     return render_to_response("main/catalog.html", locals(), context_instance=RequestContext(request))
 
 def show_product(request, product_slug):
@@ -58,6 +65,9 @@ def show_product(request, product_slug):
     form.fields['product_slug'].widget.attrs['value'] = product_slug
     # set test cookie to make sure cookies are enabled
     request.session.set_test_cookie()
+    page_title = "%s" % product.name
+    meta_keywords = page_title
+    meta_description = "%s - %s" % (page_title, product.mini_html_description)
     return render_to_response("main/tovar.html", locals(), context_instance=RequestContext(request))
 
 def all_goods(request):
@@ -66,6 +76,8 @@ def all_goods(request):
         url = urlresolvers.reverse('show_cart')
         return HttpResponseRedirect(url)
     products = Product.objects.filter(is_active=True)
+    page_title = "my-SPY - Все товары"
+    meta_keywords = page_title
     return render_to_response("main/catalog.html", locals(), context_instance=RequestContext(request))
 
 def about(request):

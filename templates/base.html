@@ -3,7 +3,7 @@
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8;" />
 <link rel="shortcut icon" href="{{ MEDIA_URL}}res/img/my-spy.ico" type="image/x-icon" />	
-<title>Магазин домашней безопасности, шпионские штучки</title>
+<title>{% block title %}{{ page_title }}{% endblock %}</title>
 <link rel="stylesheet" href="{{ MEDIA_URL}}res/css/style.css" type="text/css" media="screen" />	
 <!--[if IE 6]>
 	<script src="{{ MEDIA_URL}}res/js/belatedpng.js"></script>
@@ -24,11 +24,8 @@
 <script type='text/javascript' src='{{ MEDIA_URL}}res/js/jquery1.7.2.js'></script>
 <script type='text/javascript' src='{{ MEDIA_URL}}res/js/dropdown.js'></script>
 <script type="text/javascript" src="{{ MEDIA_URL}}res/js/jquery-hoverintent.js"></script>
-<meta name="description" content="Интернет магазин, где можно купить шпионские штучки, камеры, прослушивающие устройств. Так же у нас в продаже шпионская техника, оборудование, глушилка мобильных телефонов, мини камера." />
-<meta name="keywords" content="шпионские штучки магазин, шпионские штучки купить, прослушивающие устройства купить, купить прослушивающее устройство, шпионская техника,
-шпионские камеры, шпионское оборудование продажа,
-интернет магазин шпионских штучек, шпионская техника купить, шпионские мини камеры, шпионские камеры купить, мини камера купить, купить шпионское оборудование, интернет магазин шпионского оборудования, купить шпионские гаджеты, магазин шпионских товаров, шпионские купить гаджеты, 
-глушилка мобильных телефонов купить, шпионские товары" />
+<meta name="description" content="{{ meta_description }}" />
+<meta name="keywords" content="{{ meta_keywords }}" />
 <script type="text/javascript">
 /* <![CDATA[ */
 	var $j = jQuery.noConflict();
