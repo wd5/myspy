@@ -49,6 +49,7 @@ class Client(models.Model):
     discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус")
+    referrer = models.URLField(verify_exists=False)
 
     def get_order(self):
         cart_items = CartItem.objects.filter(cart_id = self.cart)

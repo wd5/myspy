@@ -5,7 +5,7 @@ from django.forms import ModelForm
 class ClientForm(ModelForm):
     class Meta:
         model = Client
-        exclude = ('cart')
+        exclude = ('cart, referrer')
 #        fields = ('name', 'phone')
 
     def as_table(self):
