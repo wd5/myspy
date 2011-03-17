@@ -2,11 +2,20 @@
 from django.db import models
 from catalog.models import Product
 
+class CartProduct(models.Model):
+    cartitem = models.ForeignKey('CartItem')
+    product = models.ForeignKey(Product)
+    quantity = models.IntegerField(default=1)
+
+    def augment_quantity(self, quantity):
+        self.quantity = self.quantity + int(quantity)
+        self.save()
+
 class CartItem(models.Model):
     cart_id = models.CharField(max_length=50)
     date_added = models.DateTimeField(auto_now_add=True)
-    quantity = models.IntegerField(default=1)
-    product = models.ForeignKey(Product, unique=False)
+#    quantity = models.IntegerField(default=1)
+    product = models.ManyToManyField(Product, through=CartProduct)
 
     class Meta:
         db_table = 'cart_item'
@@ -43,7 +52,7 @@ class Client(models.Model):
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     address = models.CharField(max_length=50, null=True, blank=True, verbose_name="Адрес")
     email = models.EmailField(null=True, blank=True)
-    cart = models.CharField(max_length=50)
+    cart = models.ForeignKey(CartItem)
     ordered_at = models.DateTimeField(auto_now_add=True )
     subtotal = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Сумма")
     discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
@@ -52,7 +61,7 @@ class Client(models.Model):
     referrer = models.URLField(verify_exists=False)
 
     def get_order(self):
-        cart_items = CartItem.objects.filter(cart_id = self.cart)
+        cart_items = CartProduct.objects.filter(cartitem = self.cart.id)
         products = ""
         for item in cart_items:
             products += u"%s - %sшт; " % (item.product.slug, item.quantity )

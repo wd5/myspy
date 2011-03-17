@@ -1,6 +1,7 @@
 <form action="" method="post">{% csrf_token %}
 <table>
 {{ form.as_table }}
+{{ formset }}
 <tr>
 	<td>
 		<input type="submit" value="Submit" />

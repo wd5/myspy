@@ -4,8 +4,10 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from cart.models import Client
-from forms import ClientForm
+from cart.models import Client, CartItem, CartProduct
+from forms import ClientForm, BaseProductFormset
+from django.forms.models import modelformset_factory, inlineformset_factory
+from catalog.models import Product
 
 def auth(request):
     if request.method == 'POST':
@@ -33,8 +35,14 @@ def cash(request):
 @login_required
 def edit_client(request, id):
     client = Client.objects.get(id=id)
+    cartid = client.cart.id
+    cart = CartItem.objects.get(id=cartid)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     if request.method == 'POST':
-        form = ClientForm(request.POST, instance=client)
-        form.save()
-    form = ClientForm(instance=client)
+#        form = ClientForm(request.POST, instance=client, prefix='client')
+        formset = CartProductFormset(request.POST, instance=cart)
+        formset.save()
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
+    formset = CartProductFormset(instance=cart)
+#    form = ClientForm(instance=client, prefix='client')
     return render_to_response("myadmin/edit_client.html", locals(), context_instance=RequestContext(request))

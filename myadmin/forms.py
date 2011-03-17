@@ -1,12 +1,13 @@
           # -*- coding: utf-8 -*-
-from cart.models import Client
+from cart.models import Client, CartProduct
 from django.forms import ModelForm
+from django.forms.models import BaseInlineFormSet
+
 
 class ClientForm(ModelForm):
     class Meta:
         model = Client
         exclude = ('cart, referrer')
-#        fields = ('name', 'phone')
 
     def as_table(self):
         "Returns this form rendered as HTML <tr>s -- excluding the <table></table>."
@@ -16,3 +17,8 @@ class ClientForm(ModelForm):
             row_ender = u'</td></tr>',
             help_text_html = u'<br />%s',
             errors_on_separate_row = False)
+
+class BaseProductFormset(BaseInlineFormSet):
+    def clean(self):
+        super(BaseProductFormset, self).clean()
+        raise forms.ValidationError('test')

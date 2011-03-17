@@ -24,7 +24,7 @@ def show_cart(request, template_name="cart/cart.html"):
             del request.session['cart_id']
             is_order = 1
             # Отправляем админу смс
-            cart.send_sms(cart_items, form)
+#            cart.send_sms(cart_items, form)
             # Отправляем админу email
             cart.send_admin_email(request, cart_items, form, cart_subtotal, discount)
             if form.cleaned_data['email']:
@@ -33,9 +33,10 @@ def show_cart(request, template_name="cart/cart.html"):
     else:
         form = OrderForm()
 
-    subtotal_class = cart.Subtotal(request)
     cart_items = cart.get_cart_items(request)
+    if cart_items:
+        subtotal_class = cart.Subtotal(request)
+        cart_subtotal = subtotal_class.subtotal()
+        discount = subtotal_class.discount
     page_title = 'Корзина'
-    cart_subtotal = subtotal_class.subtotal()
-    discount = subtotal_class.discount
     return render_to_response(template_name, locals(), context_instance=RequestContext(request))

@@ -1,5 +1,5 @@
           # -*- coding: utf-8 -*-
-from models import CartItem, Client
+from models import CartItem, Client, CartProduct
 from catalog.models import *
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
@@ -35,41 +35,58 @@ def _generate_cart_id():
 
 def get_cart_items(request):
     """ return all items from the current user's cart """
-    return CartItem.objects.filter(cart_id=_cart_id(request))
+    #return CartItem.objects.filter(cart_id=_cart_id(request))
+    try:
+        cartid = CartItem.objects.get(cart_id = _cart_id(request))
+        return CartProduct.objects.filter(cartitem__id__iexact=cartid.id)
+    except :
+        return False
 
 def add_to_cart(request):
-    """ function that takes a POST request and adds a product instance to the current customer's shopping cart """
     postdata = request.POST.copy()
-    # get product slug from post data, return blank if empty
+    # Получаю название заказанного продукта
     product_slug = postdata.get('product_slug','')
-    # get quantity added, return 1 if empty
-#    quantity = postdata.get('quantity',1)
     quantity = 1
-    # fetch the product or return a missing page error
-    p = get_object_or_404(Product, slug=product_slug)
-    #get products_image in cart
-    cart_products = get_cart_items(request)
     product_in_cart = False
-    # check to see if item is already in cart
-    for cart_item in cart_products:
-        if cart_item.product.id == p.id:
-            # update the quantity if found
-            cart_item.augment_quantity(quantity)
-            product_in_cart = True
-    if not product_in_cart:
-        # create and save a new cart item
+    # Получаю заказанный продукт
+    p = get_object_or_404(Product, slug=product_slug)
+    # Если клиент уже есть в базе
+    if CartItem.objects.filter(cart_id = _cart_id(request)):
+        # Получаю все продукты в корзине
+        cart = CartItem.objects.get(cart_id = _cart_id(request))
+        cart_products = CartProduct.objects.filter(cartitem=cart.id)
+        # Проверяю есть ли такой продукт уже в корзине
+        for cart_item in cart_products:
+            if cart_item.product_id == p.id:
+                # Если уже есть то обновляю количество
+                ttt = CartProduct.objects.get(product=p.id)
+                ttt.augment_quantity(quantity)
+                product_in_cart = True
+        # Если нету то добавляю
+        if not product_in_cart:
+            cart = CartItem.objects.get(cart_id = _cart_id(request))
+            cp = CartProduct(cartitem = cart, product = p)
+            cp.save()
+    # Если клиента нету в базе то создаю его
+    else:
         ci = CartItem()
-        ci.product = p
-        ci.quantity = quantity
         ci.cart_id = _cart_id(request)
         ci.save()
 
+        # И добавляю его заказ в корзину
+        cart = CartItem.objects.get(cart_id = _cart_id(request))
+        cp = CartProduct(cartitem = cart, product = p)
+        cp.save()
+
 # returns the total number of items in the user's cart
 def cart_distinct_item_count(request):
-    return get_cart_items(request).count()
+    if CartItem.objects.filter(cart_id = _cart_id(request)):
+        return get_cart_items(request).count()
+    else:
+        return 0
 
 def get_single_item(request, item_id):
-    return get_object_or_404(CartItem, id=item_id, cart_id=_cart_id(request))
+    return get_object_or_404(CartProduct, id=item_id)
 
 # update quantity for single item
 def update_cart(request):
@@ -113,11 +130,11 @@ class Subtotal:
         return cart_total
 
 def save_client(request, form):
-    cart_id = _cart_id(request)
+    cart = CartItem.objects.get(cart_id=_cart_id(request))
     subtotal_class = Subtotal(request)
 
     ci = Client()
-    ci.cart = cart_id
+    ci.cart = cart
 
     ci.name = form.cleaned_data['name']
     ci.surname = form.cleaned_data['surname']
