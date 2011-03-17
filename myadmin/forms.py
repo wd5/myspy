@@ -29,4 +29,3 @@ class BaseProductFormset(BaseInlineFormSet):
                 if product in products:
                     raise ValidationError('test')
                 products.append(product)
-                print form.cleaned_data
