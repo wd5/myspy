@@ -24,7 +24,7 @@ def show_cart(request, template_name="cart/cart.html"):
             del request.session['cart_id']
             is_order = 1
             # Отправляем админу смс
-#            cart.send_sms(cart_items, form)
+            cart.send_sms(cart_items, form)
             # Отправляем админу email
             cart.send_admin_email(request, cart_items, form, cart_subtotal, discount)
             if form.cleaned_data['email']:

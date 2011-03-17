@@ -2,7 +2,7 @@
 from cart.models import Client, CartProduct
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
-
+from django.core.exceptions import ValidationError
 
 class ClientForm(ModelForm):
     class Meta:
@@ -20,5 +20,13 @@ class ClientForm(ModelForm):
 
 class BaseProductFormset(BaseInlineFormSet):
     def clean(self):
-        super(BaseProductFormset, self).clean()
-        raise forms.ValidationError('test')
+        self.validate_unique()
+        products = []
+        for i in range(0, self.total_form_count()):
+            form = self.forms[i]
+            if form.cleaned_data:
+                product = form.cleaned_data['product']
+                if product in products:
+                    raise ValidationError('test')
+                products.append(product)
+                print form.cleaned_data

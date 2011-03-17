@@ -116,15 +116,13 @@ class Subtotal:
 
     def subtotal(self):
         cart_total = decimal.Decimal('0.00')
-        discount_quantity = 0
         cart_discount_total = 0
         cart_products = get_cart_items(self.request)
         for cart_item in cart_products:
             if cart_item.product.is_discount:
-                discount_quantity += cart_item.quantity
                 cart_discount_total += cart_item.product.price * cart_item.quantity
             cart_total += cart_item.product.price * cart_item.quantity
-        if discount_quantity >= 2:
+        if len(cart_products) >= 2:
             self.discount = (cart_discount_total * 10)/100
         cart_total -= self.discount
         return cart_total

@@ -8,6 +8,7 @@ from cart.models import Client, CartItem, CartProduct
 from forms import ClientForm, BaseProductFormset
 from django.forms.models import modelformset_factory, inlineformset_factory
 from catalog.models import Product
+import calc
 
 def auth(request):
     if request.method == 'POST':
@@ -39,10 +40,16 @@ def edit_client(request, id):
     cart = CartItem.objects.get(id=cartid)
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     if request.method == 'POST':
-#        form = ClientForm(request.POST, instance=client, prefix='client')
+        form = ClientForm(request.POST, instance=client, prefix='client')
+        form.save()
         formset = CartProductFormset(request.POST, instance=cart)
-        formset.save()
+        if formset.is_valid():
+            formset.save()
+            calc.subtotal(cartid)
+        else:
+            pass
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     formset = CartProductFormset(instance=cart)
-#    form = ClientForm(instance=client, prefix='client')
+    client = Client.objects.get(id=id)
+    form = ClientForm(instance=client, prefix='client')
     return render_to_response("myadmin/edit_client.html", locals(), context_instance=RequestContext(request))
