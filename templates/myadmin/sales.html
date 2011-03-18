@@ -68,6 +68,10 @@
 
 		<td colspan="7">
 			{{ client.city }} {{ client.address }}
+            {% if client.comment %}<br>
+                --------------<br>
+                {{ client.comment }}
+            {% endif %}
 		</td>
 	</tr>
 	{% endfor %}

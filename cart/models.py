@@ -60,6 +60,7 @@ class Client(models.Model):
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
     referrer = models.URLField(verify_exists=False)
+    comment = models.TextField(null=True, blank=True)
 
     def get_order(self):
         cart_items = CartProduct.objects.filter(cartitem = self.cart.id)
