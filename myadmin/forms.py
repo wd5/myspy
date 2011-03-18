@@ -1,8 +1,9 @@
           # -*- coding: utf-8 -*-
-from cart.models import Client, CartProduct
+from cart.models import Client, CartProduct, STATUS_CHOICES
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
+from django import forms
 
 class ClientForm(ModelForm):
     class Meta:
@@ -29,3 +30,6 @@ class BaseProductFormset(BaseInlineFormSet):
                 if product in products:
                     raise ValidationError('test')
                 products.append(product)
+
+class StatusForm(forms.Form):
+    status = forms.ChoiceField(choices=STATUS_CHOICES)

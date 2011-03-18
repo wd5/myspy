@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, BaseProductFormset
+from forms import ClientForm, StatusForm, BaseProductFormset
 from django.forms.models import modelformset_factory, inlineformset_factory
 from catalog.models import Product
 import calc
@@ -27,7 +27,13 @@ def auth(request):
 
 @login_required
 def sales(request):
-    all_clients = Client.objects.all()
+    form = StatusForm()
+    if request.method == 'POST':
+        form = StatusForm(request.POST)
+        if form.is_valid():
+            clients = Client.objects.filter(status=form.cleaned_data['status'])
+    else:
+        clients = Client.objects.all()
     return render_to_response("myadmin/sales.html", locals(), context_instance=RequestContext(request))
 
 def store(request):
