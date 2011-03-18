@@ -41,9 +41,16 @@ class CartItem(models.Model):
 
 STATUS_CHOICES = (
     ('PROCESS', 'Обработать'),
+    ('POSRSEND', 'Отправить почтой'),
+    ('COURIER_SEND', 'Отправить курьером'),
+    ('COURIER_TAKE', 'Передано курьеру'),
+    ('BUYER_TAKE', 'Передано покупателю'),
+    ('WAYT_PRODUCT', 'Ожидание поступления товара'),
+    ('CHANGE', 'Обменять'),
     ('BACK', 'Вернуть'),
-    ('POSTSEND', 'Отправить почтой'),
-    ('POSTSENDED', 'Отправлено почтой'),
+    ('CONTACT_AT', 'Связаться в назначенное время'),
+    ('REFUSED', 'Снятие заявки клиентом'),
+    ('CASH_IN', 'Деньги внесены'),
 )
 
 class Client(models.Model):
