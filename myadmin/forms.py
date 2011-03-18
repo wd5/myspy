@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 class ClientForm(ModelForm):
     class Meta:
         model = Client
-        exclude = ('cart, referrer')
+        exclude = ('cart', 'referrer')
 
     def as_table(self):
         "Returns this form rendered as HTML <tr>s -- excluding the <table></table>."

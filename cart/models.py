@@ -38,6 +38,7 @@ class CartItem(models.Model):
         self.save()
 
 STATUS_CHOICES = (
+    ('PROCESS', 'Обработать'),
     ('BACK', 'Вернуть'),
     ('POSTSEND', 'Отправить почтой'),
     ('POSTSENDED', 'Отправлено почтой'),
@@ -57,7 +58,7 @@ class Client(models.Model):
     subtotal = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Сумма")
     discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
     referrer = models.URLField(verify_exists=False)
 
     def get_order(self):
