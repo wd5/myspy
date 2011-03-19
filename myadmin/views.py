@@ -31,7 +31,11 @@ def sales(request):
     if request.method == 'POST':
         form = StatusForm(request.POST)
         if form.is_valid():
-            clients = Client.objects.filter(status=form.cleaned_data['status'])
+            clients = []
+            for i in form.cleaned_data['status']:
+               clients += Client.objects.filter(status=i)
+            # Сортирую по id - так чтобы полследний клиент был сверху
+            clients.sort(key=lambda x: x.id, reverse=True)
     else:
         clients = Client.objects.all()
     return render_to_response("myadmin/sales.html", locals(), context_instance=RequestContext(request))

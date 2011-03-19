@@ -1,4 +1,5 @@
           # -*- coding: utf-8 -*-
+from django.forms.widgets import CheckboxSelectMultiple, CheckboxInput, RadioSelect
 from cart.models import Client, CartProduct, STATUS_CHOICES
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
@@ -32,4 +33,5 @@ class BaseProductFormset(BaseInlineFormSet):
                 products.append(product)
 
 class StatusForm(forms.Form):
-    status = forms.ChoiceField(choices=STATUS_CHOICES)
+    status = forms.MultipleChoiceField(widget=CheckboxSelectMultiple,choices=STATUS_CHOICES)
+
