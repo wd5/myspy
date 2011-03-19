@@ -41,7 +41,8 @@ class CartItem(models.Model):
 
 STATUS_CHOICES = (
     ('PROCESS', 'Обработать'),
-    ('POSRSEND', 'Отправить почтой'),
+    ('POSTSEND', 'Отправить почтой'),
+    ('POSTSENDED', 'Отправлено почтой'),
     ('COURIER_SEND', 'Отправить курьером'),
     ('COURIER_TAKE', 'Передано курьеру'),
     ('BUYER_TAKE', 'Передано покупателю'),
