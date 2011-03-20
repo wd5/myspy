@@ -22,10 +22,10 @@
             Статус
         </td>
         <td>
-            Время назначения
+            ФИО
         </td>
 		<td>
-			ФИО
+			Время назначения
 		</td>
         <td>
             Телефон
@@ -52,10 +52,10 @@
             {{ client.get_status_display }}
         </td>
         <td>
-            {{ client.execute_at }}
+		{{ client.surname }} {{ client.name }} {{ client.patronymic }}
         </td>
 		<td>
-			{{ client.surname }} {{ client.name }} {{ client.patronymic }}
+                {{ client.execute_at }}
 		</td>
         <td>
             {{ client.phone }}
