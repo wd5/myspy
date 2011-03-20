@@ -6,12 +6,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
 from forms import ClientForm, StatusForm, BaseProductFormset
-from django.forms.models import modelformset_factory, inlineformset_factory
-from catalog.models import Product
+from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
-
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 def auth(request):
     if request.method == 'POST':
@@ -38,6 +37,15 @@ def sales(request):
             clients.sort(key=lambda x: x.id, reverse=True)
     else:
         clients = Client.objects.all()
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+        paginator = Paginator(clients, 100)
+        try:
+            clients = paginator.page(page)
+        except (EmptyPage, InvalidPage) :
+            clients = paginator.page(paginator.num_pages)
     return render_to_response("myadmin/sales.html", locals(), context_instance=RequestContext(request))
 
 def store(request):

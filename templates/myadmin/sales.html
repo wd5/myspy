@@ -43,7 +43,7 @@
             Tracking number
         </td>
 	<tr>
-	{% for client in clients %}
+	{% for client in clients.object_list %}
 	<tr>
 		<td style="background:#cccccc;" rowspan="2">
 			{{ client.id }}
@@ -90,3 +90,18 @@
 </table>
 <form action="" method="post">{% csrf_token %}
 <table>
+<div class="pagination">
+    <span class="step-links">
+        {% if clients.has_previous %}
+            <a href="?page={{ clients.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ clients.number }} of {{ clients.paginator.num_pages }}.
+        </span>
+
+        {% if clients.has_next %}
+            <a href="?page={{ clients.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
