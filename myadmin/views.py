@@ -54,10 +54,10 @@ def edit_client(request, id):
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     if request.method == 'POST':
         form = ClientForm(request.POST, instance=client, prefix='client')
-        calc.subtotal(cartid)
         form.save()
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
+            calc.subtotal(cartid)
             formset.save()
         else:
             pass
