@@ -12,7 +12,9 @@ def subtotal(cartid):
             discount_quantity += item.quantity
             cart_discount_total += item.product.price * item.quantity
         cart_total += item.product.price * item.quantity
-    if discount_quantity or len(products) >= 2:
+    if discount_quantity >=2:
+        discount = (cart_discount_total * 10)/100
+    elif len(products) >= 2:
         discount = (cart_discount_total * 10)/100
     cart_total -= discount
     ci = Client.objects.get(cart=cartid)

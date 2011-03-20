@@ -54,11 +54,11 @@ def edit_client(request, id):
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     if request.method == 'POST':
         form = ClientForm(request.POST, instance=client, prefix='client')
+        calc.subtotal(cartid)
         form.save()
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
             formset.save()
-            calc.subtotal(cartid)
         else:
             pass
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
@@ -86,8 +86,8 @@ def add_client(request):
         newform.save()
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
-            formset.save()
             calc.subtotal(cart.id)
+            formset.save()
         else:
             pass
         # После создания клиента тут же перекидываю на редактирование клиента
