@@ -37,15 +37,15 @@ def sales(request):
             clients.sort(key=lambda x: x.id, reverse=True)
     else:
         clients = Client.objects.all()
-        try:
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
-            page = 1
-        paginator = Paginator(clients, 100)
-        try:
-            clients = paginator.page(page)
-        except (EmptyPage, InvalidPage) :
-            clients = paginator.page(paginator.num_pages)
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    paginator = Paginator(clients, 100)
+    try:
+        clients = paginator.page(page)
+    except (EmptyPage, InvalidPage) :
+        clients = paginator.page(paginator.num_pages)
     return render_to_response("myadmin/sales.html", locals(), context_instance=RequestContext(request))
 
 def store(request):
