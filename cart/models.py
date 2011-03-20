@@ -61,7 +61,7 @@ class Client(models.Model):
     city = models.CharField(max_length=50, null=True, blank=True, verbose_name="Город")
     postcode = models.IntegerField(null=True, blank=True, verbose_name="Индекс")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
-    address = models.CharField(max_length=50, null=True, blank=True, verbose_name="Адрес")
+    address = models.CharField(max_length=200, null=True, blank=True, verbose_name="Адрес")
     email = models.EmailField(null=True, blank=True)
     cart = models.ForeignKey(CartItem)
     ordered_at = models.DateTimeField(auto_now_add=True )
