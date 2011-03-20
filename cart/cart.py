@@ -134,10 +134,6 @@ class Subtotal:
 def save_client(request, form):
     cart = CartItem.objects.get(cart_id=_cart_id(request))
     subtotal_class = Subtotal(request)
-    cart_products = CartProduct.objects.filter(cartitem=cart.id)
-    products = []
-    for product in cart_products:
-        products += Product.objects.filter(id=product.product.id)
 
     ci = Client()
     ci.cart = cart
@@ -154,8 +150,6 @@ def save_client(request, form):
     ci.discount = subtotal_class.discount
     ci.referrer = request.COOKIES.get('REFERRER', None)
     ci.save()
-    for i in products:
-        ci.product.add(i)
 
 def send_admin_email(request, cart_items, form, cart_subtotal, discount):
     products_for_email = ""

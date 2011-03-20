@@ -72,7 +72,6 @@ class Client(models.Model):
     referrer = models.URLField(verify_exists=False)
     comment = models.TextField(null=True, blank=True)
     execute_at = models.DateTimeField(default=datetime.now,editable=True,null=True, blank=True)
-    product = models.ManyToManyField(Product)
 
     def get_order(self):
         cart_items = CartProduct.objects.filter(cartitem = self.cart.id)
