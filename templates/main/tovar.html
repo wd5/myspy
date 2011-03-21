@@ -54,12 +54,17 @@
 									<h3 class="sub">{{ product.name }}</h3><h1 class="ftitle"></h1></div>
 									<div class="ftext">
 										<p>{{ product.mini_html_description|safe }}</p>
+                                        {% if not product.in_stock %}
+                                        <p><strong><em><span style="color: #ff0000">К сожалению данная модель закончилась, но вы можете сделать предзаказ по телефону.</span></em></strong></p>
+                                        {% endif %}
 											<div class="wpsc_product_price alignleft"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></p></div>
-										
+
+                                            {% if product.in_stock %}
 										    <form method="post" action="" class="cart alignright"> {% csrf_token %}
       											<input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" />
       											<input type='image' src='{{ MEDIA_URL}}res/img/atc.gif' id='product_26_submit_button' class='wpsc_buy_button' name='submit'  value="Купить" />
   										    </form>
+                                            {% endif %}
  
   										    <br/><br/>
 										</div>
