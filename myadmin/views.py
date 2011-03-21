@@ -46,7 +46,7 @@ def sales(request):
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         clients = paginator.page(paginator.num_pages)
-    return render_to_response("myadmin/sales/sales.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/sales.html", locals(), context_instance=RequestContext(request))
 
 def store(request):
     return render_to_response("myadmin/store/store.html", locals(), context_instance=RequestContext(request))
@@ -73,7 +73,7 @@ def edit_client(request, id):
     formset = CartProductFormset(instance=cart)
     client = Client.objects.get(id=id)
     form = ClientForm(instance=client, prefix='client')
-    return render_to_response("myadmin/sales/edit_client.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/edit_client.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def add_client(request):
@@ -100,5 +100,5 @@ def add_client(request):
             pass
         # После создания клиента тут же перекидываю на редактирование клиента
         return HttpResponseRedirect(reverse('myadmin.views.edit_client', args=(client.id,)))
-    return render_to_response("myadmin/sales/add_client.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/add_client.html", locals(), context_instance=RequestContext(request))
 
