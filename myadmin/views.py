@@ -69,6 +69,31 @@ def edit_client(request, id):
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
             calc.subtotal(cartid)
+            products = CartProduct.objects.filter(cartitem=cart)
+            for formitem in formset.cleaned_data:
+                if formitem:
+                    product_name = formitem['product']
+                    quantity = formitem['quantity']
+                    if formitem['DELETE']:
+                        store_product = Product.objects.get(name=product_name)
+                        store_product.quantity = store_product.quantity + quantity
+                        store_product.save()
+                    else:
+                        if not products:
+                            store_product = Product.objects.get(name=product_name)
+                            store_product.quantity = store_product.quantity - quantity
+                            store_product.save()
+                        for product in products:
+                            if product.product == product_name:
+                                if product.quantity == quantity:
+                                    pass
+                                else:
+                                    store_quantity = quantity - product.quantity
+                                    store_product = Product.objects.get(name=product_name)
+                                    store_product.quantity = store_product.quantity - store_quantity
+                                    store_product.save()
+                            else:
+                                pass
             formset.save()
         else:
             pass
@@ -97,6 +122,14 @@ def add_client(request):
         newform.save()
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
+            for formitem in formset.cleaned_data:
+                if formitem:
+                    product_name = formitem['product']
+                    quantity = formitem['quantity']
+                    product = Product.objects.get(name=product_name)
+                    true_quantity = product.quantity - quantity
+                    product.quantity = true_quantity
+                    product.save()
             calc.subtotal(cart.id)
             formset.save()
         else:

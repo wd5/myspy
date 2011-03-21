@@ -150,6 +150,11 @@ def save_client(request, form):
     ci.discount = subtotal_class.discount
     ci.referrer = request.COOKIES.get('REFERRER', None)
     ci.save()
+    products = CartProduct.objects.filter(cartitem=cart)
+    for product in products:
+        store_product = Product.objects.get(name=product.product)
+        store_product.quantity -= product.quantity
+        store_product.save()
 
 def send_admin_email(request, cart_items, form, cart_subtotal, discount):
     products_for_email = ""
