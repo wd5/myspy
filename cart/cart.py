@@ -150,6 +150,7 @@ def save_client(request, form):
     ci.discount = subtotal_class.discount
     ci.referrer = request.COOKIES.get('REFERRER', None)
     ci.save()
+    # Обновляю количество на складе
     products = CartProduct.objects.filter(cartitem=cart)
     for product in products:
         store_product = Product.objects.get(name=product.product)

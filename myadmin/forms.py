@@ -1,6 +1,6 @@
           # -*- coding: utf-8 -*-
 from django.forms.widgets import CheckboxSelectMultiple, CheckboxInput, RadioSelect
-from cart.models import Client, CartProduct, STATUS_CHOICES
+from cart.models import Client, STATUS_CHOICES
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError

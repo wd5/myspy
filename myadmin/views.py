@@ -28,6 +28,7 @@ def auth(request):
 @login_required
 def sales(request):
     form = StatusForm()
+    # Применяю фильтр по статусам
     if request.method == 'POST':
         form = StatusForm(request.POST)
         if form.is_valid():
@@ -38,10 +39,12 @@ def sales(request):
             clients.sort(key=lambda x: x.id, reverse=True)
     else:
         clients = Client.objects.all()
+    # Пейджинация
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
+    # 100 клиентов на одну страницу
     paginator = Paginator(clients, 100)
     try:
         clients = paginator.page(page)
@@ -52,6 +55,9 @@ def sales(request):
 @login_required
 def store(request):
     products = Product.objects.all()
+    money_in_retail = 0
+    for product in products:
+        money_in_retail += product.quantity * product.price
     return render_to_response("myadmin/store/store.html", locals(), context_instance=RequestContext(request))
 
 def cash(request):
@@ -59,34 +65,45 @@ def cash(request):
 
 @login_required
 def edit_client(request, id):
+    # Получаю нужные данные для работы с формами
     client = Client.objects.get(id=id)
     cartid = client.cart.id
     cart = CartItem.objects.get(id=cartid)
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     if request.method == 'POST':
+        # Сохраняю форму используя объект клиента
         form = ClientForm(request.POST, instance=client, prefix='client')
         form.save()
+        # Сохраняю форму используя объект корзины клиента
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
+            # Высчитываю сумму и скидку
             calc.subtotal(cartid)
+            # Получаю список покупок клиента
             products = CartProduct.objects.filter(cartitem=cart)
+            # Обновляю количество товара на складе
             for formitem in formset.cleaned_data:
                 if formitem:
                     product_name = formitem['product']
                     quantity = formitem['quantity']
+                    # Обновление в случае удаления товара
                     if formitem['DELETE']:
                         store_product = Product.objects.get(name=product_name)
                         store_product.quantity = store_product.quantity + quantity
                         store_product.save()
                     else:
+                        # Обновляю если у клиента еще нет товара
                         if not products:
                             store_product = Product.objects.get(name=product_name)
                             store_product.quantity = store_product.quantity - quantity
                             store_product.save()
                         for product in products:
+                            # Если такой товар у клиента уже есть
                             if product.product == product_name:
+                                # Если количество совпадает то ничего не делаю
                                 if product.quantity == quantity:
                                     pass
+                                # Если количество изменилось - пишу изменения количества в складе
                                 else:
                                     store_quantity = quantity - product.quantity
                                     store_product = Product.objects.get(name=product_name)
@@ -97,6 +114,7 @@ def edit_client(request, id):
             formset.save()
         else:
             pass
+    # Создаю формы
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     formset = CartProductFormset(instance=cart)
     client = Client.objects.get(id=id)
@@ -105,6 +123,7 @@ def edit_client(request, id):
 
 @login_required
 def add_client(request):
+    # Создаю формы
     form = ClientForm()
     CartProductFormset = inlineformset_factory(CartItem, CartProduct)
     formset = CartProductFormset()
@@ -118,10 +137,13 @@ def add_client(request):
         # Сохраняю форму используя объект созданного клиента
         form = ClientForm(request.POST, instance=client)
         newform = form.save(commit=False)
+        # Записываю корзину клиента
         newform.cart_id = cart.id
         newform.save()
+        # Сохраняю форму используя объект корзины клиента
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
+            # Обновляю количество товара на складе
             for formitem in formset.cleaned_data:
                 if formitem:
                     product_name = formitem['product']
@@ -130,6 +152,7 @@ def add_client(request):
                     true_quantity = product.quantity - quantity
                     product.quantity = true_quantity
                     product.save()
+            # Высчитываю сумму и скидку
             calc.subtotal(cart.id)
             formset.save()
         else:
