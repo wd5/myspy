@@ -27,6 +27,12 @@ def auth(request):
 
 @login_required
 def sales(request):
+    clients_wayt_money = Client.objects.exclude(status='CASH_IN').exclude(status='REFUSED').exclude(status='BACK')
+    money = 0
+    for client in clients_wayt_money:
+        products = CartProduct.objects.filter(cartitem=client.cart_id)
+        for product in products:
+            money += product.product.price * product.quantity
     form = StatusForm()
     # Применяю фильтр по статусам
     if request.method == 'POST':
