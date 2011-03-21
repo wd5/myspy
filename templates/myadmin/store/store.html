@@ -13,48 +13,20 @@
 			Цена закупки
 		</td>
 	<tr>
-	{% for client in clients.object_list %}
+	{% for product in products %}
 	<tr>
 		<td style="background:#cccccc;" rowspan="2">
-			{{ client.id }}
+			{{ product.name }}
 		</td>
         <td rowspan="2">
-            {{ client.get_status_display }}
-        </td>
-        <td>
-		{{ client.surname }} {{ client.name }} {{ client.patronymic }}
+            {{ product.quantity }}
         </td>
 		<td>
-                {{ client.execute_at }}
+            {{ product.price }}
 		</td>
         <td>
-            {{ client.phone }}
+            {{ product.wholesale_price }}
         </td>
-		<td>
-			{{ client.get_order }}
-		</td>
-        <td>
-            {{ client.subtotal }} руб.
-        </td>
-        <td>
-            {{ client.discount }} руб.
-        </td>
-        <td>
-            {{ client.tracking_number }}
-        </td>
-        <td style="background:#cccccc;" rowspan="2">
-			<a href="/myadmin/client/{{ client.id }}/" target="_blank">Редактировать</a>
-		</td>
-	</tr>
-	<tr>
-
-		<td colspan="7">
-			{{ client.city }} {{ client.address }}
-            {% if client.comment %}<br>
-                --------------<br>
-                {{ client.comment }}
-            {% endif %}
-		</td>
 	</tr>
 	{% endfor %}
 </table>

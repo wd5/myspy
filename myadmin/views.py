@@ -11,6 +11,7 @@ import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from catalog.models import Product
 
 def auth(request):
     if request.method == 'POST':
@@ -48,7 +49,9 @@ def sales(request):
         clients = paginator.page(paginator.num_pages)
     return render_to_response("myadmin/sales.html", locals(), context_instance=RequestContext(request))
 
+@login_required
 def store(request):
+    products = Product.objects.all()
     return render_to_response("myadmin/store/store.html", locals(), context_instance=RequestContext(request))
 
 def cash(request):
