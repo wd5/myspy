@@ -56,8 +56,10 @@ def sales(request):
 def store(request):
     products = Product.objects.all()
     money_in_retail = 0
+    money_in_wholesale = 0
     for product in products:
         money_in_retail += product.quantity * product.price
+        money_in_wholesale += product.quantity * product.wholesale_price
     return render_to_response("myadmin/store/store.html", locals(), context_instance=RequestContext(request))
 
 def cash(request):
