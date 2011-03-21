@@ -47,7 +47,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True, verbose_name='Ссылка')
     price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена')
     wholesale_price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена закупки')
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(default=1, verbose_name='Количество')
     mini_html_description = models.TextField(validators=[validate_even], help_text='Максимальное количество символов: 140.',
                                         verbose_name='Мини описание в HTML')
     html_description = models.TextField(blank=True, verbose_name='Описание', help_text='Описание в HTML')

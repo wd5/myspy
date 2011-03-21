@@ -13,7 +13,7 @@ admin.site.register(ProductPhoto)
 
 class ProductsAdmin(admin.ModelAdmin):
     inlines = [PhotoInline, FeaturesInline]
-    list_display = ('name', 'price', 'created_at', 'updated_at',)
+    list_display = ('name', 'price', 'quantity', 'created_at', 'updated_at',)
     list_display_links = ('name',)
     list_per_page = 50
     ordering = ['-created_at']
