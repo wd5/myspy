@@ -160,9 +160,9 @@ def add_client(request):
                     true_quantity = product.quantity - quantity
                     product.quantity = true_quantity
                     product.save()
+            formset.save()
             # Высчитываю сумму и скидку
             calc.subtotal(cart.id)
-            formset.save()
         else:
             pass
         # После создания клиента тут же перекидываю на редактирование клиента
