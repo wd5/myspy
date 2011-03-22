@@ -83,7 +83,7 @@
 	<tr>
 
 		<td colspan="7">
-			{{ client.city }} {{ client.address }}
+			{% if client.city %}{{ client.city }};{% endif %} {% if client.address %} {{ client.address }}; {% endif %} {% if client.postcode %}Индекс: {{ client.postcode }}{% endif %}
             {% if client.comment %}<br>
                 --------------<br>
                 {{ client.comment }}
