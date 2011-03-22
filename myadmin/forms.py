@@ -5,6 +5,7 @@ from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django import forms
+from models import Cash
 
 class ClientForm(ModelForm):
     class Meta:
@@ -34,4 +35,9 @@ class BaseProductFormset(BaseInlineFormSet):
 
 class StatusForm(forms.Form):
     status = forms.MultipleChoiceField(widget=CheckboxSelectMultiple,choices=STATUS_CHOICES)
+
+class CashForm(ModelForm):
+    class Meta:
+        model = Cash
+        exclude = ('balance')
 

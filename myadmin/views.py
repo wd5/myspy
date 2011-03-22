@@ -5,13 +5,14 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, StatusForm, BaseProductFormset
+from forms import ClientForm, StatusForm, BaseProductFormset, CashForm
 from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
+from models import Cash
 
 def auth(request):
     if request.method == 'POST':
@@ -68,8 +69,18 @@ def store(request):
         money_in_wholesale += product.quantity * product.wholesale_price
     return render_to_response("myadmin/store/store.html", locals(), context_instance=RequestContext(request))
 
+@login_required
 def cash(request):
-    pass
+    form = CashForm()
+    if request.method == 'POST':
+        last_balance = Cash.objects.all().latest('id')
+        form = CashForm(request.POST)
+        newform = form.save(commit=False)
+        newform.balance = last_balance.balance + newform.cashflow
+        newform.save()
+        if form.is_valid():
+            form.save()
+    return render_to_response("myadmin/cash.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def edit_client(request, id):
