@@ -139,11 +139,23 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+<script type="text/javascript">
 		$j('.product_image').click(function()
 			{
 				$j('.fmedia>center>img').attr('src',$j(this).attr('src'));		
 				return false;
 		});
 	</script>
+<!-- Put this script tag to the <head> of your page -->
+<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?22"></script>
+
+<script type="text/javascript">
+  VK.init({apiId: 2242566, onlyWidgets: true});
+</script>
+
+<!-- Put this div tag to the place, where the Comments block will be -->
+<div id="vk_comments"></div>
+<script type="text/javascript">
+VK.Widgets.Comments("vk_comments", {limit: 10, width: "600", attach: false});
+</script>
 {% endblock %}
