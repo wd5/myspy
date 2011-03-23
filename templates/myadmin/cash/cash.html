@@ -12,6 +12,9 @@
 		<td>
 			Статья потока
 		</td>
+        <td>
+            Комментарий
+        </td>
 	<tr>
 	{% for item in cash %}
 	<tr>
@@ -27,6 +30,9 @@
 		</td>
         <td>
             {{ item.cause }}
+        </td>
+        <td>
+            {{ item.comment }}
         </td>
 	</tr>
 	{% endfor %}
