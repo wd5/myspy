@@ -29,10 +29,10 @@
             {{ item.balance }}
 		</td>
         <td>
-            {{ item.cause }}
+            {{ item.get_cause_display }}
         </td>
         <td>
-            {{ item.comment }}
+            {% if item.cause == 'FROM_CLIENT' %} <a href="/myadmin/client/{{ item.comment }}">Клиент {{ item.comment }}</a> {% else %} {{ item.comment }} {% endif %}
         </td>
 	</tr>
 	{% endfor %}

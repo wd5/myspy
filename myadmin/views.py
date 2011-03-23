@@ -95,9 +95,12 @@ def edit_client(request, id):
     cart = CartItem.objects.get(id=cartid)
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     if request.method == 'POST':
+        # Получаю предыдущий статус клиента
+        client_status = client.status
         # Сохраняю форму используя объект клиента
         form = ClientForm(request.POST, instance=client, prefix='client')
         form.save()
+
         # Сохраняю форму используя объект корзины клиента
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
@@ -138,6 +141,21 @@ def edit_client(request, id):
             formset.save()
         else:
             pass
+        if form.cleaned_data['status'] == 'CASH_IN':
+            if client_status == form.cleaned_data['status']:
+                pass
+            else:
+                newcashflow = Cash()
+                newcashflow.cashflow = client.subtotal
+                last_balance = Cash.objects.all().latest('id')
+                newcashflow.balance = last_balance.balance + client.subtotal
+                newcashflow.cause = 'FROM_CLIENT'
+                newcashflow.comment = client.id
+                newcashflow.save()
+        else:
+            if client_status == 'CASH_IN':
+                cash = Cash.objects.get(comment=client.id)
+                cash.delete()
     # Создаю формы
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     formset = CartProductFormset(instance=cart)
