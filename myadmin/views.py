@@ -71,6 +71,11 @@ def store(request):
 
 @login_required
 def cash(request):
+    cash = Cash.objects.all()
+    return render_to_response("myadmin/cash/cash.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def add_cashflow(request):
     form = CashForm()
     if request.method == 'POST':
         last_balance = Cash.objects.all().latest('id')
@@ -80,7 +85,7 @@ def cash(request):
         newform.save()
         if form.is_valid():
             form.save()
-    return render_to_response("myadmin/cash.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/cash/add_cashflow.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def edit_client(request, id):

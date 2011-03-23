@@ -1,0 +1,33 @@
+<table border="1px" cellpadding="5px" cellspacing="1px">
+	<tr style="background:#cccccc;">
+		<td>
+			Дата
+		</td>
+        <td>
+            Денежный поток
+        </td>
+        <td>
+            Остаток
+        </td>
+		<td>
+			Статья потока
+		</td>
+	<tr>
+	{% for item in cash %}
+	<tr>
+		<td style="background:#cccccc;">
+			{{ item.date }}
+		</td>
+        <td >
+            {{ item.cashflow }}
+
+        </td>
+		<td>
+            {{ item.balance }}
+		</td>
+        <td>
+            {{ item.cause }}
+        </td>
+	</tr>
+	{% endfor %}
+</table>
