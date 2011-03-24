@@ -17,3 +17,6 @@ class Cash(models.Model):
     cause = models.CharField(max_length=200 ,choices=CAUSE_CHOICES)
     comment = models.CharField(max_length=200, null=True, blank=True)
 
+    class Meta:
+        ordering = ['-date']
+
