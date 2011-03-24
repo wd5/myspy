@@ -7,6 +7,7 @@ class Section(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
+    SEO_text = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Секции товара'
@@ -25,6 +26,7 @@ class Category(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    SEO_text = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return self.name
