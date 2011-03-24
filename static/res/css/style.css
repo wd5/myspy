@@ -3587,3 +3587,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 .fb_iframe_widget{
 	float: right;
 }
+#seocolum{
+	padding: 18px 30px;
+}
