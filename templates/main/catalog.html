@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
+    --------------
+    {% if request.path == '/cats/' %}
+        Каталог товара
+    {% else %}
+        <a href="/cats">Каталог товара</a> {% if section %}->{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}-><a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %}->{{ category.name }} {% endif %}
+    {% endif %}
+    --------------
     <div id="page" class="fix">
   <div id="wrapper" class="fix" >
 	
