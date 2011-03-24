@@ -3488,7 +3488,9 @@ sub {font-size:.7em;vertical-align: bottom;}
 	position: relative;
 	left: 0;
 	bottom: 0px;
-	padding-top: 20px;
+	padding-top: 10px;
+	padding-left:10px;
+	padding-bottom: 4px;
 }
 
 .basket {

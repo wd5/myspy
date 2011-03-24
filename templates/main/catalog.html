@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
-    --------------
-    {% if request.path == '/cats/' %}
-        Каталог товара
-    {% else %}
-        <a href="/cats">Каталог товара</a> {% if section %}->{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}-><a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %}->{{ category.name }} {% endif %}
-    {% endif %}
-    --------------
     <div id="page" class="fix">
   <div id="wrapper" class="fix" >
 	
@@ -37,13 +30,12 @@
 
 		
 			<div class="subnav2">
-		<!--		<dl>
-					<dt><a href="#" title="Жучки">Жучки</a></dt>
-					<dt><a href="#" title="Миникамеры">Миникамеры</a></dt>
-					<dt><a href="#" title="GPS мониторинг">GPS мониторинг</a></dt>
-					<dt><a href="#" title="Все товары">Все товары</a></dt>
-					<dt><a href="#" title="Защита от прослушки">Защита от прослушки</a></dt>
-				</dl> --><div class="clear"></div>
+    {% if request.path == '/cats/' %}
+        Каталог товара
+    {% else %}
+        <a href="/cats">Каталог товара</a> {% if section %}->&nbsp;{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}->&nbsp;<a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %}->&nbsp;{{ category.name }} {% endif %}
+    {% endif %}				
+				 <div class="clear"></div>
 			</div>
 		
 
