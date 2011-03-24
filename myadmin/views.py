@@ -143,14 +143,23 @@ def edit_client(request, id):
             pass
         if form.cleaned_data['status'] == 'CASH_IN':
             if client_status == form.cleaned_data['status']:
-                pass
+                    pass
             else:
                 newcashflow = Cash()
-                newcashflow.cashflow = client.subtotal
                 last_balance = Cash.objects.all().latest('id')
-                newcashflow.balance = last_balance.balance + client.subtotal
+                if form.cleaned_data['delivery'] == 'EMS':
+                    newcashflow.cashflow = client.subtotal - 300
+                    newcashflow.balance = last_balance.balance + client.subtotal - 300
+                    newcashflow.comment = client.id
+                elif form.cleaned_data['delivery'] == 'COURIER':
+                    newcashflow.cashflow = client.subtotal - 200
+                    newcashflow.balance = last_balance.balance + client.subtotal - 200
+                    newcashflow.comment = client.id
+                else:
+                    newcashflow.cashflow = client.subtotal
+                    newcashflow.balance = last_balance.balance + client.subtotal
+                    newcashflow.comment = client.id
                 newcashflow.cause = 'FROM_CLIENT'
-                newcashflow.comment = client.id
                 newcashflow.save()
         else:
             if client_status == 'CASH_IN':

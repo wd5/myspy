@@ -1,5 +1,5 @@
           # -*- coding: utf-8 -*-
-from django.forms.widgets import CheckboxSelectMultiple, CheckboxInput, RadioSelect
+from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
 from cart.models import Client, STATUS_CHOICES
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
@@ -11,6 +11,9 @@ class ClientForm(ModelForm):
     class Meta:
         model = Client
         exclude = ('cart', 'referrer')
+        widgets = {
+            'delivery' : RadioSelect(),
+        }
 
     def as_table(self):
         "Returns this form rendered as HTML <tr>s -- excluding the <table></table>."
