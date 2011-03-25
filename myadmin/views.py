@@ -104,8 +104,7 @@ def edit_client(request, id):
         # Сохраняю форму используя объект корзины клиента
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
-            # Высчитываю сумму и скидку
-            calc.subtotal(cartid)
+            print cartid
             # Получаю список покупок клиента
             products = CartProduct.objects.filter(cartitem=cart)
             # Обновляю количество товара на складе
@@ -139,6 +138,8 @@ def edit_client(request, id):
                             else:
                                 pass
             formset.save()
+            # Высчитываю сумму и скидку
+            calc.subtotal(cartid)
         else:
             pass
         if form.cleaned_data['status'] == 'CASH_IN':
