@@ -8,6 +8,8 @@ CAUSE_CHOICES = (
     ('SALARY_COURIER', 'Зарплата курьеру'),
     ('PURCHASE', 'Закупка товара'),
     ('BRIBE', 'Взятка'),
+    ('SENDGOODS', 'Отправка товара'),
+    ('PHONE', 'На телефон'),
 )
 
 class Cash(models.Model):
