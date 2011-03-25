@@ -76,7 +76,6 @@ def cash(request):
 
 @login_required
 def add_cashflow(request):
-    form = CashForm()
     if request.method == 'POST':
         last_balance = Cash.objects.all().latest('id')
         form = CashForm(request.POST)
@@ -85,6 +84,7 @@ def add_cashflow(request):
         newform.save()
         if form.is_valid():
             form.save()
+    form = CashForm()
     return render_to_response("myadmin/cash/add_cashflow.html", locals(), context_instance=RequestContext(request))
 
 @login_required
