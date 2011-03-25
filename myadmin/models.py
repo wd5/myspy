@@ -20,5 +20,5 @@ class Cash(models.Model):
     comment = models.CharField(max_length=200, null=True, blank=True)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['-id']
 
