@@ -44,7 +44,7 @@
     
     <div class="subnav2">
         {% if product.category.name == product.category.section.name %}
-        <a href="/cats">Каталог товара</a> » <a href="/cats/{{ product.category.slug }}">{{ product.category.name }}</a> » {{ product.name }}
+        <a href="/cats">Каталог товара</a> » <a href="/cats/{{ product.category.slug }}">{{ product.category.name }}</a>  » {{ product.name }}
             <div class="clear"></div>
         {% else %}
         <a href="/cats">Каталог товара</a> » <a href="/cats/{{ product.category.section.slug }}">{{ product.category.section.name }}</a> » <a href="/cats/{{ product.category.slug }}">{{ product.category.name }}</a> » {{ product.name }}
