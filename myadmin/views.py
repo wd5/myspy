@@ -104,7 +104,6 @@ def edit_client(request, id):
         # Сохраняю форму используя объект корзины клиента
         formset = CartProductFormset(request.POST, instance=cart)
         if formset.is_valid():
-            print cartid
             # Получаю список покупок клиента
             products = CartProduct.objects.filter(cartitem=cart)
             # Обновляю количество товара на складе
