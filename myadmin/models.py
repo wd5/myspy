@@ -10,6 +10,7 @@ CAUSE_CHOICES = (
     ('BRIBE', 'Взятка'),
     ('SENDGOODS', 'Отправка товара'),
     ('PHONE', 'На телефон'),
+    ('OTHER', 'Прочее'),
 )
 
 class Cash(models.Model):
