@@ -37,7 +37,7 @@
         <td>
             {% if item.cause == 'FROM_CLIENT' %} <a href="/myadmin/client/{{ item.comment }}">Клиент {{ item.comment }}</a> {% else %} {{ item.comment }} {% endif %}
         </td>
-        <td style="background:#cccccc;" rowspan="2">
+        <td style="background:#cccccc;">
 			<a href="/myadmin/cash/{{ item.id }}/" target="_blank">Редактировать</a>
 		</td>
 	</tr>
