@@ -1,5 +1,6 @@
           # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
+from django.core import urlresolvers
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
@@ -163,8 +164,14 @@ def edit_client(request, id):
                 newcashflow.save()
         else:
             if client_status == 'CASH_IN':
-                cash = Cash.objects.get(comment=client.id)
-                cash.delete()
+                cashflow = Cash.objects.get(comment=client.id)
+                cashflows_recalc = Cash.objects.filter(pk__gt=cashflow.id).reverse()
+                true_balance = cashflow.balance - cashflow.cashflow
+                cashflow.delete()
+                for cashflow_recalc in cashflows_recalc:
+                    cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                    true_balance = cashflow_recalc.balance
+                    cashflow_recalc.save()
     # Создаю формы
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     formset = CartProductFormset(instance=cart)
@@ -212,3 +219,31 @@ def add_client(request):
         return HttpResponseRedirect(reverse('myadmin.views.edit_client', args=(client.id,)))
     return render_to_response("myadmin/add_client.html", locals(), context_instance=RequestContext(request))
 
+@login_required
+def delete_client(request, id):
+    client = Client.objects.get(id=id)
+    cart_id = client.cart.id
+    client.delete()
+    cart = CartItem.objects.get(id=cart_id)
+    cart.delete()
+    return HttpResponseRedirect(urlresolvers.reverse(sales))
+
+@login_required
+def edit_cashflow(request, id):
+    cash = Cash.objects.get(id=id)
+    last_cashflow = cash.cashflow
+    form = CashForm(instance=cash)
+    if request.method == 'POST':
+        form = CashForm(request.POST, instance=cash)
+        newform = form.save(commit=False)
+        if not last_cashflow == newform.cashflow:
+            cashflow_diff = newform.cashflow - last_cashflow
+            newform.balance = newform.balance + cashflow_diff
+            cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
+            true_balance = cash.balance
+            for cashflow_recalc in cashflows_recalc:
+                cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                true_balance = cashflow_recalc.balance
+                cashflow_recalc.save()
+        newform.save()
+    return render_to_response("myadmin/cash/edit_cashflow.html", locals(), context_instance=RequestContext(request))
