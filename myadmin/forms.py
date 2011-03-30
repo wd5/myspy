@@ -6,6 +6,7 @@ from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django import forms
 from models import Cash, TYPE_CHOICES
+from cart.models import Client
 
 class ClientForm(ModelForm):
     class Meta:
@@ -35,6 +36,21 @@ class BaseProductFormset(BaseInlineFormSet):
                 if product in products:
                     raise ValidationError('test')
                 products.append(product)
+
+STATUS_CHOICES = (
+    ('PROCESS', 'Обработать(%s)' % Client.objects.filter(status='PROCESS').count()),
+    ('POSTSEND', 'Отправить почтой(%s)' % Client.objects.filter(status='POSTSEND').count()),
+    ('POSTSENDED', 'Отправлено почтой(%s)' % Client.objects.filter(status='POSTSENDED').count()),
+    ('COURIER_SEND', 'Отправить курьером(%s)' % Client.objects.filter(status='COURIER_SEND').count()),
+    ('COURIER_TAKE', 'Передано курьеру(%s)' % Client.objects.filter(status='COURIER_TAKE').count()),
+    ('BUYER_TAKE', 'Передано покупателю(%s)' % Client.objects.filter(status='BUYER_TAKE').count()),
+    ('WAYT_PRODUCT', 'Ожидание поступления товара(%s)' % Client.objects.filter(status='WAYT_PRODUCT').count()),
+    ('CHANGE', 'Обменять(%s)' % Client.objects.filter(status='CHANGE').count()),
+    ('BACK', 'Вернуть(%s)' % Client.objects.filter(status='BACK').count()),
+    ('CONTACT_AT', 'Связаться в назначенное время(%s)' % Client.objects.filter(status='CONTACT_AT').count()),
+    ('REFUSED', 'Снятие заявки клиентом(%s)' % Client.objects.filter(status='REFUSED').count()),
+    ('CASH_IN', 'Деньги внесены(%s)' % Client.objects.filter(status='CASH_IN').count()),
+)
 
 class StatusForm(forms.Form):
     status = forms.MultipleChoiceField(widget=CheckboxSelectMultiple,choices=STATUS_CHOICES)
