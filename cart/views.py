@@ -1,7 +1,7 @@
           # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from catalog.forms import OrderForm
+from forms import OrderForm
 from settings import SEND_SMS
 import cart
 
@@ -12,7 +12,7 @@ def show_cart(request, template_name="cart/cart.html"):
         cart_subtotal = subtotal_class.subtotal()
         discount = subtotal_class.discount
         postdata = request.POST.copy()
-        form = OrderForm(postdata)
+        form = OrderForm(request.POST)
 
         if 'Remove' in postdata:
             cart.remove_from_cart(request)

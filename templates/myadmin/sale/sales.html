@@ -100,7 +100,7 @@
 <div class="pagination">
     <span class="step-links">
         {% if clients.has_previous %}
-            <a href="?page={{ clients.previous_page_number }}">previous</a>
+            <a href="../?page={{ clients.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -108,7 +108,7 @@
         </span>
 
         {% if clients.has_next %}
-            <a href="?page={{ clients.next_page_number }}">next</a>
+            <a href="../?page={{ clients.next_page_number }}">next</a>
         {% endif %}
     </span>
 </div>

@@ -9,6 +9,8 @@ from models import Cash, TYPE_CHOICES
 from cart.models import Client
 
 class ClientForm(ModelForm):
+    name = forms.CharField(label='Имя*',error_messages={'required': 'Имя обязательно для заполнения'})
+    phone = forms.CharField(label='Телефон*', error_messages={'required': 'Телефон обязателен для заполнения'})
     class Meta:
         model = Client
         exclude = ('cart', 'referrer')
