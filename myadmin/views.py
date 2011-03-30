@@ -6,14 +6,14 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, StatusForm, BaseProductFormset, CashForm
+from forms import ClientForm, StatusForm, BaseProductFormset, CashForm, BalanceForm
 from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash
+from models import Cash, Balance
 
 def auth(request):
     if request.method == 'POST':
@@ -73,6 +73,7 @@ def store(request):
 @login_required
 def cash(request):
     cash = Cash.objects.all()
+    balance = Balance.objects.get(id=1)
     return render_to_response("myadmin/cash/cash.html", locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -82,9 +83,18 @@ def add_cashflow(request):
         form = CashForm(request.POST)
         newform = form.save(commit=False)
         newform.balance = last_balance.balance + newform.cashflow
+        balance = Balance.objects.get(id=1)
+        if newform.type == 'ENCASH':
+            balance.encash += newform.cashflow
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+        elif newform.type == 'WEBMONEY':
+            balance.webmoney += newform.cashflow
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+        elif newform.type == 'YANDEX':
+            balance.yandex += newform.cashflow
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+        balance.save()
         newform.save()
-        if form.is_valid():
-            form.save()
     form = CashForm()
     return render_to_response("myadmin/cash/add_cashflow.html", locals(), context_instance=RequestContext(request))
 
@@ -161,7 +171,12 @@ def edit_client(request, id):
                     newcashflow.balance = last_balance.balance + client.subtotal
                     newcashflow.comment = client.id
                 newcashflow.cause = 'FROM_CLIENT'
+                newcashflow.type = 'ENCASH'
                 newcashflow.save()
+                balance = Balance.objects.get(id=1)
+                balance.encash += newcashflow.cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+                balance.save()
         else:
             if client_status == 'CASH_IN':
                 cashflow = Cash.objects.get(comment=client.id)
@@ -172,6 +187,10 @@ def edit_client(request, id):
                     cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
                     true_balance = cashflow_recalc.balance
                     cashflow_recalc.save()
+                balance = Balance.objects.get(id=1)
+                balance.encash -= cashflow.cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+                balance.save()
     # Создаю формы
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
     formset = CartProductFormset(instance=cart)
@@ -232,6 +251,7 @@ def delete_client(request, id):
 def edit_cashflow(request, id):
     cash = Cash.objects.get(id=id)
     last_cashflow = cash.cashflow
+    last_type = cash.type
     form = CashForm(instance=cash)
     if request.method == 'POST':
         form = CashForm(request.POST, instance=cash)
@@ -245,5 +265,49 @@ def edit_cashflow(request, id):
                 cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
                 true_balance = cashflow_recalc.balance
                 cashflow_recalc.save()
+        if not last_type == newform.type:
+            balance = Balance.objects.get(id=1)
+            if last_type == 'ENCASH':
+                balance.encash -= last_cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+            elif last_type == 'YANDEX':
+                balance.yandex -= last_cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+            elif last_type == 'WEBMONEY':
+                balance.webmoney -= last_cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+            if newform.type == 'ENCASH':
+                balance.encash += newform.cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+            elif newform.type == 'YANDEX':
+                balance.yandex += newform.cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+            elif newform.type == 'WEBMONEY':
+                balance.webmoney += newform.cashflow
+                balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
         newform.save()
     return render_to_response("myadmin/cash/edit_cashflow.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def edit_balance(request):
+    if request.method == 'POST':
+        form = BalanceForm(request.POST)
+        if form.is_valid():
+            balance = Balance.objects.get(id=1)
+            if form.cleaned_data['from_type'] == 'ENCASH':
+                balance.encash -= form.cleaned_data['amount']
+            elif form.cleaned_data['from_type'] == 'YANDEX':
+                balance.yandex -= form.cleaned_data['amount']
+            elif form.cleaned_data['from_type'] == 'WEBMONEY':
+                balance.webmoney -= form.cleaned_data['amount']
+            if form.cleaned_data['to_type'] == 'ENCASH':
+                balance.encash += form.cleaned_data['amount']
+            elif form.cleaned_data['to_type'] == 'YANDEX':
+                balance.yandex += form.cleaned_data['amount']
+            elif form.cleaned_data['to_type'] == 'WEBMONEY':
+                balance.webmoney += form.cleaned_data['amount']
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
+    form = BalanceForm()
+    return render_to_response("myadmin/cash/edit_balance.html", locals(), context_instance=RequestContext(request))

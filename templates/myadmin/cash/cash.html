@@ -1,6 +1,11 @@
 <td style="background:#cccccc;" rowspan="2">
     <a href="/myadmin/cash/add" target="_blank">Добавить денежный поток</a>
-</td>
+</td><br>
+Всего: {{ balance.total }}<br>
+Наличка: {{ balance.encash }}<br>
+Яндекс деньги: {{ balance.yandex }}<br>
+Webmoney: {{ balance.webmoney }}<br>
+<a href="/myadmin/cash/editbalance" target="_blank">Редактировать капитал</a>
 <table border="1px" cellpadding="5px" cellspacing="1px">
 	<tr style="background:#cccccc;">
 		<td>
@@ -15,6 +20,9 @@
 		<td>
 			Статья потока
 		</td>
+        <td>
+            Вид
+        </td>
         <td>
             Комментарий
         </td>
@@ -33,6 +41,9 @@
 		</td>
         <td>
             {{ item.get_cause_display }}
+        </td>
+        <td>
+            {{ item.get_type_display }}
         </td>
         <td>
             {% if item.cause == 'FROM_CLIENT' %} <a href="/myadmin/client/{{ item.comment }}">Клиент {{ item.comment }}</a> {% else %} {{ item.comment }} {% endif %}

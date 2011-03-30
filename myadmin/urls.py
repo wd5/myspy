@@ -9,5 +9,6 @@ urlpatterns = patterns('',
                       url(r'^store$', 'myadmin.views.store', name="store-page"),
                       url(r'^cash$', 'myadmin.views.cash', name="cash-page"),
                       url(r'^cash/(?P<id>[-\w]+)/$', 'myadmin.views.edit_cashflow', name="edit-cashflow"),
-                      url(r'^cash/add$', 'myadmin.views.add_cashflow', name="cash-page"),)
+                      url(r'^cash/add$', 'myadmin.views.add_cashflow', name="cash-page"),
+                      url(r'^cash/editbalance$', 'myadmin.views.edit_balance', name="edit-balance"),)
 
