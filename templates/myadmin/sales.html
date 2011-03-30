@@ -77,7 +77,7 @@
             {{ client.discount }} руб.
         </td>
         <td>
-            {{ client.tracking_number }}
+            {% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}">{{ client.tracking_number }}</a>{% endif %}
         </td>
         <td style="background:#cccccc;" rowspan="2">
 			<a href="/myadmin/client/{{ client.id }}/" target="_blank">Редактировать</a>
