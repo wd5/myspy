@@ -57,7 +57,7 @@ def get_status():
     return STATUS_CHOICES
 
 class StatusForm(forms.Form):
-    status = forms.MultipleChoiceField(widget=CheckboxSelectMultiple,choices=get_status())
+    status = forms.MultipleChoiceField(widget=CheckboxSelectMultiple,choices=get_status)
 
 
 class CashForm(ModelForm):
