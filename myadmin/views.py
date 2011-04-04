@@ -267,26 +267,36 @@ def edit_cashflow(request, id):
                 cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
                 true_balance = cashflow_recalc.balance
                 cashflow_recalc.save()
-        if not last_type == newform.type:
             balance = Balance.objects.get(id=1)
             if last_type == 'ENCASH':
                 balance.encash -= last_cashflow
-                balance.total = balance.encash + balance.webmoney + balance.yandex
             elif last_type == 'YANDEX':
                 balance.yandex -= last_cashflow
-                balance.total = balance.encash + balance.webmoney + balance.yandex
             elif last_type == 'WEBMONEY':
                 balance.webmoney -= last_cashflow
-                balance.total = balance.encash + balance.webmoney + balance.yandex
             if newform.type == 'ENCASH':
                 balance.encash += newform.cashflow
-                balance.total = balance.encash + balance.webmoney + balance.yandex
             elif newform.type == 'YANDEX':
                 balance.yandex += newform.cashflow
-                balance.total = balance.encash + balance.webmoney + balance.yandex
             elif newform.type == 'WEBMONEY':
                 balance.webmoney += newform.cashflow
-                balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
+        elif not last_type == newform.type:
+            balance = Balance.objects.get(id=1)
+            if last_type == 'ENCASH':
+                balance.encash -= last_cashflow
+            elif last_type == 'YANDEX':
+                balance.yandex -= last_cashflow
+            elif last_type == 'WEBMONEY':
+                balance.webmoney -= last_cashflow
+            if newform.type == 'ENCASH':
+                balance.encash += newform.cashflow
+            elif newform.type == 'YANDEX':
+                balance.yandex += newform.cashflow
+            elif newform.type == 'WEBMONEY':
+                balance.webmoney += newform.cashflow
+            balance.total = balance.encash + balance.webmoney + balance.yandex
             balance.save()
         newform.save()
     return render_to_response("myadmin/cash/edit_cashflow.html", locals(), context_instance=RequestContext(request))

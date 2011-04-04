@@ -101,3 +101,6 @@ class Feature(models.Model):
     name = models.ForeignKey(FeatureName, verbose_name='Характеристика')
     value = models.CharField(max_length=100, verbose_name='Значение')
     item = models.ForeignKey(Product)
+
+class Test(models.Model):
+    name = models.CharField(max_length=50)
