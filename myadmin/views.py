@@ -169,8 +169,8 @@ def edit_client(request, id):
                     newcashflow = Cash()
                     last_balance = Cash.objects.all().latest('id')
                     if form.cleaned_data['delivery'] == 'EMS':
-                        newcashflow.cashflow = client.subtotal - 300
-                        newcashflow.balance = last_balance.balance + client.subtotal - 300
+                        newcashflow.cashflow = client.subtotal + 300
+                        newcashflow.balance = last_balance.balance + client.subtotal + 300
                         newcashflow.comment = client.id
                     elif form.cleaned_data['delivery'] == 'COURIER':
                         newcashflow.cashflow = client.subtotal - 200
