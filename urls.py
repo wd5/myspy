@@ -4,6 +4,7 @@ import settings
 
 from django.contrib import admin
 admin.autodiscover()
+handler500 = 'myspy.catalog.views.internal_error'
 
 urlpatterns = patterns('',
     (r'^', include('myspy.catalog.urls')),

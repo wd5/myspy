@@ -93,3 +93,6 @@ def blog(request):
 def delivery(request):
     page_title = "Доставка и оплата"
     return render_to_response('main/delivery.html', locals(), context_instance=RequestContext(request))
+
+def internal_error(request):
+    return render_to_response('500.html', locals(), context_instance=RequestContext(request))
