@@ -53,7 +53,6 @@ input{
 	border-color:#DEDEDE #bbb #bbb #DEDEDE;
 	border-style:solid;
 	border-width:1px;
-	background: #e5e5e5 url(../img/lightgra.png) repeat-x left top;
 	margin:0;
 	padding: 2px 3px 1px 5px;
 	color: #666;
@@ -63,7 +62,6 @@ input{
 	color: #000;
 }
 .button:active, input[type="submit"]:active, .submit:active {
-		background: #e5e5e5 url(../img/lightgra.png) repeat-x left top;
 }
 
 
@@ -699,7 +697,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 	/* MAIN NAVIGATION */
 		#nav {
 			font-size: 13px;	
-			background: transparent url(../img/nav-bg00.png) no-repeat 0px -1px;
 			margin-bottom: 16px;
 		}
 
