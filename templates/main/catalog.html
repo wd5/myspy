@@ -77,6 +77,9 @@
 
 											</p>
 										<p><a class="additional_description_span" href="{{product.get_absolute_url}}">Дополнительная информация</a></p>
+                                        {% for file in product.file_set.all %}
+                                        <p><a class="download_file" href="{{file.file.url}}">{{ file.name }}</a></p>
+                                        {% endfor %}
 
                                         {% if not product.in_stock %}
                                         <p><strong><em><span style="color: #ff0000">К сожалению данная модель закончилась, но вы можете сделать предзаказ по телефону.</span></em></strong></p>

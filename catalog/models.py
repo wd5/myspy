@@ -102,5 +102,7 @@ class Feature(models.Model):
     value = models.CharField(max_length=100, verbose_name='Значение')
     item = models.ForeignKey(Product)
 
-class Test(models.Model):
-    name = models.CharField(max_length=50)
+class File(models.Model):
+    product = models.ForeignKey(Product, verbose_name='Файл')
+    name = models.CharField(max_length=100, verbose_name='Название')
+    file = models.FileField(upload_to='res/files')
