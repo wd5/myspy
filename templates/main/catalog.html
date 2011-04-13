@@ -76,7 +76,7 @@
 																
 
 											</p>
-										<p><a class="additional_description_span" href="{{product.get_absolute_url}}">Дополнительная информация</a></p>
+										<a class="additional_description_span" href="{{product.get_absolute_url}}">Дополнительная информация</a>
                                         {% for file in product.file_set.all %}
                                         <p><a class="download_file" href="{{file.file.url}}">{{ file.name }}</a></p>
                                         {% endfor %}
