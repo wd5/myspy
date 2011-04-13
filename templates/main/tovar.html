@@ -66,7 +66,8 @@
                                         {% if not product.in_stock %}
                                         <p><strong><em><span style="color: #ff0000">К сожалению данная модель закончилась, но вы можете сделать предзаказ по телефону.</span></em></strong></p>
                                         {% endif %}
-											<div class="wpsc_product_price alignleft"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></p></div>
+											<div class="wpsc_product_price alignleft"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></p></div><br>
+
 
                                             {% if product.in_stock %}
 										    <form method="post" action="" class="cart alignright"> {% csrf_token %}
@@ -119,9 +120,13 @@
 													<table><tr>
 													<td>
 														<h2 class="prodtitles" style="font-size:18px;"><span>{{ product.name }}</span></h2>
+                                                        {% for file in product.file_set.all %}
+                                                        <p><a class="download_file" href="{{file.file.url}}" target="_blank">{{ file.name }}</a></p>
+                                                        {% endfor %}
 														<div class="wpsc_description">
 															<p> {{ product.html_description|safe }}</p>
 														</div>
+                                                    
 														<div class="single_additional_description">
 															<p>
 														<!--		Комплект поставки:<br /> 
