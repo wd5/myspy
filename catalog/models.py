@@ -2,6 +2,7 @@
 from django.db import models
 from catalog.fields import ThumbnailImageField
 from django.core.exceptions import ValidationError
+from tinymce import models as tinymce_models
 
 class Section(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -27,6 +28,8 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     SEO_text = models.TextField(null=True, blank=True)
+    image = ThumbnailImageField(upload_to='category_image', thumb_width=200, thumb_height=200, completion="thumb" )
+    description = tinymce_models.HTMLField()
 
     def __unicode__(self):
         return self.name

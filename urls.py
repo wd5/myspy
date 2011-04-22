@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     (r'^cart/', include('myspy.cart.urls')),
     (r'^myadmin/', include('myspy.myadmin.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^tinymce/', include('tinymce.urls')),
 )
 
 if settings.DEBUG:

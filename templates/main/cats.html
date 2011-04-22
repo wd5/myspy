@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load catalog_filters %}
 {% block site_wrapper %}
-  <div id="page" class="fix">
+    <div id="page" class="fix">
   <div id="wrapper" class="fix" >
-	
+
     <div id="header" class="fix">
 		<a href="/" style="float:left"><img class="headerimage" src="{{ MEDIA_URL}}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
 		<div class="basket" style="float:left">
@@ -12,81 +12,25 @@
 		<div class="icons">
 			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
 			<a href='mailto:info@my-spy.ru'>info@my-spy.ru</a>
-		</div>	
+		</div>
 	</div>
-	
+
 	<div id="nav" class="fix">
 		<ul class="fix homebutton">
 			<li class="page_item navfirst">
 				<a class="home" href="/" title="Home" style="background-image: url('{{ MEDIA_URL}}res/img/home-icon.png');">Home</a>
 			</li>
 		</ul>
-	
+
     {% category_list request.path %} <!-- Категории -->
-    </div>
+ 	</div>
 		<div class="clear"></div>
 	<div><div><!-- /nav -->
-
-
-		
-			<div class="subnav2">
-				<dl>
-					<dt><a href="#" title="Жучки">Жучки</a></dt>
-					<dt><a href="#" title="Миникамеры">Миникамеры</a></dt>
-					<dt><a href="#" title="GPS мониторинг">GPS мониторинг</a></dt>
-					<dt><a href="#" title="Все товары">Все товары</a></dt>
-					<dt><a href="#" title="Защита от прослушки">Защита от прослушки</a></dt>
-				</dl><div class="clear"></div>
-			</div>
-		
-		<div id="maincontent">
-			<div id="content">
-				<div class="postwrap fix">
-					<table>
-						<tr>
-
-
-
-						
-						{% for product in products %}
-							<td style="width:50%;">
-								<table class="item-table"><tr>
-									<td class="item-img" style="width:50%;">
-									    {% if product.productphoto_set.all %}
-           										 <img src="{{ product.productphoto_set.all.0.image.url }}" alt="{{ product.name }}" />
-   										 {% else %}
-     								   Фотография товара отсутствует
-    									{% endif %}									
-									</td>
-									<td class="item-desc">
-										<a class="item-head" href="#"><h2>{{ product.name }}</h2></a>
-										 {{ product.mini_html_description|safe }}
-										<p><a class="additional_description_span" href="{{product.get_absolute_url}}">Дополнительная информация</a></p>
-										<div class="wpsc_product_price"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></p></div>
-										<input type='image' src='{{ MEDIA_URL}}res/img/atc.gif' id='product_26_submit_button' class='wpsc_buy_button' name='Buy'  value="Добавить в корзину" />
-										    <form method="post" action="" class="cart"> {% csrf_token %}
-      											<input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" /> <br />
-      										    <input id="buy" type="submit" value="Купить" name="submit" alt="Купить" />
-  										    </form>
-									</td>
-								</tr></table>
-							</td>
-						{% endfor %}
-							
-							
-							
-							
-							
-
-						
-					</tr>	
-						
-				</table>
-				<div class="clear"/></div>
-			</div>
-		</div>
-	
-		
-  </div>
-</div>
+        Список всех категорий:<br>
+        {% for cat in cats %}
+            {{ cat.name }} {{ cat.get_absolute_url }}<br>
+            {{ cat.description|safe }}<br>
+            {{ cat.image.thumb_url }}<br>
+            ----------------<br><br>
+        {% endfor %}
 {% endblock %}

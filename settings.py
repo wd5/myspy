@@ -97,10 +97,21 @@ INSTALLED_APPS = (
     'myspy.catalog',
     'myspy.cart',
     'myspy.myadmin',
+    'tinymce',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'mode': 'textareas',
+    'plugins' : 'paste, autoresize, fullscreen, legacyoutput, preview, style',
+    'theme_advanced_buttons3_add' : 'pastetext,pasteword,selectall,fullscreen,preview,styleprops',
+    'fullscreen_new_window' : 'true',
+    'fullscreen_settings' : {
+                'theme_advanced_path_location' : 'top'
+        }
+}
 try:
     from local_settings import *
 except ImportError:
