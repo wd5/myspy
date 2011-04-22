@@ -3581,3 +3581,10 @@ sub {font-size:.7em;vertical-align: bottom;}
 #seocolum{
 	padding: 18px 30px;
 }
+.cats_discr h2{
+	color: #FF3800;
+}
+.cats_discr h2:hover{
+	text-decoration: underline;
+	background: #abfb0c;
+}	
