@@ -3587,4 +3587,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 .cats_discr h2:hover{
 	text-decoration: underline;
 	background: #abfb0c;
+}
+.cats_discr h1:hover{
+	text-decoration: underline;
 }	
