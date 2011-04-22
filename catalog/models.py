@@ -44,7 +44,7 @@ def validate_even(value):
             raise ValidationError(u'Количество символов: %s. Максимально разрешенное: 500'% len(value) )
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, verbose_name='Категория')
+    category = models.ManyToManyField(Category, verbose_name='Категория')
     name = models.CharField(max_length=255, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='Ссылка')
     price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена')
