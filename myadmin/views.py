@@ -1,11 +1,14 @@
           # -*- coding: utf-8 -*-
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+from calendar import *
+from dateutil.relativedelta import relativedelta
 from django.shortcuts import render_to_response
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.utils.datetime_safe import strftime
 from cart.models import Client, CartItem, CartProduct
 from forms import ClientForm, StatusForm, BaseProductFormset, CashForm, BalanceForm
 from django.forms.models import inlineformset_factory
@@ -33,10 +36,7 @@ def sales(request):
     form = StatusForm()
     money = Statistic.objects.get(id=1).wayt_money
     today = date.today()
-    latest_client = Client.objects.all().latest('id').ordered_at
-    first_client = Client.objects.order_by()[0].ordered_at
-    diff = latest_client - first_client
-    time_tags = [{'year': 'b', 'month' : 'a'}, latest_client]
+
     # Применяю фильтр по статусам
     if request.method == 'POST':
         form = StatusForm(request.POST)
@@ -92,6 +92,8 @@ def date_sales(request, when):
             clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month)
         elif when == 'year':
             clients = Client.objects.filter(ordered_at__year=today.year)
+        else:
+            clients = Client.objects.filter(ordered_at__year=when[-4:], ordered_at__month=when[:-4])
     # Пейджинация
     try:
         page = int(request.GET.get('page', '1'))

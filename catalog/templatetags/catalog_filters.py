@@ -1,7 +1,6 @@
 from django import template
 from catalog.models import Section
 from cart import cart
-from decimal import *
 
 register = template.Library()
 

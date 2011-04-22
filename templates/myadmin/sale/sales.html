@@ -1,5 +1,6 @@
 {% extends "myadmin/base.html" %}
 {% block site_wrapper %}
+{% load date_tags %}
 <form action="" method="post">{% csrf_token %}
 <table>
 {{ form.as_table }}
@@ -117,7 +118,5 @@
 <a href="/myadmin/sales/week/">За неделю</a>
 <a href="/myadmin/sales/month/">За месяц</a>
 <a href="/myadmin/sales/year/">За год</a><br>
-
-<a href="/myadmin/sales/year/">март 2011</a>
-<a href="/myadmin/sales/year/">апрель 2011</a>
+{% date_tags %}
 {% endblock %}
