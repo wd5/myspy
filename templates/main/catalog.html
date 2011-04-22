@@ -53,7 +53,7 @@
 								<table class="item-table"><tr>
 									<td class="item-img">
 									  <div style="min-height:200px;">  {% if product.thumbnail_image %}
-                                                 <img src="{{ product.thumbnail_image.thumb_url }}" title="{{ product.name }}" alt="{{ product.name }}" />
+                                                 <a class="item-head" href="{{product.get_absolute_url}}"><img src="{{ product.thumbnail_image.thumb_url }}" title="{{ product.name }}" alt="{{ product.name }}" /></a>
    										 {% else %}
      								   Фотография товара отсутствует
     									{% endif %}		</div>
