@@ -1,24 +1,35 @@
 		<ul id="menu-menu" class="mnav dropdown fix">
 			<li {% if request_path == '/' %} class="current-menu-item" {% endif %}><a href="/">Главная</a></li>
             <li {% if request_path == '/cats/' %} class="current-menu-item" {% endif %}><a href="/cats">Каталог товара</a>
-				<ul class="sub-menu">
-					{% for section in sections %}
-       				 <li> <a href="{{ section.get_absolute_url }}" title="">{{ section.name }}</a>
-                          {% if not section.category_set.all.0.name == section.name %}
-          				  <ul class="sub-menu">
-               				 {% for category in section.category_set.all %}
-                                {% if not category.name == section.name %}
-                    			<li>
-                      				  <a href="{{ category.get_absolute_url }}" title="">{{ category.name }}</a>
-                    			</li>
-                                {% endif %}
-              			  	{% endfor %}
-          				  </ul>
-                          {% endif %}
-      			 	 </li>
-					{% endfor %}
-                    <li> <a href="{% url catalog.views.all_goods %}" title="">Все товары</a>
-				</ul>
+            	<div id="header_sprite">
+            		<div  id="header_sprite_head"></div>
+            		<div  id="header_sprite_body">
+						<ul>
+							{% for section in sections %}
+							<div style="float:left;">
+		       				 <li style="float:left;"> <a href="{{ section.get_absolute_url }}" title="" style="font-size:15px; text-align:center;">{{ section.name }}</a>
+		                          {% if not section.category_set.all.0.name == section.name %}
+		                          
+			          				  <ul style="float:left; width:100%;">
+			               				 {% for category in section.category_set.all %}
+			                                {% if not category.name == section.name %}
+			                    			<li style="width:100%;">
+			                      				  <a href="{{ category.get_absolute_url }}" title="" style="text-align:center; color:#ccc;">{{ category.name }}</a>
+			                    			</li>
+			                                {% endif %}
+			              			  	{% endfor %}
+			          				  </ul>
+		          				  
+		                          {% endif %}
+		      			 	 </li>
+		      			 	 </div>
+							{% endfor %}
+							<div style="float:left;">
+		                    <li> <a href="{% url catalog.views.all_goods %}" title="" style="font-size:15px; text-align:center;">Все товары</a>
+		                    </div>
+						</ul>
+					</div>
+				</div>
 			</li>
 			<li {% if request_path == '/delivery' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
 			<li {% if request_path == '/about' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
@@ -31,18 +42,4 @@
 			<span class="right"></span>
 			<input type="submit" class="searchsubmit" value="Go" />
 		</form>
-			<script type="text/javascript">
-			hiConfig = {
-       	 	sensitivity: 1, // number = sensitivity threshold (must be 1 or higher)
-        	interval:100, // number = milliseconds for onMouseOver polling interval
-        	timeout: 100, // number = milliseconds delay before onMouseOut
-        	over: function() {		
-				$j(this).children('ul').show();
-				//alert('asd');
-        		}, // function = onMouseOver callback (REQUIRED)
-        	out: function() {
-        		$j(this).children('ul').hide();
-        	} // function = onMouseOut callback (REQUIRED)
-   			}
-    		$j('#nav ul.dropdown li ul li').hoverIntent(hiConfig);
-	</script>
+			

@@ -6,10 +6,10 @@ $j(document).ready(function () {
 	
 	$j("ul.dropdown > li").hover(function(){
         $j(this).addClass("menuhover");
-        $j('ul:first',this).fadeIn("fast");
+        $j(this).find('#header_sprite').fadeIn(0);
     }, function(){	
         $j(this).removeClass("menuhover");
-        $j('ul:first',this).fadeOut("fast");
+        $j(this).find('#header_sprite').fadeOut(0);
 
     });
 

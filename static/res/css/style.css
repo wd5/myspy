@@ -775,7 +775,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 		/* Drop Down*/
 		#nav li{position:relative;}
 
-		#nav ul ul {display: none;} 
+		#nav ul ul {} 
 
 
 	/* SUB NAVIGATION (ONLY ON PAGES) */
@@ -3138,47 +3138,50 @@ sub {font-size:.7em;vertical-align: bottom;}
 
 
 		#nav ul.dropdown li.menuhover ul a:hover, #nav ul.dropdown li.current_page_item ul a:hover{
-			background: #000;
 			margin:0;
 			text-shadow: none;
 			padding: 10px 13px;
 		}
 
 		/* STYLING FIRST DROP DOWN */
-
-			#nav ul.dropdown ul{
-				width: 220px;
-				display:none;
-				position: absolute; 
-				top: 100%; 
-				left: 0; 
-				z-index: 200;
-				zoom: 1;
-				border: 1px solid #222;
-				border-top: none;
-
-			    background: #444;
-				text-shadow: none;
-				padding-bottom: 5px;
-				-moz-border-radius-bottomleft: 5px;
-				-moz-border-radius-bottomright: 5px;
-				border-bottom-left-radius: 5px;
-				border-bottom-right-radius: 5px;
-				-webkit-border-bottom-left-radius: 5px;
-				-webkit-border-bottom-right-radius: 5px;
-				-khtml-border-bottom-left-radius: 5px;
-				-khtml-border-bottom-right-radius: 5px;
-			}
-			#nav ul.dropdown ul li{
-				z-index:300;
-				position:relative;
-				font-weight: normal; 
-				color: #fff;
-				border:none; 
-				float: none; 
-				margin: 0;
-				padding:0;
-			}
+		#nav ul.dropdown #header_sprite{
+			width: 700px;
+			display:none;
+			position: absolute; 	
+			top: 100%; 
+			left: -150px;			
+			text-shadow: none;					
+		}
+		#nav ul.dropdown #header_sprite_head{
+			height: 10px;
+			width: 700px;
+			background: url('../img/header_sprite.png') 220px 3px no-repeat;
+			float: left;
+		}
+		#nav ul.dropdown #header_sprite_body{
+			background: black;
+			float: left;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px #777777;
+			padding-bottom: 5px;	
+		}
+		#nav ul.dropdown ul{		
+			z-index: 200;
+			zoom: 1;
+		    background: none;			
+		}
+		#nav ul.dropdown ul li{
+			z-index:300;
+			position:relative;
+			font-weight: normal; 
+			color: #fff;
+			border:none; 
+			float: none; 
+			margin: 0;
+			padding:0;
+		}
 
 		/* Default Link Styling */
 		#nav ul.dropdown ul li a{ 
@@ -3206,10 +3209,8 @@ sub {font-size:.7em;vertical-align: bottom;}
 		#nav ul.dropdown li.menuhover ul li.current_page_item ul li a:hover,
 		#nav ul.dropdown li.menuhover ul li.current_page_ancestor ul li a:hover,
 		#nav ul.dropdown li.menuhover ul li ul li.current_page_item a{
-			color: #fff;
 			border:none;
 			text-shadow: none;
-			background: #000;
 
 		}
 
@@ -3301,7 +3302,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 			background: #2a2a2a url(../img/nav-spri.png) repeat-x 0 -36px;
 		}
 
-		#wrapper #nav ul.dropdown li.menuhover a{background: #000;}
+		#wrapper #nav ul.dropdown li.menuhover>a{background: #000;}
 
 		#wrapper #nav ul.dropdown ul li a:hover,
 		#wrapper #nav ul.dropdown li.menuhover ul li a:hover,
@@ -3312,13 +3313,11 @@ sub {font-size:.7em;vertical-align: bottom;}
 		#wrapper #nav ul.dropdown li.menuhover ul li.current_page_item ul li a:hover,
 		#wrapper #nav ul.dropdown li.menuhover ul li.current_page_ancestor ul li a:hover,
 		#wrapper #nav ul.dropdown li.menuhover ul li ul li.current_page_item a{
-
-			background: #333;
-
+			text-decoration: underline;	
 		}
-
+	
 		#wrapper #nav ul.dropdown ul{
-		    background: #000;
+		    background: none;
 		}
 
 		.page-nav, .wp-pagenavi{
