@@ -267,8 +267,27 @@ def store(request):
 
 @login_required
 def cash(request):
-    cash = Cash.objects.all()
+    today = date.today()
     balance = Balance.objects.get(id=1)
+    cash = Cash.objects.filter(date__year=today.year, date__month=today.month)
+    return render_to_response("myadmin/cash/cash.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def date_cash(request, when):
+    today = date.today()
+    balance = Balance.objects.get(id=1)
+    cash = Cash.objects.filter(date__year=today.year, date__month=today.month)
+    if when == 'today':
+        cash = Cash.objects.filter(date__year=today.year, date__month=today.month, date__day=today.day)
+    elif when == 'week':
+        monday, sunday = week_boundaries(today.year, int(today.strftime("%W")))
+        cash = Cash.objects.filter(date__year=today.year, date__month=today.month, date__range=(monday, sunday))
+    elif when == 'month':
+        cash = Cash.objects.filter(date__year=today.year, date__month=today.month)
+    elif when == 'year':
+        cash = Cash.objects.filter(date__year=today.year)
+    else:
+        cash = Cash.objects.filter(date__year=when[-4:], date__month=when[:-4])
     return render_to_response("myadmin/cash/cash.html", locals(), context_instance=RequestContext(request))
 
 @login_required

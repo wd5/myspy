@@ -1,3 +1,4 @@
+{% load date_tags %}
 <td style="background:#cccccc;" rowspan="2">
     <a href="/myadmin/cash/add" target="_blank">Добавить денежный поток</a>
 </td><br>
@@ -51,5 +52,6 @@ Webmoney: {{ balance.webmoney }}<br>
 			<a href="/myadmin/cash/{{ item.id }}/" target="_blank">Редактировать</a>
 		</td>
 	</tr>
-	{% endfor %}
+	{% endfor %}<br>
+{% date_tags request.path %}
 </table>
