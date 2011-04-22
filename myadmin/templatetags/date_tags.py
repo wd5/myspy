@@ -15,7 +15,6 @@ def spanning_months(start, end):
 
 @register.inclusion_tag("myadmin/tags/date_tags.html")
 def date_tags(request_path):
-    print request_path
     if 'sales' in request_path:
         latest_client = Client.objects.all().latest('id').ordered_at
         first_client = Client.objects.order_by()[0].ordered_at
