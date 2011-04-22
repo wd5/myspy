@@ -36,7 +36,6 @@ def sales(request):
     latest_client = Client.objects.all().latest('id').ordered_at
     first_client = Client.objects.order_by()[0].ordered_at
     diff = latest_client - first_client
-    print type(diff)
     time_tags = [{'year': 'b', 'month' : 'a'}, latest_client]
     # Применяю фильтр по статусам
     if request.method == 'POST':
