@@ -1,14 +1,11 @@
           # -*- coding: utf-8 -*-
-from datetime import date, timedelta, datetime
-from calendar import *
-from dateutil.relativedelta import relativedelta
+from datetime import date, timedelta
 from django.shortcuts import render_to_response
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.utils.datetime_safe import strftime
 from cart.models import Client, CartItem, CartProduct
 from forms import ClientForm, StatusForm, BaseProductFormset, CashForm, BalanceForm
 from django.forms.models import inlineformset_factory
