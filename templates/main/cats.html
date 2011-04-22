@@ -33,8 +33,8 @@
 		        	<tr>
 			        {% for cat in cats %}
 			        	<td style="vertical-align:top; padding:20px;  border-bottom: 1px solid #ccc;">
-				        	<table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">	
-				        		<tr>	        
+				        	<table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">
+				        		<tr>
 						        	<td style="vertical-align:top; padding:20px;">
 						        		<a href="{{ cat.get_absolute_url }}"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
 						        	</td>
@@ -56,4 +56,32 @@
         	</div>
         </div>
 	</div>
+    	<div id="maincontent">
+		<div id="content">
+			<div class="postwrap fix" style="padding:30px;">
+		        <table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">
+		        	<tr>
+			        {% for section in sections %}
+                        {% if not section.name == section.category_set.all.0.name %}
+                       <center><a href="{{ section.get_absolute_url }}"> {{ section.name }}</a><br></center>
+                        {% endif %}
+                       {% for cat in section.category_set.all %}
+                           {% if not cat.name == section.name %}
+                           <a href="{{ cat.get_absolute_url }}"> {{ cat.name }}</a><br>
+                                {{ cat.description|safe }}<br>
+                            <a href="{{ cat.get_absolute_url }}"><img width="150px" src="{{ cat.image.thumb_url }}"/></a><br><br>
+                           {% else %}
+                               <a href="{{ cat.get_absolute_url }}"> {{ cat.name }}</a><br>
+                               {{ cat.description|safe }}
+                               <a href="{{ cat.get_absolute_url }}"><img width="150px" src="{{ cat.image.thumb_url }}"/></a><br><br>
+                           {% endif %}
+                       {% endfor %}
+			        {% if forloop.counter|div:2 == 0 %}
+						</tr><tr>
+					{% endif %}
+			        {% endfor %}
+			        </tr>
+				</table>
+        	</div>
+        </div>
 {% endblock %}

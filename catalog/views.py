@@ -18,6 +18,7 @@ def index(request):
 
 def cats(request):
     cats = Category.objects.all().order_by('id')
+    sections = Section.objects.all()
     return render_to_response("main/cats.html", locals(), context_instance=RequestContext(request))
 
 def show_category(request, category_slug):
