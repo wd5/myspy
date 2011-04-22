@@ -1,4 +1,5 @@
           # -*- coding: utf-8 -*-
+from datetime import date, timedelta
 from django.shortcuts import render_to_response
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
@@ -31,6 +32,12 @@ def auth(request):
 def sales(request):
     form = StatusForm()
     money = Statistic.objects.get(id=1).wayt_money
+    today = date.today()
+    latest_client = Client.objects.all().latest('id').ordered_at
+    first_client = Client.objects.order_by()[0].ordered_at
+    diff = latest_client - first_client
+    print type(diff)
+    time_tags = [{'year': 'b', 'month' : 'a'}, latest_client]
     # Применяю фильтр по статусам
     if request.method == 'POST':
         form = StatusForm(request.POST)
@@ -41,14 +48,58 @@ def sales(request):
             # Сортирую по id - так чтобы полследний клиент был сверху
             clients.sort(key=lambda x: x.id, reverse=True)
     else:
-        clients = Client.objects.all()
+        clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month)
     # Пейджинация
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     # 100 клиентов на одну страницу
-    paginator = Paginator(clients, 100)
+    paginator = Paginator(clients, 20)
+    try:
+        clients = paginator.page(page)
+    except (EmptyPage, InvalidPage) :
+        clients = paginator.page(paginator.num_pages)
+    return render_to_response("myadmin/sale/sales.html", locals(), context_instance=RequestContext(request))
+
+def week_boundaries(year, week):
+    start_of_year = date(year, 1, 1)
+    now = start_of_year + timedelta(weeks=week)
+    mon = now - timedelta(days=now.weekday())
+    sun = mon + timedelta(days=6)
+    return mon, sun
+
+@login_required
+def date_sales(request, when):
+    form = StatusForm()
+    money = Statistic.objects.get(id=1).wayt_money
+    today = date.today()
+    # Применяю фильтр по статусам
+    if request.method == 'POST':
+        form = StatusForm(request.POST)
+        if form.is_valid():
+            clients = []
+            for i in form.cleaned_data['status']:
+               clients += Client.objects.filter(status=i)
+            # Сортирую по id - так чтобы полследний клиент был сверху
+            clients.sort(key=lambda x: x.id, reverse=True)
+    else:
+        if when == 'today':
+            clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month, ordered_at__day=today.day)
+        elif when == 'week':
+            monday, sunday = week_boundaries(today.year, int(today.strftime("%W")))
+            clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month, ordered_at__range=(monday,sunday))
+        elif when == 'month':
+            clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month)
+        elif when == 'year':
+            clients = Client.objects.filter(ordered_at__year=today.year)
+    # Пейджинация
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    # 100 клиентов на одну страницу
+    paginator = Paginator(clients, 20)
     try:
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :

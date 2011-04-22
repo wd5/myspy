@@ -1,7 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from cart.models import Client, CartProduct
 from myadmin.models import Statistic
-from django.db.models import Q
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
