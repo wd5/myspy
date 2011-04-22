@@ -1,10 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 from cart.models import Client, CartProduct
 from myadmin.models import Statistic
+from django.db.models import Q
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-            clients_wayt_money = Client.objects.exclude(status='CASH_IN').exclude(status='REFUSED').exclude(status='CONTACT_AT').exclude(status='BACK').exclude(status='CHANGE').exclude(status='WAYT_PRODUCT')
+            clients_wayt_money = Client.objects.exclude(status='CASH_IN').exclude(status='REFUSED').exclude(status='CONTACT_AT').exclude(status='BACK').exclude(status='CHANGE').exclude(status='WAYT_PRODUCT').exclude(status='COURIER_TAKE').exclude(status='COURIER_SEND').exclude(status='POSTSEND').exclude(status='PROCESS')
             money = 0
             for client in clients_wayt_money:
                 products = CartProduct.objects.filter(cartitem=client.cart_id)
