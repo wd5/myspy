@@ -4,7 +4,7 @@ from myadmin.models import Statistic
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-            clients_wayt_money = Client.objects.exclude(status='CASH_IN').exclude(status='REFUSED').exclude(status='BACK')
+            clients_wayt_money = Client.objects.exclude(status='CASH_IN').exclude(status='REFUSED').exclude(status='CONTACT_AT').exclude(status='BACK').exclude(status='CHANGE').exclude(status='WAYT_PRODUCT')
             money = 0
             for client in clients_wayt_money:
                 products = CartProduct.objects.filter(cartitem=client.cart_id)

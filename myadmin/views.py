@@ -13,7 +13,7 @@ from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash, Balance
+from models import Cash, Balance, Statistic
 
 def auth(request):
     if request.method == 'POST':
@@ -29,13 +29,8 @@ def auth(request):
 
 @login_required
 def sales(request):
-    clients_wayt_money = Client.objects.exclude(status='CASH_IN').exclude(status='REFUSED').exclude(status='BACK')
-    money = 0
-    for client in clients_wayt_money:
-        products = CartProduct.objects.filter(cartitem=client.cart_id)
-        for product in products:
-            money += product.product.price * product.quantity
     form = StatusForm()
+    money = Statistic.objects.get(id=1).wayt_money
     # Применяю фильтр по статусам
     if request.method == 'POST':
         form = StatusForm(request.POST)
