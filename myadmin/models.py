@@ -36,3 +36,6 @@ class Balance(models.Model):
     webmoney = models.DecimalField(max_digits=10, decimal_places=2)
     encash = models.DecimalField(max_digits=10, decimal_places=2)
     total = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Statistic(models.Model):
+    wayt_money = models.DecimalField(max_digits=20, decimal_places=2)
