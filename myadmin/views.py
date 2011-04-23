@@ -59,6 +59,8 @@ def sales(request, when):
             clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month)
         elif when == 'year':
             clients = Client.objects.filter(ordered_at__year=today.year)
+        elif when == 'all':
+            clients = Client.objects.all()
         else:
             clients = Client.objects.filter(ordered_at__year=when[-4:], ordered_at__month=when[:-4])
     # Пейджинация
@@ -67,7 +69,7 @@ def sales(request, when):
     except ValueError:
         page = 1
     # 100 клиентов на одну страницу
-    paginator = Paginator(clients, 20)
+    paginator = Paginator(clients, 100)
     try:
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :
