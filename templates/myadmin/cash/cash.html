@@ -53,5 +53,12 @@ Webmoney: {{ balance.webmoney }}<br>
 		</td>
 	</tr>
 	{% endfor %}<br>
-{% date_tags request.path %}
+{% date_tags request.path %}<br>
+<a href="/myadmin/cash/today/">За сегодня</a>, 
+<a href="/myadmin/cash/week/">За неделю</a>,
+<a href="/myadmin/cash/month/">За месяц</a>,
+<a href="/myadmin/cash/year/">За год</a><br>
 </table>
+Пришло за {{ when }}: {{ cash_in }} руб.<br>
+Ушло за {{ when }}: {{ cash_out }} руб.<br>
+Оборот за {{ when }}: {{ cash_all }} руб.<br>

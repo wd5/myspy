@@ -23,40 +23,10 @@ def auth(request):
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(request, user)
-            return HttpResponseRedirect("/myadmin/sales")
+            return HttpResponseRedirect("/myadmin/sales/month/")
         else:
             error = True
     return render_to_response("myadmin/auth.html", locals(), context_instance=RequestContext(request))
-
-@login_required
-def sales(request):
-    form = StatusForm()
-    money = Waytmoney.objects.get(id=1).wayt_money
-    today = date.today()
-
-    # Применяю фильтр по статусам
-    if request.method == 'POST':
-        form = StatusForm(request.POST)
-        if form.is_valid():
-            clients = []
-            for i in form.cleaned_data['status']:
-               clients += Client.objects.filter(status=i)
-            # Сортирую по id - так чтобы полследний клиент был сверху
-            clients.sort(key=lambda x: x.id, reverse=True)
-    else:
-        clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month)
-    # Пейджинация
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    # 100 клиентов на одну страницу
-    paginator = Paginator(clients, 20)
-    try:
-        clients = paginator.page(page)
-    except (EmptyPage, InvalidPage) :
-        clients = paginator.page(paginator.num_pages)
-    return render_to_response("myadmin/sale/sales.html", locals(), context_instance=RequestContext(request))
 
 def week_boundaries(year, week):
     start_of_year = date(year, 1, 1)
@@ -66,7 +36,7 @@ def week_boundaries(year, week):
     return mon, sun
 
 @login_required
-def date_sales(request, when):
+def sales(request, when):
     form = StatusForm()
     money = Waytmoney.objects.get(id=1).wayt_money
     today = date.today()
@@ -266,17 +236,9 @@ def store(request):
     return render_to_response("myadmin/store/store.html", locals(), context_instance=RequestContext(request))
 
 @login_required
-def cash(request):
+def cash(request, when):
     today = date.today()
     balance = Balance.objects.get(id=1)
-    cash = Cash.objects.filter(date__year=today.year, date__month=today.month)
-    return render_to_response("myadmin/cash/cash.html", locals(), context_instance=RequestContext(request))
-
-@login_required
-def date_cash(request, when):
-    today = date.today()
-    balance = Balance.objects.get(id=1)
-    cash = Cash.objects.filter(date__year=today.year, date__month=today.month)
     if when == 'today':
         cash = Cash.objects.filter(date__year=today.year, date__month=today.month, date__day=today.day)
     elif when == 'week':
@@ -288,6 +250,14 @@ def date_cash(request, when):
         cash = Cash.objects.filter(date__year=today.year)
     else:
         cash = Cash.objects.filter(date__year=when[-4:], date__month=when[:-4])
+    cash_in = 0
+    cash_out = 0
+    for i in cash:
+        if i.cashflow > 0:
+            cash_in += i.cashflow
+        else:
+            cash_out -= i.cashflow
+    cash_all = cash_in + cash_out
     return render_to_response("myadmin/cash/cash.html", locals(), context_instance=RequestContext(request))
 
 @login_required
