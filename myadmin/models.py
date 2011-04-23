@@ -37,5 +37,5 @@ class Balance(models.Model):
     encash = models.DecimalField(max_digits=10, decimal_places=2)
     total = models.DecimalField(max_digits=10, decimal_places=2)
 
-class Statistic(models.Model):
+class Waytmoney(models.Model):
     wayt_money = models.DecimalField(max_digits=20, decimal_places=2)

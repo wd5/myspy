@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from cart.models import Client, CartProduct
-from myadmin.models import Statistic
+from myadmin.models import Waytmoney
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -10,6 +10,6 @@ class Command(BaseCommand):
                 products = CartProduct.objects.filter(cartitem=client.cart_id)
                 for product in products:
                     money += product.product.price * product.quantity
-            wayt_money = Statistic.objects.get(id=1)
+            wayt_money = Waytmoney.objects.get(id=1)
             wayt_money.wayt_money = money
             wayt_money.save()

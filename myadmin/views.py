@@ -14,7 +14,7 @@ from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash, Balance, Statistic
+from models import Cash, Balance, Waytmoney
 
 def auth(request):
     if request.method == 'POST':
@@ -31,7 +31,7 @@ def auth(request):
 @login_required
 def sales(request):
     form = StatusForm()
-    money = Statistic.objects.get(id=1).wayt_money
+    money = Waytmoney.objects.get(id=1).wayt_money
     today = date.today()
 
     # Применяю фильтр по статусам
@@ -68,7 +68,7 @@ def week_boundaries(year, week):
 @login_required
 def date_sales(request, when):
     form = StatusForm()
-    money = Statistic.objects.get(id=1).wayt_money
+    money = Waytmoney.objects.get(id=1).wayt_money
     today = date.today()
     # Применяю фильтр по статусам
     if request.method == 'POST':
