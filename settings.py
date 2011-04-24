@@ -105,7 +105,7 @@ INSTALLED_APPS = (
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
     'mode': 'textareas',
-    'plugins' : 'paste, autoresize, fullscreen, legacyoutput, preview, style',
+    'plugins' : 'paste, fullscreen, legacyoutput, preview, style',
     'theme_advanced_buttons3_add' : 'pastetext,pasteword,selectall,fullscreen,preview,styleprops',
     'fullscreen_new_window' : 'true',
     'fullscreen_settings' : {
