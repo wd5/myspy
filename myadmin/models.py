@@ -39,3 +39,8 @@ class Balance(models.Model):
 
 class Waytmoney(models.Model):
     wayt_money = models.DecimalField(max_digits=20, decimal_places=2)
+
+class Statistic(models.Model):
+    date = models.DateField(auto_now_add=True)
+    type = models.CharField(max_length=200)
+    cash = models.DecimalField(max_digits=10, decimal_places=2)
