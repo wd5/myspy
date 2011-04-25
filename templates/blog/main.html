@@ -5,6 +5,10 @@
     <title>Блог</title>
 </head>
 <body>
-В разработке...
+{% for entry in entrys %}
+    {{ entry.title }}<br>
+    {{ entry.date }}<br>
+    {{ entry.entry }}
+{% endfor %}
 </body>
 </html>

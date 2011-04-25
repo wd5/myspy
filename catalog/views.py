@@ -88,10 +88,6 @@ def about(request):
     page_title = "О нас"
     return render_to_response('main/about.html', locals(), context_instance=RequestContext(request))
 
-def blog(request):
-    page_title = "Блог"
-    return render_to_response('main/blog.html', locals(), context_instance=RequestContext(request))
-
 def delivery(request):
     page_title = "Доставка и оплата"
     return render_to_response('main/delivery.html', locals(), context_instance=RequestContext(request))
