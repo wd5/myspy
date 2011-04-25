@@ -268,16 +268,18 @@ def add_cashflow(request):
         last_balance = Cash.objects.all().latest('id')
         form = CashForm(request.POST)
         newform = form.save(commit=False)
-        newform.balance = last_balance.balance + newform.cashflow
         balance = Balance.objects.get(id=1)
         if newform.type == 'ENCASH':
             balance.encash += newform.cashflow
+            newform.balance = last_balance.balance + newform.cashflow
             balance.total = balance.encash + balance.webmoney + balance.yandex
         elif newform.type == 'WEBMONEY':
             balance.webmoney += newform.cashflow
+            newform.balance = last_balance.balance
             balance.total = balance.encash + balance.webmoney + balance.yandex
         elif newform.type == 'YANDEX':
             balance.yandex += newform.cashflow
+            newform.balance = last_balance.balance
             balance.total = balance.encash + balance.webmoney + balance.yandex
         balance.save()
         newform.save()
@@ -294,23 +296,39 @@ def edit_cashflow(request, id):
         form = CashForm(request.POST, instance=cash)
         newform = form.save(commit=False)
         if not last_cashflow == newform.cashflow:
-            cashflow_diff = newform.cashflow - last_cashflow
-            newform.balance = newform.balance + cashflow_diff
-            cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
-            true_balance = cash.balance
-            for cashflow_recalc in cashflows_recalc:
-                cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
-                true_balance = cashflow_recalc.balance
-                cashflow_recalc.save()
             balance = Balance.objects.get(id=1)
             if last_type == 'ENCASH':
                 balance.encash -= last_cashflow
+                cashflow_diff = newform.cashflow - last_cashflow
+                newform.balance = newform.balance + cashflow_diff
+                cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
+                true_balance = cash.balance
+                for cashflow_recalc in cashflows_recalc:
+                    if cashflow_recalc.type == 'ENCASH':
+                        cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                        true_balance = cashflow_recalc.balance
+                        cashflow_recalc.save()
+                    else:
+                        cashflow_recalc.balance = true_balance
+                        cashflow_recalc.save()
             elif last_type == 'YANDEX':
                 balance.yandex -= last_cashflow
             elif last_type == 'WEBMONEY':
                 balance.webmoney -= last_cashflow
             if newform.type == 'ENCASH':
                 balance.encash += newform.cashflow
+                if not last_type == newform.type:
+                    newform.balance = newform.cashflow + newform.balance
+                    true_balance = cash.balance
+                    cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
+                    for cashflow_recalc in cashflows_recalc:
+                        if cashflow_recalc.type == 'ENCASH':
+                            cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                            true_balance = cashflow_recalc.balance
+                            cashflow_recalc.save()
+                        else:
+                            cashflow_recalc.balance = true_balance
+                            cashflow_recalc.save()
             elif newform.type == 'YANDEX':
                 balance.yandex += newform.cashflow
             elif newform.type == 'WEBMONEY':
@@ -321,12 +339,34 @@ def edit_cashflow(request, id):
             balance = Balance.objects.get(id=1)
             if last_type == 'ENCASH':
                 balance.encash -= last_cashflow
+                newform.balance = newform.balance - newform.cashflow
+                true_balance = cash.balance
+                cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
+                for cashflow_recalc in cashflows_recalc:
+                    if cashflow_recalc.type == 'ENCASH':
+                        cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                        true_balance = cashflow_recalc.balance
+                        cashflow_recalc.save()
+                    else:
+                        cashflow_recalc.balance = true_balance
+                        cashflow_recalc.save()
             elif last_type == 'YANDEX':
                 balance.yandex -= last_cashflow
             elif last_type == 'WEBMONEY':
                 balance.webmoney -= last_cashflow
             if newform.type == 'ENCASH':
                 balance.encash += newform.cashflow
+                newform.balance = newform.cashflow + newform.balance
+                true_balance = cash.balance
+                cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
+                for cashflow_recalc in cashflows_recalc:
+                    if cashflow_recalc.type == 'ENCASH':
+                        cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                        true_balance = cashflow_recalc.balance
+                        cashflow_recalc.save()
+                    else:
+                        cashflow_recalc.balance = true_balance
+                        cashflow_recalc.save()
             elif newform.type == 'YANDEX':
                 balance.yandex += newform.cashflow
             elif newform.type == 'WEBMONEY':
