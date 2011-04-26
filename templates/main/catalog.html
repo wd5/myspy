@@ -101,13 +101,13 @@
         {% if section.SEO_text %}
 		<div class="postwrap">
 		<div id="seocolum">
-            {{ section.SEO_text }}
+            {{ section.SEO_text|safe }}
         </div>
         {% endif %}
         {% if category.SEO_text %}
         <div class="postwrap">
         <div id="seocolum">
-            {{ section.SEO_text }}
+            {{ category.SEO_text|safe }}
         </div>
         {% endif %}
 	</div>
