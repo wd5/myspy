@@ -33,7 +33,7 @@
 			</li>
 			<li {% if request_path == '/delivery' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
 			<li {% if request_path == '/about' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
-			<li {% if request_path == '/blog' %} class="current-menu-item" {% endif %}><a href="{% url blog.views.blog %}">Блог</a></li>
+		<!--	<li {% if request_path == '/blog' %} class="current-menu-item" {% endif %}><a href="{% url blog.views.blog %}">Блог</a></li> -->
 		</ul>
 		
 		<form method="get" class="searchform" action="">
