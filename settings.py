@@ -97,7 +97,7 @@ INSTALLED_APPS = (
     'myspy.catalog',
     'myspy.cart',
     'myspy.myadmin',
-    'myspy.blog',
+#    'myspy.blog',
     'tinymce',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
