@@ -85,7 +85,7 @@ class ProductPhoto(models.Model):
         verbose_name_plural = 'Фото товара'
 
     def __unicode__(self):
-        return self.item.name
+        return self.image.name
 
     @models.permalink
     def get_absolute_url(self):
@@ -104,8 +104,14 @@ class Feature(models.Model):
     name = models.ForeignKey(FeatureName, verbose_name='Характеристика')
     value = models.CharField(max_length=100, verbose_name='Значение')
     item = models.ForeignKey(Product)
+    
+    def __unicode__(self):
+        return "%s: %s" % (self.name.name, self.value)
 
 class File(models.Model):
     product = models.ForeignKey(Product, verbose_name='Файл')
     name = models.CharField(max_length=100, verbose_name='Название')
     file = models.FileField(upload_to='res/files')
+
+    def __unicode__(self):
+        return self.name

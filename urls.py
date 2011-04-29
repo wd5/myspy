@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'^myadmin/', include('myspy.myadmin.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^tinymce/', include('tinymce.urls')),
+    (r'^grappelli/', include('grappelli.urls')),
 )
 
 if settings.DEBUG:

@@ -62,6 +62,8 @@ MEDIA_URL = '/media/'
 TINYMCE_JS_URL = STATIC_URL + 'js/tiny_mce/tiny_mce.js'
 TINYMCE_JS_ROOT = os.path.join(PROJECT_PATH, 'static/js/tiny_mce')
 
+ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
+
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -96,8 +98,10 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.messages',
+    'grappelli',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'myspy.catalog',
