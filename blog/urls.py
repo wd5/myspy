@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-                          url(r'^$', 'catalog.views.index', name="main-page"),
+                          url(r'^$', 'blog.views.index', name="main-page"),
 )
