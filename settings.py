@@ -34,7 +34,7 @@ TIME_ZONE = 'Europe/Moscow'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
@@ -63,8 +63,6 @@ TINYMCE_JS_URL = STATIC_URL + 'js/tiny_mce/tiny_mce.js'
 TINYMCE_JS_ROOT = os.path.join(PROJECT_PATH, 'static/js/tiny_mce')
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
-
-
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -108,6 +106,7 @@ INSTALLED_APPS = (
     'myspy.cart',
     'myspy.myadmin',
     'myspy.blog',
+    'filebrowser',
     'tinymce',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
