@@ -5,7 +5,7 @@
   <div id="wrapper" class="fix" >
 	
     <div id="header" class="fix">
-		<a href="/" style="float:left"><img class="headerimage" src="{{ MEDIA_URL}}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
+		<a href="/" style="float:left"><img class="headerimage" src="{{ STATIC_URL }}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
 		<div class="basket" style="float:left">
 			{% cart_box request %}
 		</div>
@@ -18,7 +18,7 @@
 	<div id="nav" class="fix">
 		<ul class="fix homebutton">
 			<li class="page_item navfirst">
-				<a class="home" href="/" title="Home" style="background-image: url('{{ MEDIA_URL}}res/img/home-icon.png');">Home</a>
+				<a class="home" href="/" title="Home" style="background-image: url('{{ STATIC_URL }}res/img/home-icon.png');">Home</a>
 			</li>
 		</ul>
 
@@ -45,7 +45,7 @@
 									<a class="featurelink" href="/cats/all-goods">Все товары</a>
 								</div>
 							</div>
-							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/zhuchki0.png" alt="Жучки" /></div>
+							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/zhuchki0.png" alt="Жучки" /></div>
 							<div class="clear"></div>
 
 						</div>
@@ -61,7 +61,7 @@
 									<a class="featurelink" href="/cats/all-goods">Все товары</a>
 								</div>
 							</div>
-							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/detectors_jammers.jpg" alt="Защита от прослушки" /></div>
+							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/detectors_jammers.jpg" alt="Защита от прослушки" /></div>
 							<div class="clear"></div>
 						</div>
 						
@@ -76,7 +76,7 @@
 									<a class="featurelink" href="/cats/all-goods/">Все товары</a>
 								</div>
 							</div>
-							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/minicame.png" alt="Миникамеры" /></div>
+							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/minicame.png" alt="Миникамеры" /></div>
 							<div class="clear"></div>
 						</div>
 						
@@ -91,7 +91,7 @@
 									<a class="featurelink" href="/cats/all-goods/">Все товары</a>
 								</div>
 							</div>
-							<div class="fmedia"><img src="{{ MEDIA_URL}}res/img/gps00000.png" alt="GPS слежение" /></div>
+							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/gps00000.png" alt="GPS слежение" /></div>
 							<div class="clear"></div>
 						</div>
 						
@@ -168,5 +168,5 @@
 	</div>
   </div>
 </div>
-<script type='text/javascript' src='{{ MEDIA_URL}}res/js/jquery-cycle.js'></script>
+<script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery-cycle.js'></script>
 {% endblock %}

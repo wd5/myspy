@@ -8,7 +8,7 @@
 {% for entry in entrys %}
     {{ entry.title }}<br>
     {{ entry.date }}<br>
-    {{ entry.entry }}
+    {{ entry.entry|safe }}
 {% endfor %}
 </body>
 </html>
