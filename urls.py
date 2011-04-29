@@ -4,7 +4,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import settings
 
 from django.contrib import admin
-admin.autodiscover()
 handler500 = 'myspy.catalog.views.internal_error'
 
 urlpatterns = patterns('',
