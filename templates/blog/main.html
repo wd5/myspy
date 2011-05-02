@@ -1,3 +1,4 @@
+{% load archive %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -5,10 +6,29 @@
     <title>Блог</title>
 </head>
 <body>
-{% for entry in entrys %}
-    {{ entry.title }}<br>
+{% for entry in entrys.object_list %}
+    <a href="{{ entry.get_absolute_url }}" >{{ entry.title }}</a><br>
     {{ entry.date }}<br>
-    {{ entry.entry|safe }}
+    {{ entry.thumbnail_entry|safe }}
 {% endfor %}
+Архив:<br>
+{% archive %}<br><br>
+Категории:<br>
+{% categories %}
 </body>
+<div class="pagination">
+    <span class="step-links">
+        {% if entrys.has_previous %}
+            <a href="?page={{ entrys.previous_page_number }}">Сюда</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ entrys.number }} из {{ entrys.paginator.num_pages }}.
+        </span>
+
+        {% if entrys.has_next %}
+            <a href="?page={{ entrys.next_page_number }}">Туда</a>
+        {% endif %}
+    </span>
+</div>
 </html>
