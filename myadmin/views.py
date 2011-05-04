@@ -189,8 +189,8 @@ def edit_client(request, id):
                         newcashflow.balance = last_balance.balance + client.subtotal + 300
                         newcashflow.comment = client.id
                     elif form.cleaned_data['delivery'] == 'COURIER':
-                        newcashflow.cashflow = client.subtotal - 200
-                        newcashflow.balance = last_balance.balance + client.subtotal - 200
+                        newcashflow.cashflow = client.subtotal - 300
+                        newcashflow.balance = last_balance.balance + client.subtotal - 300
                         newcashflow.comment = client.id
                     else:
                         newcashflow.cashflow = client.subtotal
