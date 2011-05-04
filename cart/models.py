@@ -76,7 +76,7 @@ class Client(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
     referrer = models.URLField(verify_exists=False, max_length=500)
     comment = models.TextField(null=True, blank=True)
-    execute_at = models.DateTimeField(default=datetime.now,editable=True,null=True, blank=True)
+    execute_at = models.DateTimeField(editable=True,null=True, blank=True)
     delivery = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True)
 
     def get_order(self):
