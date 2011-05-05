@@ -1,6 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU">
 <head>
+	<link rel="stylesheet" href="{{ STATIC_URL }}res/css/admin.css" type="text/css" media="screen" />
+	<script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery1.4.2.js'></script>
+	<script type='text/javascript'>
+		jQuery(document).ready(function(){
+			//alert('!');
+			jQuery('#allsales .clientinfo:even td').css({background:'#ebf1fe'});
+			jQuery('#allsales .clientadress:even td').css({background:'#ebf1fe'});
+			jQuery('.all').click(function(){
+				if(jQuery(this).hasClass('active')){
+					jQuery('.'+(jQuery(this).attr('id'))).removeAttr("checked");
+					jQuery(this).removeClass('active');
+				}else{
+					jQuery('.'+(jQuery(this).attr('id'))).attr("checked","checked");
+					jQuery(this).addClass('active');
+				}
+			});
+		});
+	</script>
 </head>
 <body>
         {% block site_wrapper %}

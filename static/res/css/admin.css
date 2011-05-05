@@ -1,0 +1,105 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+.alignright{
+	float: right;
+}
+.alignleft{
+	float:left;
+}
+#allsales_block{
+	padding: 0 0 0 0;
+}
+#allsales_block a{
+	color:#2778c5;
+}
+#allsales_block a:hover{
+	text-decoration: none;
+}
+#allsales_block .menu{
+	margin-top: 20px;
+}
+#allsales_block .menu td{
+	padding: 5px 20px;
+}
+#allsales_block #money{
+	position: absolute;
+	top:0;
+	right:0;
+	padding: 20px;
+}
+.margincenter{
+	margin:0 auto;
+}
+#selector_block{
+	z-index: 999;
+	background: #ebf1fe;
+	top:0;
+	border-bottom: solid 2px #4a4a4a;
+}
+#selector_block .selectbutton{
+	border: none;
+	background: #2778c5;
+	cursor: pointer;
+	color: white;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin: 10px 0 0;
+}
+#selector_block p{
+	text-align:right; 
+	padding: 0 20px;
+	float:right;
+}
+#selector_block ul{
+	list-style: none;
+	padding: 0;
+}
+#selector_block .hidden{
+	padding: 20px;
+}
+#selector_block:hover .hidden{
+	display: block;
+}
+#selector_block:hover p{
+}
+#status_selector ul li{	
+	list-style: none;
+}
+.margin_center{
+	margin: 0 auto;
+}
+#period{
+	width: 90%;
+	text-align: right;
+	padding: 5px 5% 0;
+}
+#period span{
+	float: left;
+}
+#allsales{
+	margin: 20px auto;
+	border: solid 2px #4a4a4a;
+	color: #3b4c5d;	
+}
+#allsales .pagination{
+	padding: 5px 20px;
+}
+#allsales .rightborder{
+	border-right: 1px solid #dbdbdc;
+}
+#allsales .bottomborder{
+	border-bottom: 1px solid #dbdbdc;
+}
+#allsales .head_row{
+	background:#cccccc;
+
+}
+#allsales .head_row td{
+	text-align: center;
+}
+#allsales .clientinfo td, #allsales .clientadress td{
+	background: #fefefe;
+}
