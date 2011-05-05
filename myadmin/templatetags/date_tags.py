@@ -1,3 +1,4 @@
+          # -*- coding: utf-8 -*-
 from django import template
 from datetime import date
 from cart.models import Client
@@ -29,3 +30,32 @@ def date_tags(request_path):
         'dates': dates,
         'request_path' : request_path
         }
+
+@register.simple_tag
+def status_count(status):
+    count = Client.objects.filter(status=status).count()
+    if status == "PROCESS":
+        status_with_count = "Обработать(" + str(count) + ')'
+    elif status == "POSTSEND":
+        status_with_count = "Отправить почтой(" + str(count) + ')'
+    elif status == "POSTSENDED":
+        status_with_count = "Отправлено почтой(" + str(count) + ')'
+    elif status == "COURIER_SEND":
+        status_with_count = "Отправить курьером(" + str(count) + ')'
+    elif status == "COURIER_TAKE":
+        status_with_count = "Передано курьеру(" + str(count) + ')'
+    elif status == "WAYT_PRODUCT":
+        status_with_count = "Ожидание поступления товара(" + str(count) + ')'
+    elif status == "BUYER_TAKE":
+        status_with_count = "Передано покупателю(" + str(count) + ')'
+    elif status == "BACK":
+        status_with_count = "Обмен/Возврат(" + str(count) + ')'
+    elif status == "CONTACT_AT":
+        status_with_count = "Связаться в назначенное время(" + str(count) + ')'
+    elif status == "REFUSED":
+        status_with_count = "Снятие заявки клиентом(" + str(count) + ')'
+    elif status == "CASH_IN":
+        status_with_count = "Деньги внесены(" + str(count) + ')'
+    else:
+        status_with_count = status
+    return status_with_count
