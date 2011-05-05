@@ -11,19 +11,19 @@
 								<td>
 									<label for="id_status_0">
 									<input class="first" id="id_status_0" type="checkbox" value="PROCESS" name="status">
-									Обработать(1)
+									{% status_count "PROCESS" %}
 									</label>
 								</td>
 								<td>
 									<label for="id_status_4">
 									<input class="second" id="id_status_4" type="checkbox" value="COURIER_TAKE" name="status">
-									Передано курьеру(1)
+                                    {% status_count "COURIER_TAKE" %}
 									</label>
 								</td>
 								<td>
 								<label for="id_status_10">
 								<input class="fird" id="id_status_10" type="checkbox" value="REFUSED" name="status">
-								Снятие заявки клиентом(18)
+                                {% status_count "REFUSED" %}
 								</label>
 								</td>
 							</tr>
@@ -31,19 +31,19 @@
 								<td>
 								<label for="id_status_1">
 								<input class="first" id="id_status_1" type="checkbox" value="POSTSEND" name="status">
-								Отправить почтой(0)
+                                {% status_count "POSTSEND" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_5">
 								<input class="second" id="id_status_5" type="checkbox" value="BUYER_TAKE" name="status">
-								Передано покупателю(0)
+                                {% status_count "BUYER_TAKE" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_11">
 								<input class="fird" id="id_status_11" type="checkbox" value="CASH_IN" name="status">
-								Деньги внесены(96)
+                                {% status_count "CASH_IN" %}
 								</label>
 								</td>
 							</tr>
@@ -51,13 +51,13 @@
 								<td>
 								<label for="id_status_3">
 								<input class="first" id="id_status_3" type="checkbox" value="COURIER_SEND" name="status">
-								Отправить курьером(1)
+                                {% status_count "COURIER_SEND" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_6">
 								<input class="second" id="id_status_6" type="checkbox" value="WAYT_PRODUCT" name="status">
-								Ожидание поступления товара(4)
+                                {% status_count "WAYT_PRODUCT" %}
 								</label>
 								</td>
 								<td>
@@ -69,15 +69,9 @@
 							</tr>
 							<tr>
 								<td>
-								<label for="id_status_7">
-								<input class="first" id="id_status_7" type="checkbox" value="CHANGE" name="status">
-								Обменять(0)
-								</label>
-								</td>
-								<td>
 								<label for="id_status_2">
 								<input class="second" id="id_status_2" type="checkbox" value="POSTSENDED" name="status">
-								Отправлено почтой(30)
+                                {% status_count "POSTSENDED" %}
 								</label>
 								</td>
 							</tr>
@@ -85,7 +79,7 @@
 								<td>
 								<label for="id_status_8">
 								<input class="first" id="id_status_8" type="checkbox" value="BACK" name="status">
-								Вернуть(0)
+                                {% status_count "BACK" %}
 								</label>
 								</td>
 								<td>
@@ -99,7 +93,7 @@
 								<td>
 								<label for="id_status_9">
 								<input class="first" class="fird" id="id_status_9" type="checkbox" value="CONTACT_AT" name="status">
-								Связаться в назначенное время(1)
+                                {% status_count "CONTACT_AT" %}
 								</label>
 								</td>
 							</tr>	
