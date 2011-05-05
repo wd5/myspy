@@ -1,9 +1,9 @@
 {% for i in dates %}
     {% if 'sales' in request_path %}
-        <a href="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>,
+        <a href="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
     {% else %}
         {% if 'cash' in request_path %}
-            <a href="/myadmin/cash/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>,
+            <a href="/myadmin/cash/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
         {% endif %}
     {% endif %}
 {% endfor %}
