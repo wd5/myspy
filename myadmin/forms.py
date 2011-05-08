@@ -13,7 +13,7 @@ class ClientForm(ModelForm):
     address = forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}), required=False)
     class Meta:
         model = Client
-        exclude = ('cart', 'referrer')
+        exclude = ('cart', 'referrer', 'tracking_status')
         widgets = {
             'delivery' : RadioSelect(),
         }
