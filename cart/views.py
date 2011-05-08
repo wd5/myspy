@@ -12,29 +12,28 @@ def show_cart(request, template_name="cart/cart.html"):
         cart_subtotal = subtotal_class.subtotal()
         discount = subtotal_class.discount
         postdata = request.POST.copy()
-        form = OrderForm(request.POST)
 
         if 'Remove' in postdata:
             cart.remove_from_cart(request)
-        if 'Update' in postdata:
+        elif 'Update' in postdata:
             cart.update_cart(request)
-        if form.is_valid():
-            # Пишу клиента в базу
-            cart.save_client(request, form)
-            # Удаляю сессию у клиента
-            del request.session['cart_id']
-            is_order = 1
-            # Отправляем админу смс
-            if SEND_SMS:
-                cart.send_sms(cart_items, form)
-            # Отправляем админу email
-            cart.send_admin_email(request, cart_items, form, cart_subtotal, discount)
-            if form.cleaned_data['email']:
-                # Отправляем email клиенту
-                cart.send_client_email(cart_items, form, cart_subtotal)
-    else:
-        form = OrderForm()
-
+        else:
+            form = OrderForm(request.POST)
+            if form.is_valid():
+                # Пишу клиента в базу
+                cart.save_client(request, form)
+                # Удаляю сессию у клиента
+                del request.session['cart_id']
+                is_order = 1
+                # Отправляем админу смс
+                if SEND_SMS:
+                    cart.send_sms(cart_items, form)
+                # Отправляем админу email
+                cart.send_admin_email(request, cart_items, form, cart_subtotal, discount)
+                if form.cleaned_data['email']:
+                    # Отправляем email клиенту
+                    cart.send_client_email(cart_items, form, cart_subtotal)
+    form = OrderForm()
     cart_items = cart.get_cart_items(request)
     if cart_items:
         subtotal_class = cart.Subtotal(request)

@@ -9,3 +9,7 @@
 </tr>
 <table>
 </form>
+{% if not 'add' in request.path %}
+Дата заведения: {{ client.ordered_at }}<br>
+<a href="delete">Удалить клиента</a>
+{% endif %}

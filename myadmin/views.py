@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, StatusForm, BaseProductFormset, CashForm, BalanceForm
+from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm
 from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
@@ -37,18 +37,15 @@ def week_boundaries(year, week):
 
 @login_required
 def sales(request, when):
-    form = StatusForm()
     money = Waytmoney.objects.get(id=1).wayt_money
     today = date.today()
     # Применяю фильтр по статусам
     if request.method == 'POST':
-        form = StatusForm(request.POST)
-        if form.is_valid():
-            clients = []
-            for i in form.cleaned_data['status']:
-               clients += Client.objects.filter(status=i)
-            # Сортирую по id - так чтобы полследний клиент был сверху
-            clients.sort(key=lambda x: x.id, reverse=True)
+        clients = []
+        for status in request.POST.getlist('status'):
+            clients += Client.objects.filter(status=status)
+        # Сортирую по id - так чтобы полследний клиент был сверху
+        clients.sort(key=lambda x: x.id, reverse=True)
     else:
         if when == 'today':
             clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month, ordered_at__day=today.day)
@@ -80,7 +77,7 @@ def sales(request, when):
 def add_client(request):
     # Создаю формы
     form = ClientForm()
-    CartProductFormset = inlineformset_factory(CartItem, CartProduct)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
     formset = CartProductFormset()
     if request.method == 'POST':
         # Создаю объект корзины для клиента
@@ -115,7 +112,7 @@ def add_client(request):
                 pass
             # После создания клиента тут же перекидываю на редактирование клиента
             return HttpResponseRedirect(reverse('myadmin.views.edit_client', args=(client.id,)))
-    return render_to_response("myadmin/sale/add_client.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def delete_client(request, id):
@@ -132,7 +129,7 @@ def edit_client(request, id):
     client = Client.objects.get(id=id)
     cartid = client.cart.id
     cart = CartItem.objects.get(id=cartid)
-    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
     if request.method == 'POST':
         # Получаю предыдущий статус клиента
         client_status = client.status
@@ -219,13 +216,13 @@ def edit_client(request, id):
                     balance.save()
         else:
             formset = CartProductFormset(instance=cart)
-            return render_to_response("myadmin/sale/edit_client.html", locals(), context_instance=RequestContext(request))
+            return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
     # Создаю формы
-    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
     formset = CartProductFormset(instance=cart)
     client = Client.objects.get(id=id)
     form = ClientForm(instance=client, prefix='client')
-    return render_to_response("myadmin/sale/edit_client.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def store(request):

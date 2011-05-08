@@ -6,8 +6,8 @@ from datetime import datetime
 
 class CartProduct(models.Model):
     cartitem = models.ForeignKey('CartItem')
-    product = models.ForeignKey(Product)
-    quantity = models.IntegerField(default=1)
+    product = models.ForeignKey(Product, verbose_name='Товар')
+    quantity = models.IntegerField(default=1, verbose_name='Количество')
 
     def augment_quantity(self, quantity):
         self.quantity = self.quantity + int(quantity)
@@ -65,7 +65,7 @@ class Client(models.Model):
     city = models.CharField(max_length=50, null=True, blank=True, verbose_name="Город")
     postcode = models.IntegerField(null=True, blank=True, verbose_name="Индекс")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
-    address = models.CharField(max_length=200, null=True, blank=True, verbose_name="Адрес")
+    address = models.CharField(max_length=500, null=True, blank=True, verbose_name="Адрес")
     email = models.EmailField(null=True, blank=True)
     cart = models.ForeignKey(CartItem)
     ordered_at = models.DateTimeField(auto_now_add=True )
@@ -74,9 +74,9 @@ class Client(models.Model):
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
     referrer = models.URLField(verify_exists=False, max_length=500)
-    comment = models.TextField(null=True, blank=True)
-    execute_at = models.DateTimeField(editable=True,null=True, blank=True)
-    delivery = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True)
+    comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
+    execute_at = models.DateTimeField(editable=True,null=True, blank=True, verbose_name='Время исполнения')
+    delivery = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True, verbose_name='Способ доставки')
 
     def get_order(self):
         cart_items = CartProduct.objects.filter(cartitem = self.cart.id)
