@@ -24,4 +24,4 @@ class Command(BaseCommand):
                     t_status = "%s %s" % (a[4][:-5], a[1][:-5])
                 client.tracking_status = t_status[:-6]
                 client.save()
-                time.sleep(5)
+                time.sleep(10)
