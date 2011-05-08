@@ -198,7 +198,9 @@
 		{{ client.surname }} {{ client.name }} {{ client.patronymic }}
         </td>
 		<td class="bottomborder rightborder">
+            {% if client.execute_at %}
                 {{ client.execute_at }}
+            {% endif %}
 		</td>
         <td class="bottomborder rightborder">
             {{ client.phone }}
