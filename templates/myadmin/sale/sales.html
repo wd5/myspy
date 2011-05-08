@@ -215,7 +215,8 @@
             {{ client.discount }} руб.
         </td>
         <td class="rightborder bottomborder">
-            {% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a>{% endif %}
+            {% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a><br>
+            {{ client.tracking_status }}{% endif %}
         </td>
         <td rowspan="2" class="bottomborder">
 			<a href="/myadmin/client/{{ client.id }}/" target="_blank"><img src="/static/res/img/edit.png"/></a>
