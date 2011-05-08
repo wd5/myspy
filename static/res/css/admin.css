@@ -84,6 +84,9 @@ body{
 	border: solid 2px #4a4a4a;
 	color: #3b4c5d;	
 }
+#allsales .addclientbtn{
+	padding: 0 20px;
+}
 #allsales .pagination{
 	padding: 5px 20px;
 }
