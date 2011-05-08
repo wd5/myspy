@@ -13,7 +13,6 @@ class Command(BaseCommand):
                 cash_in += i.cashflow
             else:
                 cash_out -= i.cashflow
-        cash_all = cash_in + cash_out
         stat = Statistic()
         stat.date = today
         stat.type = 'cash_in'
