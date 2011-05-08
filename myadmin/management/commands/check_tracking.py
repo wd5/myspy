@@ -11,7 +11,7 @@ class Command(BaseCommand):
                 try:
                     response = urllib2.urlopen('http://www.emspost.ru/tracking/%s' % client.tracking_number)
                 except urllib2.HTTPError:
-                    time.sleep(60)
+                    time.sleep(1200)
                     continue
                 result = re.findall(ur"<tr class=\"(.*)\"><td>(.+?)</tr>", response.read())
                 i = result[len(result) - 1][1]
