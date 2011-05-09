@@ -10,7 +10,7 @@ from cart.models import Client
 class ClientForm(ModelForm):
     name = forms.CharField(label='Имя*',error_messages={'required': 'Имя обязательно для заполнения'})
     phone = forms.CharField(label='Телефон*', error_messages={'required': 'Телефон обязателен для заполнения'})
-    address = forms.CharField(widget=forms.Textarea(attrs={'rows':'2'}), required=False)
+    address = forms.CharField(label='Адрес', widget=forms.Textarea(attrs={'rows':'2'}), required=False)
     class Meta:
         model = Client
         exclude = ('cart', 'referrer', 'tracking_status')
