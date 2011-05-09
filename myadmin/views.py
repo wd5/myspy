@@ -31,7 +31,7 @@ def auth(request):
 
 def logout_view(request):
     logout(request)
-    url = urlresolvers.reverse('auth')
+    url = urlresolvers.reverse('auth-page')
     return HttpResponseRedirect(url)
 
 def week_boundaries(year, week):
