@@ -140,20 +140,21 @@ class Client(models.Model):
                     if not f.name == 'subtotal':
                         if not f.name == 'discount':
                             if not f.name == 'change_log':
-                                if f.value_from_object(old):
-                                    self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                      (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                       f.value_from_object(old), f.value_from_object(self))
-                                    print u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                      (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                       f.value_from_object(old), f.value_from_object(self))
-                                else:
-                                    self.change_log += u"%s - %s добавил %s %s<br>\r" %\
-                                                 (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                                  f.value_from_object(self))
-                                    print u"%s - %s добавил %s %s<br>\r" %\
-                                                 (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                                  f.value_from_object(self))
+                                if not f.name == 'last_user':
+                                    if f.value_from_object(old):
+                                        self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                          (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                           f.value_from_object(old), f.value_from_object(self))
+                                        print u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                          (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                           f.value_from_object(old), f.value_from_object(self))
+                                    else:
+                                        self.change_log += u"%s - %s добавил %s %s<br>\r" %\
+                                                     (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                      f.value_from_object(self))
+                                        print u"%s - %s добавил %s %s<br>\r" %\
+                                                     (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                      f.value_from_object(self))
         super(Client, self).save() # Call the "real" save() method.
         if not not_new == self.pk:
             client = Client.objects.get(pk=self.pk)
