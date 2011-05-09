@@ -31,7 +31,8 @@ def auth(request):
 
 def logout_view(request):
     logout(request)
-    return render_to_response("myadmin/auth.html", locals(), context_instance=RequestContext(request))
+    url = urlresolvers.reverse('auth')
+    return HttpResponseRedirect(url)
 
 def week_boundaries(year, week):
     start_of_year = date(year, 1, 1)
