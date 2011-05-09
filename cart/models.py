@@ -32,7 +32,6 @@ class CartProduct(models.Model):
                     if f.name == 'quantity':
                         if old.product == self.product:
                             client.change_log += u"%s - %s изменил %s с %s шт на %s шт<br>\r" % (date.today() ,client.last_user, self.product, f.value_from_object(old), f.value_from_object(self))
-                            print u"%s - %s изменил %s с %s шт на %s шт<br>\r" % (date.today() ,client.last_user, self.product, f.value_from_object(old), f.value_from_object(self))
                             client.save()
                     elif f.name == 'product':
                         old_product = Product.objects.get(pk=f.value_from_object(old))
@@ -47,7 +46,6 @@ class CartProduct(models.Model):
                     if f.name == 'cartitem':
                         client.change_log += u"%s - %s добавил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity )
                         client.save()
-                        print u"%s - %s добавил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity)
 
 class CartItem(models.Model):
     cart_id = models.CharField(max_length=50)
@@ -145,14 +143,8 @@ class Client(models.Model):
                                         self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
                                           (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
                                            f.value_from_object(old), f.value_from_object(self))
-                                        print u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                          (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                           f.value_from_object(old), f.value_from_object(self))
                                     else:
                                         self.change_log += u"%s - %s добавил %s %s<br>\r" %\
-                                                     (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                                      f.value_from_object(self))
-                                        print u"%s - %s добавил %s %s<br>\r" %\
                                                      (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
                                                       f.value_from_object(self))
         super(Client, self).save() # Call the "real" save() method.
@@ -160,7 +152,6 @@ class Client(models.Model):
             client = Client.objects.get(pk=self.pk)
             client.change_log = u"%s - %s добавил клиента<br>\r" % (date.today(), client.last_user)
             client.save()
-            print u"%s - %s добавил клиента<br>\r" % (date.today(), client.last_user)
 
 class Test(models.Model):
     sms_status = models.NullBooleanField()
