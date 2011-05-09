@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
 from models import Cash, Balance, Waytmoney
+from django.contrib.auth import logout
 
 def auth(request):
     if request.method == 'POST':
@@ -26,6 +27,10 @@ def auth(request):
             return HttpResponseRedirect("/myadmin/sales/all/")
         else:
             error = True
+    return render_to_response("myadmin/auth.html", locals(), context_instance=RequestContext(request))
+
+def logout_view(request):
+    logout(request)
     return render_to_response("myadmin/auth.html", locals(), context_instance=RequestContext(request))
 
 def week_boundaries(year, week):
