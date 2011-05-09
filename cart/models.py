@@ -16,9 +16,12 @@ class CartProduct(models.Model):
     def delete(self, using=None):
         for f in self._meta.fields:
             if f.name == 'cartitem':
-                client = Client.objects.get(cart=self.cartitem)
-                client.change_log += u"%s - %s удалил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity)
-                client.save()
+                try:
+                    client = Client.objects.get(cart=self.cartitem)
+                    client.change_log += u"%s - %s удалил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity)
+                    client.save()
+                except :
+                    pass
         super(CartProduct, self).delete() # Call the "real" save() method.
 
 
@@ -26,26 +29,32 @@ class CartProduct(models.Model):
         not_new = self.pk
         if not_new:
             old = CartProduct.objects.get(pk=self.pk)
-            client = Client.objects.get(cart=old.cartitem.pk)
-            for f in self._meta.fields:
-                if f.value_from_object(old) != f.value_from_object(self):
-                    if f.name == 'quantity':
-                        if old.product == self.product:
-                            client.change_log += u"%s - %s изменил %s с %s шт на %s шт<br>\r" % (date.today() ,client.last_user, self.product, f.value_from_object(old), f.value_from_object(self))
+            try:
+                client = Client.objects.get(cart=old.cartitem.pk)
+                for f in self._meta.fields:
+                    if f.value_from_object(old) != f.value_from_object(self):
+                        if f.name == 'quantity':
+                            if old.product == self.product:
+                                client.change_log += u"%s - %s изменил %s с %s шт на %s шт<br>\r" % (date.today() ,client.last_user, self.product, f.value_from_object(old), f.value_from_object(self))
+                                client.save()
+                        elif f.name == 'product':
+                            old_product = Product.objects.get(pk=f.value_from_object(old))
+                            new_product = Product.objects.get(pk=f.value_from_object(self))
+                            client.change_log += u"%s - %s изменил %s(%s шт) на %s(%s шт)<br>\r" % (date.today(), client.last_user, old_product, old.quantity, new_product, self.quantity)
                             client.save()
-                    elif f.name == 'product':
-                        old_product = Product.objects.get(pk=f.value_from_object(old))
-                        new_product = Product.objects.get(pk=f.value_from_object(self))
-                        client.change_log += u"%s - %s изменил %s(%s шт) на %s(%s шт)<br>\r" % (date.today(), client.last_user, old_product, old.quantity, new_product, self.quantity)
-                        client.save()
+            except:
+                pass
         super(CartProduct, self).save() # Call the "real" save() method.
         if not self.pk == not_new:
-            client = Client.objects.get(cart=self.cartitem)
-            if not "добавил клиента" in client.change_log.split('\r')[len(client.change_log.split('\r')) - 2].encode('utf-8'):
-                for f in self._meta.fields:
-                    if f.name == 'cartitem':
-                        client.change_log += u"%s - %s добавил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity )
-                        client.save()
+            try:
+                client = Client.objects.get(cart=self.cartitem)
+                if not "добавил клиента" in client.change_log.split('\r')[len(client.change_log.split('\r')) - 2].encode('utf-8'):
+                    for f in self._meta.fields:
+                        if f.name == 'cartitem':
+                            client.change_log += u"%s - %s добавил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity )
+                            client.save()
+            except:
+                pass
 
 class CartItem(models.Model):
     cart_id = models.CharField(max_length=50)
@@ -131,6 +140,10 @@ class Client(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None):
         not_new = self.pk
+        if not self.last_user:
+            user = u"Сайт"
+        else:
+            user = self.last_user
         if not_new:
             old = Client.objects.get(pk=self.pk)
             for f in self._meta.fields:
@@ -141,16 +154,16 @@ class Client(models.Model):
                                 if not f.name == 'last_user':
                                     if f.value_from_object(old):
                                         self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                          (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                          (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
                                            f.value_from_object(old), f.value_from_object(self))
                                     else:
                                         self.change_log += u"%s - %s добавил %s %s<br>\r" %\
-                                                     (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                     (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
                                                       f.value_from_object(self))
         super(Client, self).save() # Call the "real" save() method.
         if not not_new == self.pk:
             client = Client.objects.get(pk=self.pk)
-            client.change_log = u"%s - %s добавил клиента<br>\r" % (date.today(), client.last_user)
+            client.change_log = u"%s - %s добавил клиента<br>\r" % (date.today(), user)
             client.save()
 
 class Test(models.Model):
