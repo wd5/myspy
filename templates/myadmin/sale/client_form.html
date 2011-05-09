@@ -11,5 +11,7 @@
 </form>
 {% if not 'add' in request.path %}
 Дата заведения: {{ client.ordered_at }}<br>
-<a href="delete">Удалить клиента</a>
+<a href="delete">Удалить клиента</a><br><br>
+    История изменений:<br>
+    {{ client.change_log|safe }}
 {% endif %}

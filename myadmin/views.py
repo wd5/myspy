@@ -92,6 +92,7 @@ def add_client(request):
             newform = form.save(commit=False)
             # Записываю корзину клиента
             newform.cart_id = cart.id
+            newform.last_user = request.user.first_name
             newform.save()
             # Сохраняю форму используя объект корзины клиента
             formset = CartProductFormset(request.POST, instance=cart)
@@ -136,7 +137,9 @@ def edit_client(request, id):
         # Сохраняю форму используя объект клиента
         form = ClientForm(request.POST, instance=client, prefix='client')
         if form.is_valid():
-            form.save()
+            newform = form.save(commit=False)
+            newform.last_user = request.user.first_name
+            newform.save()
             # Сохраняю форму используя объект корзины клиента
             formset = CartProductFormset(request.POST, instance=cart)
             if formset.is_valid():

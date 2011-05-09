@@ -1,8 +1,8 @@
           # -*- coding: utf-8 -*-
 from django.db import models
+from django.utils.encoding import smart_unicode
+from datetime import date
 from catalog.models import Product
-from datetime import datetime
-
 
 class CartProduct(models.Model):
     cartitem = models.ForeignKey('CartItem')
@@ -12,6 +12,42 @@ class CartProduct(models.Model):
     def augment_quantity(self, quantity):
         self.quantity = self.quantity + int(quantity)
         self.save()
+
+    def delete(self, using=None):
+        for f in self._meta.fields:
+            if f.name == 'cartitem':
+                client = Client.objects.get(cart=self.cartitem)
+                client.change_log += u"%s - %s удалил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity)
+                client.save()
+        super(CartProduct, self).delete() # Call the "real" save() method.
+
+
+    def save(self, force_insert=False, force_update=False, using=None):
+        not_new = self.pk
+        if not_new:
+            old = CartProduct.objects.get(pk=self.pk)
+            client = Client.objects.get(cart=old.cartitem.pk)
+            for f in self._meta.fields:
+                if f.value_from_object(old) != f.value_from_object(self):
+                    if f.name == 'quantity':
+                        if old.product == self.product:
+                            client.change_log += u"%s - %s изменил %s с %s шт на %s шт<br>\r" % (date.today() ,client.last_user, self.product, f.value_from_object(old), f.value_from_object(self))
+                            print u"%s - %s изменил %s с %s шт на %s шт<br>\r" % (date.today() ,client.last_user, self.product, f.value_from_object(old), f.value_from_object(self))
+                            client.save()
+                    elif f.name == 'product':
+                        old_product = Product.objects.get(pk=f.value_from_object(old))
+                        new_product = Product.objects.get(pk=f.value_from_object(self))
+                        client.change_log += u"%s - %s изменил %s(%s шт) на %s(%s шт)<br>\r" % (date.today(), client.last_user, old_product, old.quantity, new_product, self.quantity)
+                        client.save()
+        super(CartProduct, self).save() # Call the "real" save() method.
+        if not self.pk == not_new:
+            client = Client.objects.get(cart=self.cartitem)
+            if not "добавил клиента" in client.change_log.split('\r')[len(client.change_log.split('\r')) - 2].encode('utf-8'):
+                for f in self._meta.fields:
+                    if f.name == 'cartitem':
+                        client.change_log += u"%s - %s добавил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity )
+                        client.save()
+                        print u"%s - %s добавил %s(%s шт)<br>\r" % (date.today(), client.last_user, self.product, self.quantity)
 
 class CartItem(models.Model):
     cart_id = models.CharField(max_length=50)
@@ -74,10 +110,13 @@ class Client(models.Model):
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
     tracking_status = models.CharField(max_length=500, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
+    sms_status = models.NullBooleanField()
     referrer = models.URLField(verify_exists=False, max_length=500)
     comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
     execute_at = models.DateTimeField(editable=True,null=True, blank=True, verbose_name='Время исполнения')
     delivery = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True, verbose_name='Способ доставки')
+    last_user = models.CharField(max_length=200, null=True, blank=True)
+    change_log = models.TextField(null=True, blank=True)
 
     def get_order(self):
         cart_items = CartProduct.objects.filter(cartitem = self.cart.id)
@@ -91,3 +130,36 @@ class Client(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def save(self, force_insert=False, force_update=False, using=None):
+        not_new = self.pk
+        if not_new:
+            old = Client.objects.get(pk=self.pk)
+            for f in self._meta.fields:
+                if f.value_from_object(old) != f.value_from_object(self):
+                    if not f.name == 'subtotal':
+                        if not f.name == 'discount':
+                            if not f.name == 'change_log':
+                                if f.value_from_object(old):
+                                    self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                      (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                       f.value_from_object(old), f.value_from_object(self))
+                                    print u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                      (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                       f.value_from_object(old), f.value_from_object(self))
+                                else:
+                                    self.change_log += u"%s - %s добавил %s %s<br>\r" %\
+                                                 (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                  f.value_from_object(self))
+                                    print u"%s - %s добавил %s %s<br>\r" %\
+                                                 (date.today(), self.last_user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                  f.value_from_object(self))
+        super(Client, self).save() # Call the "real" save() method.
+        if not not_new == self.pk:
+            client = Client.objects.get(pk=self.pk)
+            client.change_log = u"%s - %s добавил клиента<br>\r" % (date.today(), client.last_user)
+            client.save()
+            print u"%s - %s добавил клиента<br>\r" % (date.today(), client.last_user)
+
+class Test(models.Model):
+    sms_status = models.NullBooleanField()
