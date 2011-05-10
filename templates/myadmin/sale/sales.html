@@ -208,7 +208,7 @@
             {{ client.phone }}
         </td>
 		<td class="bottomborder rightborder">
-			{{ client.get_order }}
+			{{ client.get_order|safe }}
 		</td>
         <td class="bottomborder rightborder">
             {{ client.subtotal }} руб.
