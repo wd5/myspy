@@ -11,17 +11,29 @@ body{
 #allsales_block{
 	padding: 0 0 0 0;
 }
-#allsales_block a{
+a{
 	color:#2778c5;
 }
-#allsales_block a:hover{
+a:hover{
 	text-decoration: none;
 }
-#allsales_block .menu{
-	margin-top: 20px;
+.menu{
+	margin: 0px auto;
 }
-#allsales_block .menu td{
+.menu td{
 	padding: 5px 20px;
+	background: url('../img/menu_bg_admin.jpg') top left repeat-x;
+	height: 30px;
+	vertical-align: center;
+	line-height: 20px;
+	font-size: 14px;
+}
+.menu td:hover{
+	background-position: left bottom;
+}
+#menu_block{
+	width: 100%;
+	background: url('../img/menu_bg_admin.jpg') top left repeat-x;
 }
 #allsales_block #money{
 	position: absolute;
@@ -36,9 +48,11 @@ body{
 	z-index: 999;
 	background: #ebf1fe;
 	top:0;
-	border-bottom: solid 2px #4a4a4a;
+	border-bottom: solid 2px #999;
+	border-top: solid 2px #999;
+	position: relative;
 }
-#selector_block .selectbutton{
+.selectbutton{
 	border: none;
 	background: #2778c5;
 	cursor: pointer;
@@ -47,6 +61,11 @@ body{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	margin: 10px 0 0;
+	font-size: 12px;
+}
+a.selectbutton{
+	padding: 3px 10px 2px;
+	text-decoration: none;
 }
 #selector_block p{
 	text-align:right; 
@@ -74,15 +93,19 @@ body{
 #period{
 	width: 90%;
 	text-align: right;
-	padding: 5px 5% 0;
+	padding: 25px 5% 0;
 }
 #period span{
 	float: left;
 }
-#allsales{
+#allsales, #client_edit_form_table{
 	margin: 20px auto;
-	border: solid 2px #4a4a4a;
+	border: solid 2px #999;
 	color: #3b4c5d;	
+}
+#client_edit_form_table{
+	font-size: 12px;
+	padding: 5px;
 }
 #allsales .addclientbtn{
 	padding: 0 20px;
@@ -105,4 +128,6 @@ body{
 }
 #allsales .clientinfo td, #allsales .clientadress td{
 	background: #fefefe;
+}
+#id_sms_status{
 }
