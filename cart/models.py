@@ -129,7 +129,7 @@ class Client(models.Model):
         cart_items = CartProduct.objects.filter(cartitem = self.cart.id)
         products = ""
         for item in cart_items:
-            products += u"%s - %sшт; " % (item.product.slug, item.quantity )
+            products += u"<a href=\"%s\" target=\"_blank\">%s</a> - %sшт; " % (item.product.get_absolute_url(), item.product.slug, item.quantity )
         return products
 
     class Meta:
