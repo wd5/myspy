@@ -8,7 +8,6 @@ from hashlib import md5
 import decimal
 import random
 import settings
-from django.utils.encoding import smart_str, smart_unicode
 
 CART_ID_SESSION_KEY = 'cart_id'
 
