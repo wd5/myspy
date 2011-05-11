@@ -11,6 +11,9 @@ body{
 #allsales_block{
 	padding: 0 0 0 0;
 }
+.clr{
+	clear: both;
+}
 a{
 	color:#2778c5;
 }
@@ -22,24 +25,27 @@ a:hover{
 }
 .menu td{
 	padding: 5px 20px;
-	background: url('../img/menu_bg_admin.jpg') top left repeat-x;
 	height: 30px;
 	vertical-align: center;
 	line-height: 20px;
 	font-size: 14px;
 }
 .menu td:hover{
-	background-position: left bottom;
+	background:#999;
 }
 #menu_block{
-	width: 100%;
-	background: url('../img/menu_bg_admin.jpg') top left repeat-x;
+/* 	background: url('../img/menu_bg_admin.jpg') top left repeat-x; */
+	border: solid 2px #999;
+	position: relative;
 }
 #allsales_block #money{
 	position: absolute;
 	top:0;
 	right:0;
 	padding: 20px;
+}
+.textcenter{
+	text-align: center;
 }
 .margincenter{
 	margin:0 auto;
@@ -49,7 +55,6 @@ a:hover{
 	background: #ebf1fe;
 	top:0;
 	border-bottom: solid 2px #999;
-	border-top: solid 2px #999;
 	position: relative;
 }
 .selectbutton{
@@ -93,10 +98,16 @@ a.selectbutton{
 #period{
 	width: 90%;
 	text-align: right;
-	padding: 25px 5% 0;
+	padding: 25px 5% 10px;
 }
 #period span{
 	float: left;
+}
+#allsales td{
+	padding: 5px;
+}
+#allsales th label{
+	font-size: 13px;
 }
 #allsales, #client_edit_form_table{
 	margin: 20px auto;
@@ -108,7 +119,7 @@ a.selectbutton{
 	padding: 5px;
 }
 #allsales .addclientbtn{
-	padding: 0 20px;
+	padding: 10px 20px;
 }
 #allsales .pagination{
 	padding: 5px 20px;
@@ -130,4 +141,33 @@ a.selectbutton{
 	background: #fefefe;
 }
 #id_sms_status{
+}
+#add_formstats{
+	position: absolute;
+	top:50px;
+	right: 0;
+	border: solid 2px #999;
+	padding: 10px;
+	max-width:15%;
+	background: white;
+}
+#add_formstats .title{
+	background: rgb(235, 241, 254);
+	text-align: center;
+	margin: 0 0 10px 0;
+}
+.orange{
+	color: #e66202;
+}
+.autent{
+	position: absolute;
+	top:0;
+	right: 0;
+	padding: 7px 20px;
+}
+.money_stat{
+	padding: 15px 15px 0;
+}
+.money_stat td{
+	padding: 3px 5px;
 }
