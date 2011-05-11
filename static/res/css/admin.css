@@ -131,3 +131,8 @@ a.selectbutton{
 }
 #id_sms_status{
 }
+#add_formstats{
+	position: absolute;
+	top:50px;
+	right: 0;
+}

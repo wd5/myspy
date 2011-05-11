@@ -28,19 +28,37 @@
 							<tr>
 								<td>
 									<label for="id_status_0">
-									<input class="first" id="id_status_0" type="checkbox" value="PROCESS" name="status">
+									<input class="first" id="id_status_0" type="checkbox" value="PROCESS" name='status'
+									{% for i in statuses %}
+										{% if i == "PROCESS" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
 									{% status_count "PROCESS" %}
 									</label>
 								</td>
 								<td>
 									<label for="id_status_4">
-									<input class="second" id="id_status_4" type="checkbox" value="COURIER_TAKE" name="status">
+									<input class="second" id="id_status_4" type="checkbox" value="COURIER_TAKE" name="status"
+									{% for i in statuses %}
+										{% if i == "COURIER_TAKE" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                     {% status_count "COURIER_TAKE" %}
 									</label>
 								</td>
 								<td>
 									<label for="id_status_10">
-									<input class="fird" id="id_status_10" type="checkbox" value="REFUSED" name="status">
+									<input class="fird" id="id_status_10" type="checkbox" value="REFUSED" name="status"
+									{% for i in statuses %}
+										{% if i == "REFUSED" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
 	                                {% status_count "REFUSED" %}
 									</label>
 								</td>
@@ -48,19 +66,37 @@
 							<tr>
 								<td>
 								<label for="id_status_1">
-								<input class="first" id="id_status_1" type="checkbox" value="POSTSEND" name="status">
+								<input class="first" id="id_status_1" type="checkbox" value="POSTSEND" name="status"
+								{% for i in statuses %}
+										{% if i == "POSTSEND" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "POSTSEND" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_5">
-								<input class="second" id="id_status_5" type="checkbox" value="BUYER_TAKE" name="status">
+								<input class="second" id="id_status_5" type="checkbox" value="BUYER_TAKE" name="status"
+								{% for i in statuses %}
+										{% if i == "BUYER_TAKE" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "BUYER_TAKE" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_11">
-								<input class="fird" id="id_status_11" type="checkbox" value="CASH_IN" name="status">
+								<input class="fird" id="id_status_11" type="checkbox" value="CASH_IN" name="status"
+								{% for i in statuses %}
+										{% if i == "CASH_IN" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "CASH_IN" %}
 								</label>
 								</td>
@@ -68,13 +104,25 @@
 							<tr>
 								<td>
 								<label for="id_status_3">
-								<input class="first" id="id_status_3" type="checkbox" value="COURIER_SEND" name="status">
+								<input class="first" id="id_status_3" type="checkbox" value="COURIER_SEND" name="status"
+								{% for i in statuses %}
+										{% if i == "COURIER_SEND" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "COURIER_SEND" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_6">
-								<input class="second" id="id_status_6" type="checkbox" value="WAYT_PRODUCT" name="status">
+								<input class="second" id="id_status_6" type="checkbox" value="WAYT_PRODUCT" name="status"
+								{% for i in statuses %}
+										{% if i == "WAYT_PRODUCT" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "WAYT_PRODUCT" %}
 								</label>
 								</td>
@@ -88,13 +136,25 @@
 							<tr>
 								<td>
 								<label for="id_status_8">
-								<input class="first" id="id_status_8" type="checkbox" value="BACK" name="status">
+								<input class="first" id="id_status_8" type="checkbox" value="BACK" name="status"
+								{% for i in statuses %}
+										{% if i == "BACK" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "BACK" %}
 								</label>
 								</td>
 								<td>
 								<label for="id_status_2">
-								<input class="second" id="id_status_2" type="checkbox" value="POSTSENDED" name="status">
+								<input class="second" id="id_status_2" type="checkbox" value="POSTSENDED" name="status"
+								{% for i in statuses %}
+										{% if i == "POSTSENDED" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "POSTSENDED" %}
 								</label>
 								</td>
@@ -103,7 +163,13 @@
 							<tr>
 								<td>
 								<label for="id_status_9">
-								<input class="first" class="fird" id="id_status_9" type="checkbox" value="CONTACT_AT" name="status">
+								<input class="first" class="fird" id="id_status_9" type="checkbox" value="CONTACT_AT" name="status"
+								{% for i in statuses %}
+										{% if i == "CONTACT_AT" %}
+									    	checked="checked"
+									    {% endif %}
+									{% endfor %}
+									>
                                 {% status_count "CONTACT_AT" %}
 								</label>
 								</td>
@@ -262,4 +328,6 @@
 
 
 </div>
+
 {% endblock %}
+

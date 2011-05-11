@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ru-RU">
 <head>
 	<link rel="stylesheet" href="{{ STATIC_URL }}res/css/admin.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}js/anytimec.css" type="text/css" media="screen" />
 	<script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery1.4.2.js'></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}res/js/jquery.cookie.js"></script>
-	
-		<link type="text/css" href="{{ STATIC_URL }}res/css/ui-lightness/jquery-ui-1.8.12.custom.css" rel="stylesheet" />
-		<script src="{{ STATIC_URL }}js/jquery-ui-1.8.12.custom.min.js" type="text/javascript"></script>
-		<script src="{{ STATIC_URL }}js/development-bundle/ui/i18n/jquery.ui.datepicker-ru.js" type="text/javascript"></script>
-	
+	<script type="text/javascript" src="{{ STATIC_URL }}res/js/jquery.cookie.js"></script>	
+		
+		<script type="text/javascript" src="{{ STATIC_URL }}js/anytimec.js"></script>
+		
+		
 	<script type='text/javascript'>
 		jQuery(document).ready(function(){
 			//alert('!');
@@ -37,7 +37,9 @@
 					jQuery('#id_sms_status, #id_client-sms_status').parents('tr').hide();
 				}
 			});
-			jQuery("#id_execute_at").datepicker();
+			  jQuery("#id_execute_at, #id_client-execute_at").AnyTime_picker(
+			     { format: "%Y-%m-%d %H:%i:%s", firstDOW: 1 }
+			   );
 		});
 	</script>
 </head>
