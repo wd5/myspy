@@ -14,12 +14,14 @@
 			    <a href="/myadmin/cash/month/" target="_blank">Касса</a>
 			</td>
 		</table>
+		<div class="autent">
+		{{ request.user }}
+		    <a href="/myadmin/logout/">Выйти</a>
+		</div>
 	</div>
 	<div id="selector_block">
 		<div id="money">
-		    {{ request.user }}
-		    <a href="/myadmin/logout/">Выйти</a><br>
-			Ожидаемое количество денег:</br> {{ money }} руб
+			Ожидаемое количество денег:</br> <span class="orange">{{ money }}</span> руб
 		</div>
 		<div class="hidden">
 			<form action="" method="post">{% csrf_token %}

@@ -12,6 +12,10 @@
 			    <a href="/myadmin/cash/month/" target="_blank">Касса</a>
 			</td>
 		</table>
+		<div class="autent">
+		{{ request.user }}
+		    <a href="/myadmin/logout/">Выйти</a>
+		</div>
 	</div>
 	<form action="" method="post">{% csrf_token %}
 		<table id="client_edit_form_table" class="margincenter">
@@ -35,7 +39,7 @@
 	
 	{% if not 'add' in request.path %}
 	<div id="add_formstats">		
-		    История изменений:<br>
+		   	<p class="title"> История изменений:</p>
 		    {{ client.change_log|safe }}
 	</div>
 	{% endif %}

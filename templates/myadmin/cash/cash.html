@@ -1,14 +1,63 @@
+{% extends "myadmin/base.html" %}
+{% block site_wrapper %}
 {% load date_tags %}
-<td style="background:#cccccc;" rowspan="2">
-    <a href="/myadmin/cash/add" target="_blank">Добавить денежный поток</a>
-</td><br>
-Всего: {{ balance.total }}<br>
-Наличка: {{ balance.encash }}<br>
-Яндекс деньги: {{ balance.yandex }}<br>
-Webmoney: {{ balance.webmoney }}<br>
-<a href="/myadmin/cash/editbalance" target="_blank">Редактировать капитал</a>
-<table border="1px" cellpadding="5px" cellspacing="1px">
-	<tr style="background:#cccccc;">
+	<div id="menu_block">
+		<table cellpadding="0" cellspacing="0" border="0" class="menu">
+			<td rowspan="2">
+			    <a href="/myadmin/sales/all/" >Клиенты</a>
+			</td>
+			<td rowspan="2">
+			    <a href="/myadmin/store" target="_blank">Склад</a>
+			</td>
+			<td rowspan="2">
+			    <a href="/myadmin/cash/month/" target="_blank">Касса</a>
+			</td>
+		</table>
+		<div class="autent">
+		{{ request.user }}
+		    <a href="/myadmin/logout/">Выйти</a>
+		</div>
+	</div>
+	<div id="selector_block">
+		<div class="money_stat">
+			<table class="alignleft" cellspacing="0" cellpadding="0" border="0">
+				<tr><td>Всего: </td><td><span class="orange">{{ balance.total }}</span></td></tr>
+				<tr><td>Наличка: </td><td><span class="orange">{{ balance.encash }}</span></td></tr>
+				<tr><td>Яндекс деньги: </td><td><span class="orange">{{ balance.yandex }}</span></td></tr>
+				<tr><td>Webmoney: </td><td><span class="orange">{{ balance.webmoney }}</span></td></tr>
+			</table>
+			<table class="alignright" cellspacing="0" cellpadding="0" border="0">
+				<tr><td>Пришло за {{ when }}: </td><td><span class="orange">{{ cash_in }}</span> руб.</td></tr>
+				<tr><td>Ушло за {{ when }}: </td><td><span class="orange">{{ cash_out }}</span> руб.</td></tr>
+				<tr><td>Оборот за {{ when }}: </td><td><span class="orange">{{ cash_all }}</span> руб.</td></tr>
+			</table>
+			<div class="clr"></div>
+		</div>
+		<div id="period">
+			<span>
+				{% date_tags request.path %}
+			</span>
+			<a href="/myadmin/cash/today/">За сегодня</a>
+			<a href="/myadmin/cash/week/">За неделю</a>
+			<a href="/myadmin/cash/month/">За месяц</a>
+			<a href="/myadmin/cash/year/">За год</a>
+		</div>
+	</div>
+
+
+
+<table id="allsales" cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td class="addclientbtn" colspan="2">
+		    <a href="/myadmin/cash/editbalance" target="_blank">Редактировать капитал</a>
+		</td>
+		<td colspan="5">
+			<div class="pagination alignright">
+			 	<a href="/myadmin/cash/add" target="_blank">Добавить денежный поток</a>
+			</div>
+		</td>
+	</tr>
+	<tr style="background:#cccccc;" class="textcenter">
 		<td>
 			Дата
 		</td>
@@ -27,38 +76,32 @@ Webmoney: {{ balance.webmoney }}<br>
         <td>
             Комментарий
         </td>
-	<tr>
+        <td></td>
+	</tr>
 	{% for item in cash %}
-	<tr>
-		<td style="background:#cccccc;">
+	<tr class="clientinfo 	">
+		<td class="bottomborder rightborder textcenter">
 			{{ item.date }}
 		</td>
-        <td >
+        <td class="bottomborder rightborder textcenter">
             {{ item.cashflow }}
         </td>
-		<td>
+		<td class="bottomborder rightborder textcenter">
             {{ item.balance }}
 		</td>
-        <td>
+        <td class="bottomborder rightborder">
             {{ item.get_cause_display }}
         </td>
-        <td>
+        <td class="bottomborder rightborder">
             {{ item.get_type_display }}
         </td>
-        <td>
+        <td class="bottomborder rightborder">
             {% if item.cause == 'FROM_CLIENT' %} <a href="/myadmin/client/{{ item.comment }}">Клиент {{ item.comment }}</a> {% else %} {{ item.comment }} {% endif %}
         </td>
-        <td style="background:#cccccc;">
-			<a href="/myadmin/cash/edit/{{ item.id }}/" target="_blank">Редактировать</a>
+        <td class="bottomborder">
+			<a href="/myadmin/cash/edit/{{ item.id }}/" target="_blank"><img src="/static/res/img/edit.png"/></a>
 		</td>
 	</tr>
 	{% endfor %}<br>
-{% date_tags request.path %}<br>
-<a href="/myadmin/cash/today/">За сегодня</a>, 
-<a href="/myadmin/cash/week/">За неделю</a>,
-<a href="/myadmin/cash/month/">За месяц</a>,
-<a href="/myadmin/cash/year/">За год</a><br>
 </table>
-Пришло за {{ when }}: {{ cash_in }} руб.<br>
-Ушло за {{ when }}: {{ cash_out }} руб.<br>
-Оборот за {{ when }}: {{ cash_all }} руб.<br>
+{% endblock %}

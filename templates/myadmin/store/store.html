@@ -1,35 +1,56 @@
-<table border="1px" cellpadding="5px" cellspacing="1px">
-	<tr style="background:#cccccc;">
-		<td>
-			Наименование
-		</td>
-        <td>
-            Количество
-        </td>
-        <td>
-            Розничная цена
-        </td>
-		<td>
-			Цена закупки
-		</td>
-	<tr>
-	{% for product in products %}
-	<tr>
-		<td style="background:#cccccc;">
-			{{ product.name }}
-		</td>
-        <td >
-            {{ product.quantity }}
-        </td>
-		<td>
-            {{ product.price }}
-		</td>
-        <td>
-            {{ product.wholesale_price }}
-        </td>
-	</tr>
-	{% endfor %}
-</table>
-Денег в рознице: {{ money_in_retail }} руб <br>
-Денег в опте: {{ money_in_wholesale }} руб
-
+{% extends "myadmin/base.html" %}
+{% block site_wrapper %}
+	<div id="menu_block">
+		<table cellpadding="0" cellspacing="0" border="0" class="menu">
+			<td rowspan="2">
+			    <a href="/myadmin/sales/all/" >Клиенты</a>
+			</td>
+			<td rowspan="2">
+			    <a href="/myadmin/store" target="_blank">Склад</a>
+			</td>
+			<td rowspan="2">
+			    <a href="/myadmin/cash/month/" target="_blank">Касса</a>
+			</td>
+		</table>
+		<div class="autent">
+		{{ request.user }}
+		    <a href="/myadmin/logout/">Выйти</a>
+		</div>
+	</div>
+	<table id="allsales" cellpadding="5px" cellspacing="0">
+		<tr style="background:#cccccc;" class="textcenter">
+			<td class="bottomborder rightborder">
+				Наименование
+			</td>
+	        <td class="bottomborder rightborder">
+	            Количество
+	        </td>
+	        <td class="bottomborder rightborder">
+	            Розничная цена
+	        </td>
+			<td class="bottomborder">
+				Цена закупки
+			</td>
+		<tr>
+		{% for product in products %}
+		<tr class="clientinfo">
+			<td class="bottomborder rightborder">
+				{{ product.name }}
+			</td>
+	        <td class="bottomborder rightborder textcenter">
+	            {{ product.quantity }}
+	        </td>
+			<td class="bottomborder rightborder textcenter">
+	            {{ product.price }}
+			</td>
+	        <td class="bottomborder textcenter">
+	            {{ product.wholesale_price }}
+	        </td>
+		</tr>
+		{% endfor %}
+	</table>
+	<div id="add_formstats">
+		Денег в рознице: <span class="orange">{{ money_in_retail }}</span> руб <br/><br/>
+		Денег в опте: <span class="orange">{{ money_in_wholesale }}</span> руб
+	</div>
+{% endblock %}
