@@ -51,7 +51,7 @@ def sales(request, when):
     # Применяю фильтр по статусам
     if request.method == 'POST':
         clients = []
-        statuses = []
+        statuses = {}
         for status in request.POST.getlist('status'):
             statuses += status
             clients += Client.objects.filter(status=status)
