@@ -7,7 +7,7 @@ import threading, urllib2, urllib
 from hashlib import md5
 import decimal
 import random
-import settings
+import settings, re
 
 CART_ID_SESSION_KEY = 'cart_id'
 
@@ -188,7 +188,7 @@ def send_sms(cart_items, form):
     login = 'palv1@yandex.ru'
     password = '97ajhJaj9zna'
     phones = ["79151225291", "79267972292"]
-    from_phone = form.cleaned_data['phone']
+    from_phone = re.sub("\D", "", form.cleaned_data['phone'])
     products = ""
     for item in cart_items:
         products += "%sx%s" % (item.product.slug, item.quantity)
