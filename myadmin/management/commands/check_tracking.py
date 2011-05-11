@@ -14,14 +14,17 @@ class Command(BaseCommand):
                     time.sleep(1200)
                     continue
                 result = re.findall(ur"<tr class=\"(.*)\"><td>(.+?)</tr>", response.read())
-                i = result[len(result) - 1][1]
-                a = i.split('<td>')
-                if a[4][:-5] == 'Единичный':
-                    t_status = "%s %s" % (a[0][:-5], a[1][:-5])
-                elif a[4][:-5] == 'Иная':
-                    t_status = "%s %s" % (a[0][:-5], a[1][:-5])
-                else:
-                    t_status = "%s %s" % (a[4][:-5], a[1][:-5])
-                client.tracking_status = t_status[:-6]
-                client.save()
-                time.sleep(10)
+                try:
+                    i = result[len(result) - 1][1]
+                    a = i.split('<td>')
+                    if a[4][:-5] == 'Единичный':
+                        t_status = "%s %s" % (a[0][:-5], a[1][:-5])
+                    elif a[4][:-5] == 'Иная':
+                        t_status = "%s %s" % (a[0][:-5], a[1][:-5])
+                    else:
+                        t_status = "%s %s" % (a[4][:-5], a[1][:-5])
+                    client.tracking_status = t_status[:-6]
+                    client.save()
+                    time.sleep(10)
+                except :
+                    pass
