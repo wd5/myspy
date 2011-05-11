@@ -53,7 +53,7 @@ def sales(request, when):
         clients = []
         statuses = {}
         for status in request.POST.getlist('status'):
-            statuses += status
+            statuses += str(status)
             clients += Client.objects.filter(status=status)
         # Сортирую по id - так чтобы полследний клиент был сверху
         clients.sort(key=lambda x: x.id, reverse=True)
