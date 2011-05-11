@@ -152,33 +152,34 @@ class Client(models.Model):
                         if not f.name == 'discount':
                             if not f.name == 'change_log':
                                 if not f.name == 'last_user':
-                                    if f.name == 'status':
-                                        if f.value_from_object(old):
-                                            self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                              (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                               old.get_status_display(), self.get_status_display())
+                                    if not f.name == 'tracking_status':
+                                        if f.name == 'status':
+                                            if f.value_from_object(old):
+                                                self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                                  (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                   old.get_status_display(), self.get_status_display())
+                                            else:
+                                                self.change_log += u"%s - %s добавил %s %s<br>\r" %\
+                                                             (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                              self.get_status_display())
+                                        elif f.name == 'delivery':
+                                            if f.value_from_object(old):
+                                                self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                                  (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                   old.get_delivery_display(), self.get_delivery_display())
+                                            else:
+                                                self.change_log += u"%s - %s добавил %s %s<br>\r" %\
+                                                             (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                              self.get_delivery_display())
                                         else:
-                                            self.change_log += u"%s - %s добавил %s %s<br>\r" %\
-                                                         (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                                          self.get_status_display())
-                                    elif f.name == 'delivery':
-                                        if f.value_from_object(old):
-                                            self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                              (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                               old.get_delivery_display(), self.get_delivery_display())
-                                        else:
-                                            self.change_log += u"%s - %s добавил %s %s<br>\r" %\
-                                                         (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                                          self.get_delivery_display())
-                                    else:
-                                        if f.value_from_object(old):
-                                            self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
-                                              (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                               f.value_from_object(old), f.value_from_object(self))
-                                        else:
-                                            self.change_log += u"%s - %s добавил %s %s<br>\r" %\
-                                                         (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
-                                                          f.value_from_object(self))
+                                            if f.value_from_object(old):
+                                                self.change_log += u"%s - %s изменил %s с %s на %s<br>\r" %\
+                                                  (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                   f.value_from_object(old), f.value_from_object(self))
+                                            else:
+                                                self.change_log += u"%s - %s добавил %s %s<br>\r" %\
+                                                             (date.today(), user, smart_unicode(Client._meta.get_field(f.name).verbose_name),
+                                                              f.value_from_object(self))
         super(Client, self).save() # Call the "real" save() method.
         if not not_new == self.pk:
             client = Client.objects.get(pk=self.pk)
