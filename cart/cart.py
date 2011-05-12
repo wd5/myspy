@@ -193,9 +193,9 @@ def send_sms(cart_items, form):
     for item in cart_items:
         products += "%sx%s" % (item.product.slug, item.quantity)
     if form.cleaned_data['postcode']:
-        msg = "%s,%s %s, %s %s %s" % (form.cleaned_data['city'], form.cleaned_data['name'], form.cleaned_data['surname'], form.cleaned_data['address'], "индекс:" + form.cleaned_data['postcode'] ,products)
+        msg = "%s %s %s %s %s %s" % (str(form.cleaned_data['city']) + ',', form.cleaned_data['name'], form.cleaned_data['surname'], form.cleaned_data['address'], u"индекс:" + str(form.cleaned_data['postcode']) ,products)
     else:
-        msg = "%s,%s %s, %s %s" % (form.cleaned_data['city'], form.cleaned_data['name'], form.cleaned_data['surname'], form.cleaned_data['address'], products)
+        msg = "%s %s %s %s %s" % (str(form.cleaned_data['city']) + ',', form.cleaned_data['name'], form.cleaned_data['surname'], form.cleaned_data['address'], products)
     msg = urllib.urlencode({'msg': msg.encode('cp1251')})
     for to_phone in phones:
         req = urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )
