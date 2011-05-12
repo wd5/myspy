@@ -1,3 +1,55 @@
-{{ entry.title }}<br>
-{{ entry.date }}<br>
-{{ entry.entry|safe }}
+{% extends "base.html" %}
+{% load catalog_filters %}
+{% block site_wrapper %}
+{% load archive %}
+<div id="page" class="fix">
+  <div id="wrapper" class="fix">
+
+    <div id="header" class="fix">
+		<a href="/" style="float:left"><img class="headerimage" src="{{ STATIC_URL }}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
+		<div class="basket" style="float:left">
+			{% cart_box request %}
+		</div>
+		<div class="icons">
+			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
+			<a href='mailto:info@my-spy.ru'>info@my-spy.ru</a>
+		</div>
+	</div>
+
+	<div id="nav" class="fix">
+		<ul class="fix homebutton">
+			<li class="page_item navfirst">
+				<a class="home" href="/" title="Home" style="background-image: url('{{ STATIC_URL }}res/img/home-icon.png');">Home</a>
+			</li>
+		</ul>
+
+    {% category_list request.path %} <!-- Категории -->
+    </div>
+	<div class="clear"></div>
+	<div>
+		<div>
+			<div id="maincontent">
+				<div id="content">
+					<div class="postwrap fix">
+					<!-- /nav -->
+						<div id="blog_posts" class="alignleft">
+							<div class="blog_post">
+								<a href="{{ entry.get_absolute_url }}" class="post_title"><h1>{{ entry.title }}</h1></a>
+								<p class="date">{{ entry.date }}</p>
+								{{ entry.entry|safe }}
+								<div class="clr"></div>
+								
+							</div>
+						</div>
+						<div class="blog_side alignleft">
+							Архив:<br>
+							{% archive %}<br><br>
+							Категории:<br>
+							{% categories %}
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
