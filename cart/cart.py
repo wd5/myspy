@@ -198,9 +198,8 @@ def send_sms(cart_items, form):
         msg = "%s %s %s %s %s" % (form.cleaned_data['city'], form.cleaned_data['name'], form.cleaned_data['surname'], form.cleaned_data['address'], products)
     msg = urllib.urlencode({'msg': msg.encode('cp1251')})
     for to_phone in phones:
-        req = urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )
-        kkk =  req.read()
-        if str(kkk) == "1":
+        urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )
+        if len(str(form.cleaned_data['phone'])) != 11:
             if form.cleaned_data['postcode']:
                 msg = "%s %s %s %s %s %s %s" % (form.cleaned_data['city'], form.cleaned_data['name'], form.cleaned_data['surname'], form.cleaned_data['address'], u"индекс:" + str(form.cleaned_data['postcode']), u"тел:" + str(form.cleaned_data['phone']) ,products)
             else:
