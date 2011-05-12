@@ -3591,3 +3591,38 @@ sub {font-size:.7em;vertical-align: bottom;}
 .cats_discr h1:hover{
 	text-decoration: underline;
 }	
+#blog_posts{
+	padding: 20px;
+	width: 800px;
+}
+#blog_posts .blog_post{
+	border-bottom: 1px solid #C8D2DE;
+	margin-bottom:20px;
+	padding-bottom: 10px;
+}
+#blog_posts .blog_post h3{
+	font-size: 14px;
+}
+#blog_posts .blog_post .date{
+	text-align: right;
+	margin-top: 15px;
+}
+#blog_posts .blog_post a.post_title h1{
+	font-size: 18px;
+	color:#FF3800;
+	border-bottom: 1px solid #C8D2DE;
+	margin-bottom: 10px;
+}
+.pagination{
+	text-align: center;
+	padding: 10px;
+}
+.blog_side{
+	text-align: right;
+	padding: 20px 0 20px 20px;
+	width: 200px;
+}
+.marg_top_15px{
+	margin-top: 15px;
+	padding: 20px;
+}
