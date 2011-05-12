@@ -196,6 +196,6 @@ def send_sms(cart_items, form):
     msg = urllib.urlencode({'msg': msg.encode('cp1251')})
     for to_phone in phones:
         req = urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )
-        if req:
+        if not req:
             urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, to_phone, msg.encode('cp1251'), '79151225291', md5(login + md5(password).hexdigest() + to_phone).hexdigest()) )
 
