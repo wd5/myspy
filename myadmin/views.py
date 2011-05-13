@@ -405,6 +405,16 @@ def edit_balance(request):
             balance = Balance.objects.get(id=1)
             if form.cleaned_data['from_type'] == 'ENCASH':
                 balance.encash -= form.cleaned_data['amount']
+                last_balance = Cash.objects.all().latest('id')
+                cash = Cash()
+                cash.cashflow = -form.cleaned_data['amount']
+                cash.balance = last_balance.balance - form.cleaned_data['amount']
+                cash.cause = "OTHER"
+                cash.type = "ENCASH"
+                if form.cleaned_data['to_type'] == 'YANDEX':
+                    cash.comment = "На яндекс деньги"
+                elif form.cleaned_data['to_type'] == 'WEBMONEY':
+                    cash.comment = "На webmoney"
             elif form.cleaned_data['from_type'] == 'YANDEX':
                 balance.yandex -= form.cleaned_data['amount']
             elif form.cleaned_data['from_type'] == 'WEBMONEY':
@@ -413,8 +423,10 @@ def edit_balance(request):
                 balance.encash += form.cleaned_data['amount']
             elif form.cleaned_data['to_type'] == 'YANDEX':
                 balance.yandex += form.cleaned_data['amount']
+                cash.save()
             elif form.cleaned_data['to_type'] == 'WEBMONEY':
                 balance.webmoney += form.cleaned_data['amount']
+                cash.save()
             balance.total = balance.encash + balance.webmoney + balance.yandex
             balance.save()
     form = BalanceForm()
