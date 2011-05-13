@@ -40,12 +40,13 @@ class BaseProductFormset(BaseInlineFormSet):
                 products.append(product)
 
 class CashForm(ModelForm):
+    comment = forms.CharField(widget=forms.Textarea(attrs={'rows':'3'}))
     class Meta:
         model = Cash
         exclude = ('balance')
 
 class BalanceForm(forms.Form):
-    from_type = forms.ChoiceField(choices=TYPE_CHOICES)
-    to_type = forms.ChoiceField(choices=TYPE_CHOICES)
-    amount = forms.DecimalField()
+    from_type = forms.ChoiceField(label="Из",choices=TYPE_CHOICES)
+    to_type = forms.ChoiceField(label="На",choices=TYPE_CHOICES)
+    amount = forms.DecimalField(label="Сумма")
 

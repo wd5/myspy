@@ -305,7 +305,7 @@ def add_cashflow(request):
         balance.save()
         newform.save()
     form = CashForm()
-    return render_to_response("myadmin/cash/add_cashflow.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/cash/edit_cashflow.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def edit_cashflow(request, id):
