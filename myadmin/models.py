@@ -22,11 +22,11 @@ TYPE_CHOICES = (
 
 class Cash(models.Model):
     date = models.DateField(auto_now_add=True)
-    cashflow = models.DecimalField(max_digits=10, decimal_places=2)
+    cashflow = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Поток")
     balance = models.DecimalField(max_digits=10, decimal_places=2)
-    cause = models.CharField(max_length=200 ,choices=CAUSE_CHOICES)
-    type = models.CharField(default='Encash',max_length=200 ,choices=TYPE_CHOICES)
-    comment = models.CharField(max_length=200, null=True, blank=True)
+    cause = models.CharField(max_length=200 ,choices=CAUSE_CHOICES, verbose_name="Причина")
+    type = models.CharField(default='Encash',max_length=200 ,choices=TYPE_CHOICES, verbose_name="Тип")
+    comment = models.CharField(max_length=200, null=True, blank=True, verbose_name="Комментарий")
 
     class Meta:
         ordering = ['-id']
