@@ -3155,7 +3155,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 		#nav ul.dropdown #header_sprite_head{
 			height: 10px;
 			width: 700px;
-			background: url('../img/header_sprite.png') 220px 3px no-repeat;
 			float: left;
 		}
 		#nav ul.dropdown #header_sprite_body{
