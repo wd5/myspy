@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from cart.models import Client, CartProduct, CartItem
-from myadmin.models import Waytmoney
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
