@@ -4,8 +4,9 @@ from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django import forms
-from models import Cash, TYPE_CHOICES
+from models import Cash, Task, TYPE_CHOICES
 from cart.models import Client
+from tinymce.widgets import TinyMCE
 
 class ClientForm(ModelForm):
     name = forms.CharField(label='Имя*',error_messages={'required': 'Имя обязательно для заполнения'})
@@ -50,3 +51,7 @@ class BalanceForm(forms.Form):
     to_type = forms.ChoiceField(label="На",choices=TYPE_CHOICES)
     amount = forms.DecimalField(label="Сумма")
 
+class TaskForm(ModelForm):
+    task = forms.CharField(label="Задание",widget=TinyMCE())
+    class Meta:
+        model = Task

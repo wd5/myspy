@@ -11,5 +11,8 @@ urlpatterns = patterns('',
                       url(r'^cash/add/$', 'myadmin.views.add_cashflow', name="cash-page"),
                       url(r'^cash/(?P<when>[-\w]+)/$', 'myadmin.views.cash', name="date_cash-page"),
                       url(r'^cash/edit/(?P<id>[-\w]+)/$', 'myadmin.views.edit_cashflow', name="edit-cashflow"),
-                      url(r'^cash/editbalance$', 'myadmin.views.edit_balance', name="edit-balance"),)
+                      url(r'^cash/editbalance$', 'myadmin.views.edit_balance', name="edit-balance"),
+                      url(r'^tasks$', 'myadmin.views.tasks', name="tasks-page"),
+                      url(r'^tasks/add$', 'myadmin.views.add_task', name="add-task"),
+                      url(r'^tasks/(?P<id>[-\w]+)/$', 'myadmin.views.edit_task', name="edit-task"),)
 

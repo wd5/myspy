@@ -9,14 +9,14 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm
+from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm
 from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash, Balance, Waytmoney
+from models import Cash, Balance, Waytmoney, Task
 from django.contrib.auth import logout
 import re
 
@@ -431,3 +431,22 @@ def edit_balance(request):
             balance.save()
     form = BalanceForm()
     return render_to_response("myadmin/cash/edit_balance.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def tasks(request):
+    tasks = Task.objects.all()
+    return render_to_response("myadmin/tasks/tasks.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def add_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+    form = TaskForm()
+    return render_to_response("myadmin/tasks/add_task.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def edit_task(request, id):
+    task = Task.objects.get(pk=id)
+    return render_to_response("myadmin/tasks/task.html", locals(), context_instance=RequestContext(request))

@@ -39,3 +39,12 @@ class Balance(models.Model):
 
 class Waytmoney(models.Model):
     wayt_money = models.DecimalField(max_digits=20, decimal_places=2)
+
+class Task(models.Model):
+    title = models.CharField(max_length=500, verbose_name="Название")
+    task = models.TextField()
+    is_done = models.BooleanField(verbose_name="Готово?")
+
+class TaskAnswer(models.Model):
+    task = models.ForeignKey(Task)
+    answer = models.TextField()
