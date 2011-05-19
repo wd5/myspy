@@ -12,7 +12,12 @@ urlpatterns = patterns('',
                       url(r'^cash/(?P<when>[-\w]+)/$', 'myadmin.views.cash', name="date_cash-page"),
                       url(r'^cash/edit/(?P<id>[-\w]+)/$', 'myadmin.views.edit_cashflow', name="edit-cashflow"),
                       url(r'^cash/editbalance$', 'myadmin.views.edit_balance', name="edit-balance"),
-                      url(r'^tasks$', 'myadmin.views.tasks', name="tasks-page"),
-                      url(r'^tasks/add$', 'myadmin.views.add_task', name="add-task"),
-                      url(r'^tasks/(?P<id>[-\w]+)/$', 'myadmin.views.edit_task', name="edit-task"),)
-
+                      url(r'^tasks/$', 'myadmin.views.tasks', name="tasks-page"),
+                      url(r'^tasks/done/$', 'myadmin.views.show_taskdone', name="done-task"),
+                      url(r'^tasks/my/$', 'myadmin.views.my_tasks', name="my-tasks"),
+                      url(r'^tasks/myown/$', 'myadmin.views.myown_tasks', name="myown-tasks"),
+                      url(r'^tasks/add/$', 'myadmin.views.add_task', name="add-task"),
+                      url(r'^tasks/edit/(?P<id>[-\w]+)/$', 'myadmin.views.edit_task', name="edit-task"),
+                      url(r'^tasks/(?P<id>[-\w]+)/is_done$', 'myadmin.views.task_done', name="task-done"),
+                      url(r'^tasks/edit/(?P<id>[-\w]+)/delete$', 'myadmin.views.delete_task', name="delete-task"),
+                      url(r'^tasks/(?P<id>[-\w]+)/$', 'myadmin.views.task', name="task-page"),)

@@ -1,5 +1,6 @@
           # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 
 CAUSE_CHOICES = (
     ('FROM_CLIENT', 'С продажи'),
@@ -44,7 +45,18 @@ class Task(models.Model):
     title = models.CharField(max_length=500, verbose_name="Название")
     task = models.TextField()
     is_done = models.BooleanField(verbose_name="Готово?")
+    user = models.CharField(max_length=200)
+    performers = models.ManyToManyField(User)
 
 class TaskAnswer(models.Model):
     task = models.ForeignKey(Task)
     answer = models.TextField()
+    user = models.CharField(max_length=200)
+    file = models.FileField(upload_to='./taskfiles')
+
+class TaskFile(models.Model):
+    task = models.ForeignKey(Task)
+    file = models.FileField(upload_to='./taskfiles')
+
+    def __unicode__(self):
+        return str(self.file).split('/')[1]

@@ -9,14 +9,14 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm
+from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm
 from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash, Balance, Waytmoney, Task
+from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile
 from django.contrib.auth import logout
 import re
 
@@ -434,19 +434,80 @@ def edit_balance(request):
 
 @login_required
 def tasks(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(is_done=False)
     return render_to_response("myadmin/tasks/tasks.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def add_task(request):
+    form = TaskForm()
+    TaskFileFormset = inlineformset_factory(Task, TaskFile, extra=1)
+    task = Task()
+    formset = TaskFileFormset()
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-    form = TaskForm()
+        formset = TaskFileFormset(request.POST, request.FILES, instance=task)
+        if formset.is_valid():
+            formset.save()
+        task.user = request.user.username
+        task.save()
+        url = urlresolvers.reverse('tasks-page')
+        return HttpResponseRedirect(url)
     return render_to_response("myadmin/tasks/add_task.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def task(request, id):
+    task = Task.objects.get(pk=id)
+    answers = TaskAnswer.objects.filter(task=task)
+    if request.method == 'POST':
+        form = TaskAnswerForm(request.POST, request.FILES)
+        if form.is_valid():
+            newform = form.save(commit=False)
+            newform.task = task
+            newform.user = request.user.username
+            newform.save()
+    form = TaskAnswerForm()
+    return render_to_response("myadmin/tasks/task.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def edit_task(request, id):
     task = Task.objects.get(pk=id)
-    return render_to_response("myadmin/tasks/task.html", locals(), context_instance=RequestContext(request))
+    form = TaskForm(instance=task)
+    TaskFileFormset = inlineformset_factory(Task, TaskFile, extra=1)
+    formset = TaskFileFormset(instance=task)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        url = urlresolvers.reverse('tasks-page')
+        return HttpResponseRedirect(url)
+    return render_to_response("myadmin/tasks/add_task.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def task_done(request, id):
+    task = Task.objects.get(pk=id)
+    task.is_done = True
+    task.save()
+    return HttpResponseRedirect(urlresolvers.reverse(tasks))
+
+@login_required
+def delete_task(request, id):
+    task = Task.objects.get(pk=id)
+    task.delete()
+    return HttpResponseRedirect(urlresolvers.reverse(tasks))
+
+@login_required
+def show_taskdone(request):
+    tasks = Task.objects.filter(is_done=True)
+    return render_to_response("myadmin/tasks/tasks.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def my_tasks(request):
+    tasks = Task.objects.filter(performers=request.user).exclude(is_done=True)
+    return render_to_response("myadmin/tasks/tasks.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def myown_tasks(request):
+    tasks = Task.objects.filter(user=request.user)
+    return render_to_response("myadmin/tasks/tasks.html", locals(), context_instance=RequestContext(request))

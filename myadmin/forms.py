@@ -1,12 +1,13 @@
           # -*- coding: utf-8 -*-
-from django.forms.widgets import RadioSelect
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django import forms
-from models import Cash, Task, TYPE_CHOICES
+from models import Cash, Task, TaskAnswer, TYPE_CHOICES
 from cart.models import Client
 from tinymce.widgets import TinyMCE
+from django.contrib.auth.models import User
 
 class ClientForm(ModelForm):
     name = forms.CharField(label='Имя*',error_messages={'required': 'Имя обязательно для заполнения'})
@@ -53,5 +54,14 @@ class BalanceForm(forms.Form):
 
 class TaskForm(ModelForm):
     task = forms.CharField(label="Задание",widget=TinyMCE())
+    performers = forms.ModelMultipleChoiceField(label="Исполнители",queryset=User.objects.all(), widget=CheckboxSelectMultiple)
     class Meta:
         model = Task
+        exclude = ('user')
+
+class TaskAnswerForm(ModelForm):
+    answer = forms.CharField(label="Ответ",widget=TinyMCE())
+    file = forms.FileField(required=False)
+    class Meta:
+        exclude = ('task', 'user')
+        model = TaskAnswer

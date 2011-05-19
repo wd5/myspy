@@ -111,7 +111,7 @@ class Feature(models.Model):
 class File(models.Model):
     product = models.ForeignKey(Product, verbose_name='Файл')
     name = models.CharField(max_length=100, verbose_name='Название')
-    file = models.FileField(upload_to='res/files')
+    file = models.FileField(upload_to='./files')
 
     def __unicode__(self):
         return self.name

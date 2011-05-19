@@ -1,3 +1,9 @@
 {% for task in tasks %}
-    <a href="/myadmin/tasks/{{ task.id }}/">{{ task.title }}</a>
-{% endfor %}
+    <a href="/myadmin/tasks/{{ task.id }}/">{{ task.title }}</a> <a href="/myadmin/tasks/edit/{{ task.id }}/">Редактировать</a><br>
+{% endfor %}<br>
+<a href="/myadmin/tasks/add/">Добавить задание</a><br>
+<a href="/myadmin/tasks/">Показать все готовые</a><br>
+<a href="/myadmin/tasks/done/">Показать готовые</a><br>
+<a href="/myadmin/tasks/my/">Показать задания для меня</a><br>
+<a href="/myadmin/tasks/myown/">Показать задания созданные мною</a>
+
