@@ -60,3 +60,11 @@ class TaskFile(models.Model):
 
     def __unicode__(self):
         return str(self.file).split('/')[1]
+
+class Order(models.Model):
+    title = models.CharField(max_length=300, verbose_name="Название")
+    order = models.TextField()
+    tracking_number = models.CharField(max_length=200)
+    invoice = models.FileField(upload_to="./invoices")
+    is_done = models.BooleanField(verbose_name="Доставлено?")
+    user = models.CharField(max_length=200)
