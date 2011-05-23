@@ -20,4 +20,12 @@ urlpatterns = patterns('',
                       url(r'^tasks/edit/(?P<id>[-\w]+)/$', 'myadmin.views.edit_task', name="edit-task"),
                       url(r'^tasks/(?P<id>[-\w]+)/is_done$', 'myadmin.views.task_done', name="task-done"),
                       url(r'^tasks/edit/(?P<id>[-\w]+)/delete$', 'myadmin.views.delete_task', name="delete-task"),
-                      url(r'^tasks/(?P<id>[-\w]+)/$', 'myadmin.views.task', name="task-page"),)
+                      url(r'^tasks/(?P<id>[-\w]+)/$', 'myadmin.views.task', name="task-page"),
+                      url(r'^orders/$', 'myadmin.views.orders', name="orders-page"),
+                      url(r'^orders/done/$', 'myadmin.views.show_orderdone', name="done-order"),
+                      url(r'^orders/add/$', 'myadmin.views.add_order', name="add-order"),
+                      url(r'^orders/(?P<id>[-\w]+)/$', 'myadmin.views.order', name="order-page"),
+                      url(r'^orders/(?P<id>[-\w]+)/is_done$', 'myadmin.views.order_done', name="order-done"),
+                      url(r'^orders/edit/(?P<id>[-\w]+)/$', 'myadmin.views.edit_order', name="edit-order"),
+                      url(r'^orders/edit/(?P<id>[-\w]+)/delete$', 'myadmin.views.delete_order', name="delete-order"),)
+

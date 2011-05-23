@@ -9,14 +9,14 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm
+from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm, OrderForm
 from django.forms.models import inlineformset_factory
 import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile
+from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order
 from django.contrib.auth import logout
 import re
 
@@ -131,9 +131,10 @@ def delete_client(request, id):
     client = Client.objects.get(id=id)
     cart_id = client.cart.id
     client.delete()
+    print "Delete %s" % client.id
     cart = CartItem.objects.get(id=cart_id)
     cart.delete()
-    return HttpResponseRedirect(urlresolvers.reverse(sales))
+    return HttpResponseRedirect('/myadmin/sales/all')
 
 @login_required
 def edit_client(request, id):
@@ -477,7 +478,7 @@ def edit_task(request, id):
     TaskFileFormset = inlineformset_factory(Task, TaskFile, extra=1)
     formset = TaskFileFormset(instance=task)
     if request.method == 'POST':
-        form = TaskForm(request.POST, request.FILES)
+        form = TaskForm(request.POST, request.FILES, instance=task)
         if form.is_valid():
             form.save()
         url = urlresolvers.reverse('tasks-page')
@@ -511,3 +512,54 @@ def my_tasks(request):
 def myown_tasks(request):
     tasks = Task.objects.filter(user=request.user)
     return render_to_response("myadmin/tasks/tasks.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def orders(request):
+    orders = Order.objects.all().exclude(is_done=True)
+    return render_to_response("myadmin/orders/orders.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def add_order(request):
+    form = OrderForm()
+    if request.method == 'POST':
+        form = OrderForm(request.POST, request.FILES)
+        if form.is_valid():
+            newform = form.save(commit=False)
+            newform.user = request.user
+            newform.save()
+            return HttpResponseRedirect(urlresolvers.reverse(orders))
+    return render_to_response("myadmin/orders/order_form.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def order(request, id):
+    order = Order.objects.get(id=id)
+    return render_to_response("myadmin/orders/order.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def edit_order(request, id):
+    order = Order.objects.get(pk=id)
+    form = OrderForm(instance=order)
+    if request.method == 'POST':
+        form = OrderForm(request.POST, request.FILES, instance=order)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(urlresolvers.reverse(orders))
+    return render_to_response("myadmin/orders/order_form.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def show_orderdone(request):
+    orders = Order.objects.filter(is_done=True)
+    return render_to_response("myadmin/orders/orders.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def delete_order(request, id):
+    order = Order.objects.get(pk=id)
+    order.delete()
+    return HttpResponseRedirect(urlresolvers.reverse(orders))
+
+@login_required
+def order_done(request, id):
+    order = Order.objects.get(pk=id)
+    order.is_done = True
+    order.save()
+    return HttpResponseRedirect(urlresolvers.reverse(orders))

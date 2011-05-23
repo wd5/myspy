@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django import forms
-from models import Cash, Task, TaskAnswer, TYPE_CHOICES
+from models import Cash, Task, TaskAnswer, Order, TYPE_CHOICES
 from cart.models import Client
 from tinymce.widgets import TinyMCE
 from django.contrib.auth.models import User
@@ -65,3 +65,10 @@ class TaskAnswerForm(ModelForm):
     class Meta:
         exclude = ('task', 'user')
         model = TaskAnswer
+
+class OrderForm(ModelForm):
+    order = forms.CharField(label="Заказ", widget=TinyMCE())
+    invoice = forms.FileField(required=False)
+    class Meta:
+        model = Order
+        exclude = ('user')
