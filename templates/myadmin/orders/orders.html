@@ -1,5 +1,9 @@
 {% for order in orders %}
     <a href="/myadmin/orders/{{ order.id }}/">{{ order.title }}</a> <a href="/myadmin/orders/edit/{{ order.id }}/">Редактировать</a><br>
+    {% if 'EE' in order.tracking_number %}
+        <a href="http://www.emspost.ru/tracking/{{ order.tracking_number }}">{{ order.tracking_number }}</a>
+    {% endif %}
+    {{ order.tracking_number }}
 {% endfor %}<br>
 <a href="/myadmin/orders/add/">Добавить заказ</a><br>
 <a href="/myadmin/orders/done/">Показать доставленные</a><br>
