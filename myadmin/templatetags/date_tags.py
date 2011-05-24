@@ -32,9 +32,9 @@ def date_tags(request_path):
         }
 
 @register.inclusion_tag("myadmin/tags/menu.html")
-def menu(request_path):
+def menu(request):
     return {
-        'request_path' : request_path,
+        'request' : request,
         }
 
 @register.simple_tag

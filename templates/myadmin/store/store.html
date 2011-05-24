@@ -1,7 +1,7 @@
 {% extends "myadmin/base.html" %}
 {% block site_wrapper %}
 {% load date_tags %}
-	{% menu request.path %}
+	{% menu request %}
 	<table id="allsales" cellpadding="5px" cellspacing="0">
 		<tr style="background:#cccccc;" class="textcenter">
 			<td class="bottomborder rightborder">

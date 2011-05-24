@@ -1,7 +1,7 @@
 {% extends "myadmin/base.html" %}
 {% block site_wrapper %}
 {% load date_tags %}
-	{% menu request.path %}	
+	{% menu request %}
 	{{ form.media }}
 	<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table id="client_edit_form_table" class="margincenter">
