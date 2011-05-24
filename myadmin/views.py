@@ -478,11 +478,8 @@ def task(request, id):
             for user in task.performers.all().exclude(username=request.user):
                 mails.append(user.email)
             user = User.objects.get(username=task.user)
-            try:
-                mails.index(user.email)
+            if not user.email in mails:
                 mails.append(user.email)
-            except :
-                pass
             if mails:
                 send_mail(u'%s добавил ответ в заданиe' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
     form = TaskAnswerForm()

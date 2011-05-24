@@ -60,7 +60,7 @@ class TaskForm(ModelForm):
         exclude = ('user')
 
 class TaskAnswerForm(ModelForm):
-    answer = forms.CharField(label="Ответ",widget=TinyMCE())
+    answer = forms.CharField(required=False,label="Ответ",widget=TinyMCE())
     file = forms.FileField(required=False)
     class Meta:
         exclude = ('task', 'user')
