@@ -53,7 +53,7 @@ class BalanceForm(forms.Form):
     amount = forms.DecimalField(label="Сумма")
 
 class TaskForm(ModelForm):
-    task = forms.CharField(label="Задание",widget=TinyMCE())
+    task = forms.CharField(required=False,label="Задание",widget=TinyMCE())
     performers = forms.ModelMultipleChoiceField(label="Исполнители",queryset=User.objects.all(), widget=CheckboxSelectMultiple)
     class Meta:
         model = Task

@@ -449,18 +449,18 @@ def add_task(request):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-        formset = TaskFileFormset(request.POST, request.FILES, instance=task)
-        if formset.is_valid():
-            formset.save()
-        task.user = request.user.username
-        task.save()
-        url = urlresolvers.reverse('tasks-page')
-        mails = []
-        for user in task.performers.all().exclude(username=request.user):
-            mails.append(user.email)
-        if mails:
-            send_mail(u'%s добавил задание для вас' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
-        return HttpResponseRedirect(url)
+            task.user = request.user.username
+            task.save()
+            formset = TaskFileFormset(request.POST, request.FILES, instance=task)
+            if formset.is_valid():
+                formset.save()
+            url = urlresolvers.reverse('tasks-page')
+            mails = []
+            for user in task.performers.all().exclude(username=request.user):
+                mails.append(user.email)
+            if mails:
+                send_mail(u'%s добавил задание для вас' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
+            return HttpResponseRedirect(url)
     return render_to_response("myadmin/tasks/add_task.html", locals(), context_instance=RequestContext(request))
 
 @login_required
