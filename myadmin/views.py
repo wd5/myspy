@@ -18,6 +18,8 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
 from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order
 from django.contrib.auth import logout
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 import re
 
 def auth(request):
@@ -454,6 +456,11 @@ def add_task(request):
         task.user = request.user.username
         task.save()
         url = urlresolvers.reverse('tasks-page')
+        mails = []
+        for user in task.performers.all().exclude(username=request.user):
+            mails.append(user.email)
+        if mails:
+            send_mail(u'%s добавил задание для вас' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
         return HttpResponseRedirect(url)
     return render_to_response("myadmin/tasks/add_task.html", locals(), context_instance=RequestContext(request))
 
@@ -468,6 +475,14 @@ def task(request, id):
             newform.task = task
             newform.user = request.user.username
             newform.save()
+            mails = []
+            for user in task.performers.all().exclude(username=request.user):
+                mails.append(user.email)
+            user = User.objects.get(username=task.user)
+            if not mails.index(user.email):
+                mails.append(user.email)
+            if mails:
+                send_mail(u'%s добавил ответ в заданиe' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
     form = TaskAnswerForm()
     return render_to_response("myadmin/tasks/task.html", locals(), context_instance=RequestContext(request))
 
@@ -527,6 +542,11 @@ def add_order(request):
             newform = form.save(commit=False)
             newform.user = request.user
             newform.save()
+            users = User.objects.all().exclude(username=request.user)
+            mails = []
+            for user in users:
+                mails.append(user.email)
+            send_mail(u'%s добавил заказ' % request.user.first_name, 'http://my-spy.ru/myadmin/orders/%i/' % newform.id, 'info@my-spy.ru', mails)
             return HttpResponseRedirect(urlresolvers.reverse(orders))
     return render_to_response("myadmin/orders/order_form.html", locals(), context_instance=RequestContext(request))
 
