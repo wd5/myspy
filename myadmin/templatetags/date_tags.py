@@ -31,6 +31,12 @@ def date_tags(request_path):
         'request_path' : request_path
         }
 
+@register.inclusion_tag("myadmin/tags/menu.html")
+def menu(request):
+    return {
+        'request' : request,
+        }
+
 @register.simple_tag
 def status_count(status):
     count = Client.objects.filter(status=status).count()

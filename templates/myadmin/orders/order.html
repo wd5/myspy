@@ -1,9 +1,14 @@
-{{ order.title }}<br>
-{{ order.order|safe }}
-{{ order.tracking_number }}<br>
-{% if order.invoice %}
-<p><a class="download_file" href="{{ order.invoice.url }}" target="_blank">{{ order.invoice }}</a></p>
-{% endif %}
-{% if not order.is_done %}
-<a href="is_done" class="alignright" style="color:#bc0d0d; vertical-align:bottom;">Задание готово</a>
-{% endif %}
+{% extends "myadmin/base.html" %}
+{% block site_wrapper %}
+{% load date_tags %}
+	{% menu request %}
+	{{ order.title }}<br>
+	{{ order.order|safe }}
+	{{ order.tracking_number }}<br>
+	{% if order.invoice %}
+	<p><a class="download_file" href="{{ order.invoice.url }}" target="_blank">{{ order.invoice }}</a></p>
+	{% endif %}
+	{% if not order.is_done %}
+	<a href="is_done" class="alignright" style="color:#bc0d0d; vertical-align:bottom;">Задание готово</a>
+	{% endif %}
+{% endblock %}

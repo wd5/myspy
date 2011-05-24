@@ -2,29 +2,7 @@
 {% block site_wrapper %}
 {% load date_tags %}
 <div id="allsales_block">
-	<div id="menu_block">
-		<table cellpadding="0" cellspacing="0" border="0" class="menu">
-			<td rowspan="2">
-			    <a href="/myadmin/sales/all/" >Клиенты</a>
-			</td>
-			<td rowspan="2">
-			    <a href="/myadmin/store" >Склад</a>
-			</td>
-			<td rowspan="2">
-			    <a href="/myadmin/cash/month/" >Касса</a>
-			</td>
-            <td rowspan="2">
-			    <a href="/myadmin/tasks/" >Задачи</a>
-			</td>
-            <td rowspan="2">
-			    <a href="/myadmin/orders/" >Заказы</a>
-			</td>
-		</table>
-		<div class="autent">
-		{{ request.user }}
-		    <a href="/myadmin/logout/">Выйти</a>
-		</div>
-	</div>
+{% menu request %}
 	<div id="selector_block">
 		<div id="money">
 			Ожидаемое количество денег:</br> <span class="orange">{{ money }}</span> руб

@@ -1,28 +1,7 @@
 {% extends "myadmin/base.html" %}
 {% block site_wrapper %}
-	<div id="menu_block">
-		<table cellpadding="0" cellspacing="0" border="0" class="menu">
-			<td rowspan="2">
-			    <a href="/myadmin/sales/all/" >Клиенты</a>
-			</td>
-			<td rowspan="2">
-			    <a href="/myadmin/store" >Склад</a>
-			</td>
-			<td rowspan="2">
-			    <a href="/myadmin/cash/month/" >Касса</a>
-			</td>
-            <td rowspan="2">
-			    <a href="/myadmin/tasks/" >Задачи</a>
-			</td>
-            <td rowspan="2">
-			    <a href="/myadmin/orders/" >Заказы</a>
-			</td>
-		</table>
-		<div class="autent">
-		{{ request.user }}
-		    <a href="/myadmin/logout/">Выйти</a>
-		</div>
-	</div>
+{% load date_tags %}
+	{% menu request %}
 	<table id="allsales" cellpadding="5px" cellspacing="0">
 		<tr style="background:#cccccc;" class="textcenter">
 			<td class="bottomborder rightborder">
