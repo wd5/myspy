@@ -482,8 +482,9 @@ def task(request, id):
                 mails.index(user.email)
                 mails.append(user.email)
             except :
-                if mails:
-                    send_mail(u'%s добавил ответ в заданиe' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
+                pass
+            if mails:
+                send_mail(u'%s добавил ответ в заданиe' % request.user.first_name, 'http://my-spy.ru/myadmin/tasks/%i/' % task.id, 'info@my-spy.ru', mails)
     form = TaskAnswerForm()
     return render_to_response("myadmin/tasks/task.html", locals(), context_instance=RequestContext(request))
 
