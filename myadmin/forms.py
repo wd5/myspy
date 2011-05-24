@@ -69,6 +69,7 @@ class TaskAnswerForm(ModelForm):
 class OrderForm(ModelForm):
     title = forms.CharField(label="Название", widget=forms.Textarea(attrs={'rows':'1'}))
     order = forms.CharField(label="Заказ", widget=TinyMCE())
+    tracking_number = forms.CharField(required=False)
     invoice = forms.FileField(required=False)
     class Meta:
         model = Order
