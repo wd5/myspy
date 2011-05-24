@@ -130,6 +130,9 @@ a.selectbutton{
 .bottomborder{
 	border-bottom: 1px solid #dbdbdc;
 }
+.topborder{
+	border-top: 1px solid #dbdbdc;
+}
 .head_row{
 	background:#cccccc;
 
@@ -174,4 +177,20 @@ a.selectbutton{
 .chat_menu{
 	margin:30px 5% 0;
 	width:90%;
+}
+.order_fonts{
+	font-size: 16px;
+}
+#task_chat{
+	margin: 30px auto 0;
+	color: #3B4C5D;
+}
+#task_chat td{
+	padding: 5px 15px;
+}
+#task_chat td p{
+	margin:0;
+}
+#task_chat_in{
+	width:100%;
 }
