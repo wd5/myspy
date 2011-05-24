@@ -133,7 +133,6 @@ def delete_client(request, id):
     client = Client.objects.get(id=id)
     cart_id = client.cart.id
     client.delete()
-    print "Delete %s" % client.id
     cart = CartItem.objects.get(id=cart_id)
     cart.delete()
     return HttpResponseRedirect('/myadmin/sales/all')
@@ -496,6 +495,9 @@ def edit_task(request, id):
         form = TaskForm(request.POST, request.FILES, instance=task)
         if form.is_valid():
             form.save()
+        formset = TaskFileFormset(request.POST, request.FILES, instance=task)
+        if formset.is_valid():
+            formset.save()
         url = urlresolvers.reverse('tasks-page')
         return HttpResponseRedirect(url)
     return render_to_response("myadmin/tasks/add_task.html", locals(), context_instance=RequestContext(request))
