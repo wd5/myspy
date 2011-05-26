@@ -4,7 +4,7 @@ from myadmin.models import Waytmoney
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        clients = Client.objects.filter(cart__product__category=4)
+        clients = Client.objects.filter(cart__product__category=4, status="CASH_IN")
         p = CartProduct.objects.filter(product__category=4)
         sum = 0
         for client in clients:
