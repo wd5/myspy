@@ -14,7 +14,7 @@ def category_list(request_path):
 
 @register.inclusion_tag("cart/cart_box.html")
 def cart_box(request):
-    box_count = cart.cart_distinct_item_count(request)
+    box_count = cart.cart_count(request)
     return {
         'box_count': box_count,
 }

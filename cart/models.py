@@ -9,10 +9,6 @@ class CartProduct(models.Model):
     product = models.ForeignKey(Product, verbose_name='Товар')
     quantity = models.IntegerField(default=1, verbose_name='Количество')
 
-    def augment_quantity(self, quantity):
-        self.quantity = self.quantity + int(quantity)
-        self.save()
-
     def delete(self, using=None):
         for f in self._meta.fields:
             if f.name == 'cartitem':
@@ -59,42 +55,10 @@ class CartProduct(models.Model):
 class CartItem(models.Model):
     cart_id = models.CharField(max_length=50)
     date_added = models.DateTimeField(auto_now_add=True)
-#    quantity = models.IntegerField(default=1)
     product = models.ManyToManyField(Product, through=CartProduct)
 
     class Meta:
         db_table = 'cart_item'
-        ordering = ['date_added']
-
-    def total(self):
-        return self.quantity * self.product.price
-
-    def name(self):
-        return self.product.name
-
-    def price(self):
-        return self.product.price
-
-    def get_absolute_url(self):
-        return self.product.get_absolute_url()
-
-    def augment_quantity(self, quantity):
-        self.quantity = self.quantity + int(quantity)
-        self.save()
-
-STATUS_CHOICES = (
-    ('PROCESS', 'Обработать'),
-    ('POSTSEND', 'Отправить почтой'),
-    ('POSTSENDED', 'Отправлено почтой'),
-    ('COURIER_SEND', 'Отправить курьером'),
-    ('COURIER_TAKE', 'Передано курьеру'),
-    ('BUYER_TAKE', 'Передано покупателю'),
-    ('WAYT_PRODUCT', 'Ожидание поступления товара'),
-    ('BACK', 'Обмен/Возврат'),
-    ('CONTACT_AT', 'Связаться в назначенное время'),
-    ('REFUSED', 'Снятие заявки клиентом'),
-    ('CASH_IN', 'Деньги внесены'),
-)
 
 DELIVERY_CHOICES = (
     ('EMS', 'EMS'),
@@ -116,7 +80,7 @@ class Client(models.Model):
     discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
     tracking_status = models.CharField(max_length=500, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
+    status = models.CharField(max_length=20, verbose_name="Статус", default='PROCESS')
     sms_status = models.NullBooleanField()
     referrer = models.URLField(verify_exists=False, max_length=500)
     comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
@@ -185,6 +149,3 @@ class Client(models.Model):
             client = Client.objects.get(pk=self.pk)
             client.change_log = u"%s - %s добавил клиента<br>\r" % (date.today(), user)
             client.save()
-
-class Test(models.Model):
-    sms_status = models.NullBooleanField()
