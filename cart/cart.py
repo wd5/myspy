@@ -65,8 +65,11 @@ def add_to_cart(request):
             # Если нету то добавляю
             else:
                 cart = CartItem.objects.get(cart_id = _cart_id(request))
-                cp = CartProduct(cartitem = cart, product = p)
-                cp.save()
+                CartProduct(cartitem = cart, product = p).save()
+        # Если корзина пуста то добавляю товар
+        if not cart_products:
+            cart = CartItem.objects.get(cart_id = _cart_id(request))
+            CartProduct(cartitem = cart, product = p).save()
     # Если нету то добавляю
     else:
         ci = CartItem()
