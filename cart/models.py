@@ -65,6 +65,20 @@ DELIVERY_CHOICES = (
     ('COURIER', 'Курьер'),
 )
 
+STATUS_CHOICES = (
+    ('PROCESS', 'Обработать'),
+    ('POSTSEND', 'Отправить почтой'),
+    ('POSTSENDED', 'Отправлено почтой'),
+    ('COURIER_SEND', 'Отправить курьером'),
+    ('COURIER_TAKE', 'Передано курьеру'),
+    ('BUYER_TAKE', 'Передано покупателю'),
+    ('WAYT_PRODUCT', 'Ожидание поступления товара'),
+    ('BACK', 'Обмен/Возврат'),
+    ('CONTACT_AT', 'Связаться в назначенное время'),
+    ('REFUSED', 'Снятие заявки клиентом'),
+    ('CASH_IN', 'Деньги внесены'),
+)
+
 class Client(models.Model):
     surname = models.CharField(max_length=50, null=True, blank=True, verbose_name="Фамилия")
     name = models.CharField(max_length=50, verbose_name="Имя")
@@ -80,7 +94,7 @@ class Client(models.Model):
     discount = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2, verbose_name="Скидка")
     tracking_number = models.CharField(max_length=20, null=True, blank=True)
     tracking_status = models.CharField(max_length=500, blank=True)
-    status = models.CharField(max_length=20, verbose_name="Статус", default='PROCESS')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус", default='PROCESS')
     sms_status = models.NullBooleanField()
     referrer = models.URLField(verify_exists=False, max_length=500)
     comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
