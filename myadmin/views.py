@@ -1,7 +1,5 @@
           # -*- coding: utf-8 -*-
 from datetime import date, timedelta
-import urllib, urllib2
-from hashlib import md5
 from django.shortcuts import render_to_response
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
@@ -11,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
 from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm, OrderForm
 from django.forms.models import inlineformset_factory
-import calc
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -20,7 +17,8 @@ from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order
 from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
-import re
+from madmin_func import clients_list, client_sms, update_store, subtotal, update_cash, cash_list
+from settings import *
 
 def auth(request):
     if request.method == 'POST':
@@ -34,6 +32,7 @@ def auth(request):
             error = True
     return render_to_response("myadmin/auth.html", locals(), context_instance=RequestContext(request))
 
+@login_required
 def logout_view(request):
     logout(request)
     url = urlresolvers.reverse('auth-page')
@@ -48,31 +47,22 @@ def week_boundaries(year, week):
 
 @login_required
 def sales(request, when):
+    # Ожидаемое количество денег
     money = Waytmoney.objects.get(id=1).wayt_money
-    today = date.today()
     # Применяю фильтр по статусам
     if request.method == 'POST':
-        clients = []
+        # Выбранные статусы
         statuses = []
+        # Клиенты соответсвующие статусам
+        clients = []
         for status in request.POST.getlist('status'):
             statuses.append(status)
             clients += Client.objects.filter(status=status)
-        # Сортирую по id - так чтобы полследний клиент был сверху
+        # Сортирую по id - так чтобы последний клиент был сверху
         clients.sort(key=lambda x: x.id, reverse=True)
     else:
-        if when == 'today':
-            clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month, ordered_at__day=today.day)
-        elif when == 'week':
-            monday, sunday = week_boundaries(today.year, int(today.strftime("%W")))
-            clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month, ordered_at__range=(monday,sunday))
-        elif when == 'month':
-            clients = Client.objects.filter(ordered_at__year=today.year, ordered_at__month=today.month)
-        elif when == 'year':
-            clients = Client.objects.filter(ordered_at__year=today.year)
-        elif when == 'all':
-            clients = Client.objects.all()
-        else:
-            clients = Client.objects.filter(ordered_at__year=when[-4:], ordered_at__month=when[:-4])
+        # Список клиентов за запрошеный период
+        clients = clients_list(when)
     # Пейджинация
     try:
         page = int(request.GET.get('page', '1'))
@@ -121,7 +111,7 @@ def add_client(request):
                         product.save()
                 formset.save()
                 # Высчитываю сумму и скидку
-                calc.subtotal(cart.id)
+                subtotal(cart.id)
             else:
                 pass
             # После создания клиента тут же перекидываю на редактирование клиента
@@ -130,9 +120,11 @@ def add_client(request):
 
 @login_required
 def delete_client(request, id):
+    # УДаляю клиента
     client = Client.objects.get(id=id)
     cart_id = client.cart.id
     client.delete()
+    # Уляляю корзину клиента
     cart = CartItem.objects.get(id=cart_id)
     cart.delete()
     return HttpResponseRedirect('/myadmin/sales/all')
@@ -145,23 +137,20 @@ def edit_client(request, id):
     cart = CartItem.objects.get(id=cartid)
     CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
     if request.method == 'POST':
-        # Получаю предыдущий статус клиента
+        # Получаю предыдущие статусы клиента
         client_status = client.status
         sms_status = client.sms_status
         # Сохраняю форму используя объект клиента
         form = ClientForm(request.POST, instance=client, prefix='client')
         if form.is_valid():
             newform = form.save(commit=False)
+            # Сохраняю в базе последнего пользователя редактирующего клиента
             newform.last_user = request.user.first_name
-            if newform.sms_status:
-                if not sms_status:
-                    login = 'palv1@yandex.ru'
-                    password = '97ajhJaj9zna'
-                    phone = re.sub("\D", "", newform.phone)
-                    from_phone = "79151225291"
-                    msg = u"Здравствуйте, посылка с вашим заказом выслана. Номер отправления: %s Отследить посылку можно на сайте emspost.ru С Уважением my-spy.ru" % newform.tracking_number
-                    msg = urllib.urlencode({'msg': msg.encode('cp1251')})
-                    req = urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + phone).hexdigest()) )
+            # Отправляю смс клиенту
+            if SEND_SMS:
+                if newform.sms_status:
+                    if not sms_status:
+                        client_sms(newform)
             newform.save()
             # Сохраняю форму используя объект корзины клиента
             formset = CartProductFormset(request.POST, instance=cart)
@@ -169,77 +158,12 @@ def edit_client(request, id):
                 # Получаю список покупок клиента
                 products = CartProduct.objects.filter(cartitem=cart)
                 # Обновляю количество товара на складе
-                for formitem in formset.cleaned_data:
-                    if formitem:
-                        product_name = formitem['product']
-                        quantity = formitem['quantity']
-                        # Обновление в случае удаления товара
-                        if formitem['DELETE']:
-                            store_product = Product.objects.get(name=product_name)
-                            store_product.quantity = store_product.quantity + quantity
-                            store_product.save()
-                        else:
-                            # Обновляю если у клиента еще нет товара
-                            if not products:
-                                store_product = Product.objects.get(name=product_name)
-                                store_product.quantity = store_product.quantity - quantity
-                                store_product.save()
-                            for product in products:
-                                # Если такой товар у клиента уже есть
-                                if product.product == product_name:
-                                    # Если количество совпадает то ничего не делаю
-                                    if product.quantity == quantity:
-                                        pass
-                                    # Если количество изменилось - пишу изменения количества в складе
-                                    else:
-                                        store_quantity = quantity - product.quantity
-                                        store_product = Product.objects.get(name=product_name)
-                                        store_product.quantity = store_product.quantity - store_quantity
-                                        store_product.save()
-                                else:
-                                    pass
+                update_store(formset.cleaned_data, products)
                 formset.save()
                 # Высчитываю сумму и скидку
-                calc.subtotal(cartid)
-            if form.cleaned_data['status'] == 'CASH_IN':
-                if client_status == form.cleaned_data['status']:
-                        pass
-                else:
-                    newcashflow = Cash()
-                    last_balance = Cash.objects.all().latest('id')
-                    if form.cleaned_data['delivery'] == 'EMS':
-                        newcashflow.cashflow = client.subtotal + 300
-                        newcashflow.balance = last_balance.balance + client.subtotal + 300
-                        newcashflow.comment = client.id
-                    elif form.cleaned_data['delivery'] == 'COURIER':
-                        newcashflow.cashflow = client.subtotal - 300
-                        newcashflow.balance = last_balance.balance + client.subtotal - 300
-                        newcashflow.comment = client.id
-                    else:
-                        newcashflow.cashflow = client.subtotal
-                        newcashflow.balance = last_balance.balance + client.subtotal
-                        newcashflow.comment = client.id
-                    newcashflow.cause = 'FROM_CLIENT'
-                    newcashflow.type = 'ENCASH'
-                    newcashflow.save()
-                    balance = Balance.objects.get(id=1)
-                    balance.encash += newcashflow.cashflow
-                    balance.total = balance.encash + balance.webmoney + balance.yandex
-                    balance.save()
-            else:
-                if client_status == 'CASH_IN':
-                    cashflow = Cash.objects.get(comment=client.id)
-                    cashflows_recalc = Cash.objects.filter(pk__gt=cashflow.id).reverse()
-                    true_balance = cashflow.balance - cashflow.cashflow
-                    cashflow.delete()
-                    for cashflow_recalc in cashflows_recalc:
-                        cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
-                        true_balance = cashflow_recalc.balance
-                        cashflow_recalc.save()
-                    balance = Balance.objects.get(id=1)
-                    balance.encash -= cashflow.cashflow
-                    balance.total = balance.encash + balance.webmoney + balance.yandex
-                    balance.save()
+                subtotal(cartid)
+            # Обновляю баланс
+            update_cash(form.cleaned_data, client, client_status)
         else:
             formset = CartProductFormset(instance=cart)
             return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
@@ -262,19 +186,8 @@ def store(request):
 
 @login_required
 def cash(request, when):
-    today = date.today()
     balance = Balance.objects.get(id=1)
-    if when == 'today':
-        cash = Cash.objects.filter(date__year=today.year, date__month=today.month, date__day=today.day)
-    elif when == 'week':
-        monday, sunday = week_boundaries(today.year, int(today.strftime("%W")))
-        cash = Cash.objects.filter(date__year=today.year, date__month=today.month, date__range=(monday, sunday))
-    elif when == 'month':
-        cash = Cash.objects.filter(date__year=today.year, date__month=today.month)
-    elif when == 'year':
-        cash = Cash.objects.filter(date__year=today.year)
-    else:
-        cash = Cash.objects.filter(date__year=when[-4:], date__month=when[:-4])
+    cash = cash_list(when)
     cash_in = 0
     cash_out = 0
     for i in cash:
