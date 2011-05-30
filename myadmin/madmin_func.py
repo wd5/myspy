@@ -5,8 +5,10 @@ import re, urllib, urllib2
 from hashlib import md5
 import decimal
 from catalog.models import Product
+from cart.settings import DISCOUNT, DISCOUNT_PERCENT, COUNT_FOR_DISCOUNT
 from settings import *
 from models import Cash, Balance
+from forms import CashForm
 
 # Возвращает число понедельника и воскресенья текущей недели
 def week_boundaries(year, week):
@@ -34,7 +36,7 @@ def clients_list(when):
             clients = Client.objects.filter(ordered_at__year=when[-4:], ordered_at__month=when[:-4])
         return clients
 
-# Список денежных поток за запрошенный период времени
+# Список денежных потоков за запрошенный период времени
 def cash_list(when):
     today = date.today()
     if when == 'today':
@@ -198,3 +200,137 @@ def update_cash(data, client, client_status):
             balance.encash -= cashflow.cashflow
             balance.total = balance.encash + balance.webmoney + balance.yandex
             balance.save()
+
+# Пересчитывает потоки исправляя остаток
+def change_cashflows_balance(cash):
+    cashflows_recalc = Cash.objects.filter(pk__gt=cash.id).reverse()
+    true_balance = cash.balance
+    for cashflow_recalc in cashflows_recalc:
+        if cashflow_recalc.type == 'ENCASH':
+            cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+            true_balance = cashflow_recalc.balance
+            cashflow_recalc.save()
+        else:
+            cashflow_recalc.balance = true_balance
+            cashflow_recalc.save()
+
+# Изменяет и пересчитывает денежный поток
+def change_cashflow(request, cash):
+        # Предыдущий денежный поток
+        last_cashflow = cash.cashflow
+        # Предыдущий тип потока
+        last_type = cash.type
+        form = CashForm(request.POST, instance=cash)
+        newform = form.save(commit=False)
+        # Если новый поток не совпадает с предыдущим
+        if not last_cashflow == newform.cashflow:
+            balance = Balance.objects.get(id=1)
+            # Если тип предыдущего потока "Наличные"
+            if last_type == 'ENCASH':
+                # Удаляю из баланса предыдуший поток
+                balance.encash -= last_cashflow
+                # Получаю разницу между новым и старым потоком
+                cashflow_diff = newform.cashflow - last_cashflow
+                # Исправляю остаток
+                newform.balance = newform.balance + cashflow_diff
+                # Пересчитываю все остальные потоки исправляя остатки
+                change_cashflows_balance(cash)
+            # Если тип предыдущего потока "Яндекс деньги"
+            elif last_type == 'YANDEX':
+                # Исправляю баланс яндекса
+                balance.yandex -= last_cashflow
+            # Если тип предыдущего потока "Яндекс деньги"
+            elif last_type == 'WEBMONEY':
+                # Исправляю баланс вебмани
+                balance.webmoney -= last_cashflow
+            # Если тип нового потока "Наличные"
+            if newform.type == 'ENCASH':
+                # Исправляю баланс наличных
+                balance.encash += newform.cashflow
+                # Если предыдущий тип не был "наличные"(иначе все уже исправлено)
+                if not last_type == newform.type:
+                    # Исправляю остаток
+                    newform.balance = newform.cashflow + newform.balance
+                    # Пересчитываю все остальные потоки исправляя остатки
+                    change_cashflows_balance(cash)
+            # Если тип нового потока "Яндекс деньги"
+            elif newform.type == 'YANDEX':
+                # Исправляю баланс яндекс
+                balance.yandex += newform.cashflow
+            # Если тип нового потока "Вебмани"
+            elif newform.type == 'WEBMONEY':
+                # Исправляю баланс вебмани
+                balance.webmoney += newform.cashflow
+            # Пересчитываю общий баланс
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
+        # Если просто изменился тип потока
+        elif not last_type == newform.type:
+            balance = Balance.objects.get(id=1)
+            # Если предыдущий тип Наличные
+            if last_type == 'ENCASH':
+                # Изменяю баланс наличных
+                balance.encash -= last_cashflow
+                # Изменяю остаток
+                newform.balance = newform.balance - newform.cashflow
+                # Пересчитываю все остальные потоки исправляя остатки
+                change_cashflows_balance(cash)
+            # Если предыдущий тип яндекс
+            elif last_type == 'YANDEX':
+                # Изменяю баланс яндекса
+                balance.yandex -= last_cashflow
+            # Если предыдущий тип вебмани
+            elif last_type == 'WEBMONEY':
+                # Изменяю баланс вебмани
+                balance.webmoney -= last_cashflow
+            # Если новый тип наличные
+            if newform.type == 'ENCASH':
+                # Исправляю баланс наличных
+                balance.encash += newform.cashflow
+                newform.balance = newform.cashflow + newform.balance
+                # Если предыдущий тип не был "наличные"(иначе все уже исправлено)
+                if not last_type == newform.type:
+                    # Исправляю остаток в других потоках
+                    change_cashflows_balance(cash)
+            # Если новый тип яндекс
+            elif newform.type == 'YANDEX':
+                # Исправляю баланс яндекса
+                balance.yandex += newform.cashflow
+            # Если новый тип вебмани
+            elif newform.type == 'WEBMONEY':
+                # Исправляю баланс вебмани
+                balance.webmoney += newform.cashflow
+            # Исправляю весь баланс
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
+        newform.save()
+
+# Изменяет баланс
+def change_balance(form):
+    balance = Balance.objects.get(id=1)
+    if form.cleaned_data['from_type'] == 'ENCASH':
+        balance.encash -= form.cleaned_data['amount']
+        last_balance = Cash.objects.all().latest('id')
+        cash = Cash()
+        cash.cashflow = -form.cleaned_data['amount']
+        cash.balance = last_balance.balance - form.cleaned_data['amount']
+        cash.cause = "OTHER"
+        cash.type = "ENCASH"
+        if form.cleaned_data['to_type'] == 'YANDEX':
+            cash.comment = "На яндекс деньги"
+        elif form.cleaned_data['to_type'] == 'WEBMONEY':
+            cash.comment = "На webmoney"
+    elif form.cleaned_data['from_type'] == 'YANDEX':
+        balance.yandex -= form.cleaned_data['amount']
+    elif form.cleaned_data['from_type'] == 'WEBMONEY':
+        balance.webmoney -= form.cleaned_data['amount']
+    if form.cleaned_data['to_type'] == 'ENCASH':
+        balance.encash += form.cleaned_data['amount']
+    elif form.cleaned_data['to_type'] == 'YANDEX':
+        balance.yandex += form.cleaned_data['amount']
+        cash.save()
+    elif form.cleaned_data['to_type'] == 'WEBMONEY':
+        balance.webmoney += form.cleaned_data['amount']
+        cash.save()
+    balance.total = balance.encash + balance.webmoney + balance.yandex
+    balance.save()
