@@ -48,6 +48,9 @@ class Task(models.Model):
     user = models.CharField(max_length=200)
     performers = models.ManyToManyField(User)
 
+    class Meta:
+        ordering = ['-id']
+
 class TaskAnswer(models.Model):
     task = models.ForeignKey(Task)
     answer = models.TextField()
@@ -68,3 +71,6 @@ class Order(models.Model):
     invoice = models.FileField(upload_to="./invoices")
     is_done = models.BooleanField(verbose_name="Доставлено?")
     user = models.CharField(max_length=200)
+
+    class Meta:
+        ordering = ['-id']
