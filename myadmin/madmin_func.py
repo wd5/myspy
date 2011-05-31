@@ -72,7 +72,6 @@ def update_store(data, products):
     newproducts_name = []
     for formitem in data:
         if formitem:
-            print formitem
             product_name = formitem['product']
             quantity = formitem['quantity']
             # Обновление в случае удаления товара
