@@ -53,9 +53,9 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена')
     wholesale_price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена закупки')
     quantity = models.IntegerField(default=1, verbose_name='Количество')
-    mini_html_description = models.TextField(validators=[validate_even], help_text='Максимальное количество символов: 140.',
+    mini_html_description = tinymce_models.HTMLField(validators=[validate_even], help_text='Максимальное количество символов: 140.',
                                         verbose_name='Мини описание в HTML')
-    html_description = models.TextField(blank=True, verbose_name='Описание', help_text='Описание в HTML')
+    html_description = tinymce_models.HTMLField(blank=True, verbose_name='Описание', help_text='Описание в HTML')
     thumbnail_image = ThumbnailImageField(upload_to='products_image', thumb_width=200, thumb_height=200, completion="thumb" )
     # Метаданные товара
     is_active = models.BooleanField(default=True, verbose_name='Активный')
