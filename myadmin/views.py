@@ -176,7 +176,7 @@ def edit_client(request, id):
 
 @login_required
 def store(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('category')
     money_in_retail = 0
     money_in_wholesale = 0
     for product in products:
