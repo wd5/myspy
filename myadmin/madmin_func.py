@@ -63,57 +63,68 @@ def client_sms(newform):
     urllib2.urlopen('http://sms48.ru/send_sms.php?login=%s&to=%s&%s&from=%s&check2=%s' % (login, phone, msg.encode('cp1251'), from_phone, md5(login + md5(password).hexdigest() + phone).hexdigest()) )
 
 # Обновляет количество товара на складе
-def update_store(data, products):
+def update_store(data, products, status_refused):
     # Предыдущий список товара
     products_name = []
     for product in products:
         products_name.append(product.product)
     # Текущий список товара
     newproducts_name = []
-    for formitem in data:
-        if formitem:
-            product_name = formitem['product']
-            quantity = formitem['quantity']
-            # Обновление в случае удаления товара
-            if formitem['DELETE']:
+    # Если статус "Снятие заяки клиентом"
+    if status_refused:
+        for formitem in data:
+            if formitem:
+                product_name = formitem['product']
+                quantity = formitem['quantity']
+                # Обновляю количество товара на складе
                 store_product = Product.objects.get(name=product_name)
                 store_product.quantity += quantity
                 store_product.save()
-            else:
-                # Обновляю если у клиента еще нет товаров
-                if not products:
+    else:
+        for formitem in data:
+            if formitem:
+                product_name = formitem['product']
+                quantity = formitem['quantity']
+                # Обновление в случае удаления товара
+                if formitem['DELETE']:
                     store_product = Product.objects.get(name=product_name)
-                    store_product.quantity -= quantity
+                    store_product.quantity += quantity
                     store_product.save()
                 else:
-                    for product in products:
-                        # Если такой товар у клиента уже есть
-                        if product.product == product_name:
-                            # Если количество совпадает то ничего не делаю
-                            if product.quantity == quantity:
-                                pass
-                            # Если количество изменилось - пишу изменения количества в складе
-                            else:
-                                store_quantity = quantity - product.quantity
-                                store_product = Product.objects.get(name=product_name)
-                                store_product.quantity -= store_quantity
-                                store_product.save()
-                # Если добавился товар
-                if product_name not in products_name:
-                    # Изменяю количество на складе
-                    store_product = Product.objects.get(name=product_name)
-                    store_product.quantity -= quantity
-                    store_product.save()
-                # Обновляю текущий список товара
-                newproducts_name.append(product_name)
-    # Сравниваю передыдущий список товара с текущим
-    for product in products:
-        # Если из предыдущего исчез товар
-        if product.product not in newproducts_name:
-            # Возвращаю его на склад
-            store_product = Product.objects.get(name=product.product)
-            store_product.quantity += product.quantity
-            store_product.save()
+                    # Обновляю если у клиента еще нет товаров
+                    if not products:
+                        store_product = Product.objects.get(name=product_name)
+                        store_product.quantity -= quantity
+                        store_product.save()
+                    else:
+                        for product in products:
+                            # Если такой товар у клиента уже есть
+                            if product.product == product_name:
+                                # Если количество совпадает то ничего не делаю
+                                if product.quantity == quantity:
+                                    pass
+                                # Если количество изменилось - пишу изменения количества в складе
+                                else:
+                                    store_quantity = quantity - product.quantity
+                                    store_product = Product.objects.get(name=product_name)
+                                    store_product.quantity -= store_quantity
+                                    store_product.save()
+                    # Если добавился товар
+                    if product_name not in products_name:
+                        # Изменяю количество на складе
+                        store_product = Product.objects.get(name=product_name)
+                        store_product.quantity -= quantity
+                        store_product.save()
+                    # Обновляю текущий список товара
+                    newproducts_name.append(product_name)
+        # Сравниваю передыдущий список товара с текущим
+        for product in products:
+            # Если из предыдущего исчез товар
+            if product.product not in newproducts_name:
+                # Возвращаю его на склад
+                store_product = Product.objects.get(name=product.product)
+                store_product.quantity += product.quantity
+                store_product.save()
 
 # Высчитывает сумму и скидку
 def subtotal(cartid):

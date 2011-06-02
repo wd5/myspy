@@ -140,10 +140,20 @@ def edit_client(request, id):
         # Получаю предыдущие статусы клиента
         client_status = client.status
         sms_status = client.sms_status
+        status = client.status
         # Сохраняю форму используя объект клиента
         form = ClientForm(request.POST, instance=client, prefix='client')
         if form.is_valid():
             newform = form.save(commit=False)
+            # Если статус клиента "Снятие заявки клиентом"
+            if newform.status == 'REFUSED':
+                # Если предыдущий статус тоже был REFUSED
+                if status == newform.status:
+                    status_refused = False
+                else:
+                    status_refused = True
+            else:
+                status_refused = False
             # Сохраняю в базе последнего пользователя редактирующего клиента
             newform.last_user = request.user.first_name
             # Отправляю смс клиенту
@@ -158,7 +168,7 @@ def edit_client(request, id):
                 # Получаю список покупок клиента
                 products = CartProduct.objects.filter(cartitem=cart)
                 # Обновляю количество товара на складе
-                update_store(formset.cleaned_data, products)
+                update_store(formset.cleaned_data, products, status_refused)
                 formset.save()
                 # Высчитываю сумму и скидку
                 subtotal(cartid)
