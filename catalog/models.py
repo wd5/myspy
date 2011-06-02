@@ -98,6 +98,7 @@ class FeatureName(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name']
         verbose_name_plural = 'Характеристики товара'
 
 class Feature(models.Model):
