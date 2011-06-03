@@ -25,3 +25,6 @@ class Entry(models.Model):
 
     def get_absolute_url(self):
         return "/blog/%s/" % self.slug
+
+    class Meta:
+        ordering = ['-date']
