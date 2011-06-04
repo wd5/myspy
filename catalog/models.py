@@ -30,6 +30,8 @@ class Category(models.Model):
     SEO_text = tinymce_models.HTMLField(null=True, blank=True)
     image = ThumbnailImageField(upload_to='category_image', thumb_width=200, thumb_height=200, completion="thumb" )
     description = tinymce_models.HTMLField()
+    meta_keywords = models.TextField(blank=True)
+    meta_descriotion = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.name
