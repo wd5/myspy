@@ -1,6 +1,7 @@
           # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from catalog.models import Product
 
 CAUSE_CHOICES = (
     ('FROM_CLIENT', 'С продажи'),
@@ -40,6 +41,17 @@ class Balance(models.Model):
 
 class Waytmoney(models.Model):
     wayt_money = models.DecimalField(max_digits=20, decimal_places=2)
+
+class Cash_statistic(models.Model):
+    date = models.DateField()
+    type = models.CharField(max_length=200 ,choices=TYPE_CHOICES, verbose_name="Тип")
+    cash = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Product_statistic(models.Model):
+    date = models.DateField()
+    product = models.ForeignKey(Product)
+    quantity = models.IntegerField()
+    cash = models.DecimalField(max_digits=10, decimal_places=2)
 
 class Task(models.Model):
     title = models.CharField(max_length=500, verbose_name="Название")
