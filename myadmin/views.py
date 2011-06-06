@@ -13,7 +13,7 @@ from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product
-from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order
+from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order, Product_statistic, Cash_statistic
 from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
@@ -400,3 +400,53 @@ def order_done(request, id):
     order.is_done = True
     order.save()
     return HttpResponseRedirect(urlresolvers.reverse(orders))
+
+@login_required
+def statistic(request):
+    all_profit = 0
+    all_costs = 0
+    all_sendgoods = 0
+    all_purchase = 0
+    all_bribes = 0
+    all_yandex = 0
+    all_phone = 0
+    all_other = 0
+    all_vladimir = 0
+    all_victor = 0
+    all_courier = 0
+    all_profit_obj = Cash_statistic.objects.filter(type='FROM_CLIENT')
+    all_costs_obj = Cash_statistic.objects.exclude(type='FROM_CLIENT')
+    all_sendgoods_obj = Cash_statistic.objects.filter(type='SENDGOODS')
+    all_purchase_obj = Cash_statistic.objects.filter(type='PURCHASE')
+    all_bribes_obj = Cash_statistic.objects.filter(type='BRIBE')
+    all_yandex_obj = Cash_statistic.objects.filter(type='Yandex')
+    all_phone_obj = Cash_statistic.objects.filter(type='PHONE')
+    all_other_obj = Cash_statistic.objects.filter(type='OTHER')
+    all_vladimir_obj = Cash_statistic.objects.filter(type='SALARY_VLADIMIR')
+    all_victor_obj = Cash_statistic.objects.filter(type='SALARY_VICTOR')
+    all_courier_obj = Cash_statistic.objects.filter(type='SALARY_COURIER')
+
+    for courier in all_courier_obj:
+        all_courier += courier.cash
+    for victor in all_victor_obj:
+        all_victor += victor.cash
+    for vladimir in all_vladimir_obj:
+        all_vladimir += vladimir.cash
+    for other in all_other_obj:
+        all_other += other.cash
+    for phone in all_phone_obj:
+        all_phone += phone.cash
+    for yandex in all_yandex_obj:
+        all_yandex += yandex.cash
+    for bribe in all_bribes_obj:
+        all_bribes += bribe.cash
+    for purchase in all_purchase_obj:
+        all_purchase += purchase.cash
+    for send_good in all_sendgoods_obj:
+        all_sendgoods += send_good.cash
+    for profit in all_profit_obj:
+        all_profit += profit.cash
+    for cost in all_costs_obj:
+        all_costs += cost.cash
+    all_clean_profit = all_profit - all_costs
+    return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
