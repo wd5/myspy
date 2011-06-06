@@ -8,10 +8,9 @@ from myadmin.settings import EMS, COURIER
 class Command(BaseCommand):
     def handle(self, *args, **options):
         today = date.today()
-        first_day_month = date.today().replace(day=1)
+        first_day_month = today.replace(day=1)
         # Получаю все денежные потоки за вчера
         cashs = Cash.objects.filter(date__month=today.month, date__year=today.year,date__day=today.day-1)
-        cashs = Cash.objects.filter(date__range=(date(2011,6,1),date(2011,6,5)))
         for cash in cashs:
             if cash.cause == 'FROM_CLIENT':
                 if cash.cashflow > 0:
