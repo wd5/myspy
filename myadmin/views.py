@@ -401,8 +401,11 @@ def order_done(request, id):
     order.save()
     return HttpResponseRedirect(urlresolvers.reverse(orders))
 
+from copy import deepcopy
+
 @login_required
 def statistic(request):
+    today = date.today()
     all_profit = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='FROM_CLIENT')))
     all_costs = sum(map(lambda x: x.cash, Cash_statistic.objects.exclude(type='FROM_CLIENT')))
     all_sendgoods = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SENDGOODS')))
@@ -416,7 +419,6 @@ def statistic(request):
     all_courier = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_COURIER')))
     all_clean_profit = all_profit - all_costs
 
-    today = date.today()
     month_profit = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='FROM_CLIENT',date__year=today.year, date__month=today.month)))
     month_costs = sum(map(lambda x: x.cash, Cash_statistic.objects.exclude(type='FROM_CLIENT',date__year=today.year, date__month=today.month)))
     month_sendgoods = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SENDGOODS',date__year=today.year, date__month=today.month)))
@@ -428,4 +430,24 @@ def statistic(request):
     month_vladimir = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VLADIMIR',date__year=today.year, date__month=today.month)))
     month_victor = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VICTOR',date__year=today.year, date__month=today.month)))
     month_courier = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_COURIER',date__year=today.year, date__month=today.month)))
+
+    products = Product_statistic.objects.all()
+
+    b = []
+    for product in products:
+        ooo = False
+        for x in b:
+            if x.product == product.product:
+                ooo =  True
+        if not ooo:
+            all = products.filter(product=product.product)
+            new_product = Product_statistic()
+            new_product.product = product.product
+            new_product.quantity = 0
+            new_product.cash = 0
+            for u in all:
+                new_product.quantity += u.quantity
+                new_product.cash += u.cash
+            print new_product.product, new_product.quantity
+            b.append(new_product)
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
