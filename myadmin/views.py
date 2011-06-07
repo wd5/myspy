@@ -448,6 +448,5 @@ def statistic(request):
             for u in all:
                 new_product.quantity += u.quantity
                 new_product.cash += u.cash
-            print new_product.product, new_product.quantity
             b.append(new_product)
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
