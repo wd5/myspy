@@ -403,50 +403,29 @@ def order_done(request, id):
 
 @login_required
 def statistic(request):
-    all_profit = 0
-    all_costs = 0
-    all_sendgoods = 0
-    all_purchase = 0
-    all_bribes = 0
-    all_yandex = 0
-    all_phone = 0
-    all_other = 0
-    all_vladimir = 0
-    all_victor = 0
-    all_courier = 0
-    all_profit_obj = Cash_statistic.objects.filter(type='FROM_CLIENT')
-    all_costs_obj = Cash_statistic.objects.exclude(type='FROM_CLIENT')
-    all_sendgoods_obj = Cash_statistic.objects.filter(type='SENDGOODS')
-    all_purchase_obj = Cash_statistic.objects.filter(type='PURCHASE')
-    all_bribes_obj = Cash_statistic.objects.filter(type='BRIBE')
-    all_yandex_obj = Cash_statistic.objects.filter(type='Yandex')
-    all_phone_obj = Cash_statistic.objects.filter(type='PHONE')
-    all_other_obj = Cash_statistic.objects.filter(type='OTHER')
-    all_vladimir_obj = Cash_statistic.objects.filter(type='SALARY_VLADIMIR')
-    all_victor_obj = Cash_statistic.objects.filter(type='SALARY_VICTOR')
-    all_courier_obj = Cash_statistic.objects.filter(type='SALARY_COURIER')
-
-    for courier in all_courier_obj:
-        all_courier += courier.cash
-    for victor in all_victor_obj:
-        all_victor += victor.cash
-    for vladimir in all_vladimir_obj:
-        all_vladimir += vladimir.cash
-    for other in all_other_obj:
-        all_other += other.cash
-    for phone in all_phone_obj:
-        all_phone += phone.cash
-    for yandex in all_yandex_obj:
-        all_yandex += yandex.cash
-    for bribe in all_bribes_obj:
-        all_bribes += bribe.cash
-    for purchase in all_purchase_obj:
-        all_purchase += purchase.cash
-    for send_good in all_sendgoods_obj:
-        all_sendgoods += send_good.cash
-    for profit in all_profit_obj:
-        all_profit += profit.cash
-    for cost in all_costs_obj:
-        all_costs += cost.cash
+    all_profit = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='FROM_CLIENT')))
+    all_costs = sum(map(lambda x: x.cash, Cash_statistic.objects.exclude(type='FROM_CLIENT')))
+    all_sendgoods = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SENDGOODS')))
+    all_purchases = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='PURCHASE')))
+    all_bribes = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='BRIBE')))
+    all_yandex = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='Yandex')))
+    all_phones = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='PHONE')))
+    all_others = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='OTHER')))
+    all_vladimir = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VLADIMIR')))
+    all_victor = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VICTOR')))
+    all_courier = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_COURIER')))
     all_clean_profit = all_profit - all_costs
+
+    today = date.today()
+    month_profit = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='FROM_CLIENT',date__year=today.year, date__month=today.month)))
+    month_costs = sum(map(lambda x: x.cash, Cash_statistic.objects.exclude(type='FROM_CLIENT',date__year=today.year, date__month=today.month)))
+    month_sendgoods = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SENDGOODS',date__year=today.year, date__month=today.month)))
+    month_purchases = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='PURCHASE',date__year=today.year, date__month=today.month)))
+    month_brbes = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='BRIBE',date__year=today.year, date__month=today.month)))
+    month_yandex = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='Yandex',date__year=today.year, date__month=today.month)))
+    month_phones = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='PHONE',date__year=today.year, date__month=today.month)))
+    mont_others = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='OTHER',date__year=today.year, date__month=today.month)))
+    month_vladimir = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VLADIMIR',date__year=today.year, date__month=today.month)))
+    month_victor = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VICTOR',date__year=today.year, date__month=today.month)))
+    month_courier = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_COURIER',date__year=today.year, date__month=today.month)))
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
