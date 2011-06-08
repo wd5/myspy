@@ -449,4 +449,5 @@ def statistic(request):
                 new_product.quantity += u.quantity
                 new_product.cash += u.cash
             b.append(new_product)
+    b.sort(key=lambda x: x.cash, reverse=True)
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
