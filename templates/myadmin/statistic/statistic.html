@@ -28,8 +28,11 @@
                 <tr><td>ЗП Владимиру за месяц: </td><td><span class="orange">{{ month_vladimir }}</span></td></tr>
                 <tr><td>ЗП Виктору за месяц: </td><td><span class="orange">{{ month_victor }}</span></td></tr>
                 <tr><td>ЗП курьеру за месяц: </td><td><span class="orange">{{ month_courier }}</span></td></tr>
-                {% for product in b %}
+                {% for product in products %}
                     <tr><td>Продано {{ product.product.name }}: </td><td>{{ product.quantity }} шт, чистой прибыли: <span class="orange">{{ product.cash }}</span></td></tr>
+                {% endfor %}
+                {% for i in q %}
+                    <tr><td>{{ i.0 }}</td><td><span class="orange">{{ i.1 }}</span></td></tr>
                 {% endfor %}
 			</table>
 			<div class="clr"></div>

@@ -12,7 +12,7 @@ from django.forms.models import inlineformset_factory
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from catalog.models import Product
+from catalog.models import Product, Category
 from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order, Product_statistic, Cash_statistic
 from django.contrib.auth import logout
 from django.core.mail import send_mail
@@ -401,8 +401,6 @@ def order_done(request, id):
     order.save()
     return HttpResponseRedirect(urlresolvers.reverse(orders))
 
-from copy import deepcopy
-
 @login_required
 def statistic(request):
     today = date.today()
@@ -431,23 +429,37 @@ def statistic(request):
     month_victor = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_VICTOR',date__year=today.year, date__month=today.month)))
     month_courier = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SALARY_COURIER',date__year=today.year, date__month=today.month)))
 
-    products = Product_statistic.objects.all()
+    products_statistic = Product_statistic.objects.all()
 
-    b = []
-    for product in products:
+    products = []
+    for statistic_item in products_statistic:
         ooo = False
-        for x in b:
-            if x.product == product.product:
+        for product in products:
+            # Если такой товар уже есть в списке
+            if product.product == statistic_item.product:
                 ooo =  True
+        # Если товара нету в списке то считаю его
         if not ooo:
-            all = products.filter(product=product.product)
-            new_product = Product_statistic()
-            new_product.product = product.product
-            new_product.quantity = 0
-            new_product.cash = 0
-            for u in all:
-                new_product.quantity += u.quantity
-                new_product.cash += u.cash
-            b.append(new_product)
-    b.sort(key=lambda x: x.cash, reverse=True)
+                all = products_statistic.filter(product=statistic_item.product)
+                new_product = Product_statistic()
+                new_product.product = statistic_item.product
+                new_product.quantity = 0
+                new_product.cash = 0
+                for u in all:
+                    new_product.quantity += u.quantity
+                    new_product.cash += u.cash
+                products.append(new_product)
+    products.sort(key=lambda x: x.cash, reverse=True)
+
+    last_cat_id = Category.objects.all().latest('id').id
+
+    q = []
+
+    for i in range(1,last_cat_id):
+        cash = 0
+        cats = Product_statistic.objects.filter(product__category=i)
+        for x in cats:
+            cash += x.cash
+        q.append([x.product.category.all()[0],cash])
+    q.sort(key=lambda x: x[1], reverse=True)
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
