@@ -420,7 +420,7 @@ def statistic(request):
     all_clean_profit = all_profit - all_costs
 
     month_profit = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='FROM_CLIENT',date__year=today.year, date__month=today.month)))
-    month_costs = sum(map(lambda x: x.cash, Cash_statistic.objects.exclude(type='FROM_CLIENT',date__year=today.year, date__month=today.month)))
+    month_costs = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(date__year=today.year, date__month=today.month).exclude(type='FROM_CLIENT')))
     month_sendgoods = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='SENDGOODS',date__year=today.year, date__month=today.month)))
     month_purchases = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='PURCHASE',date__year=today.year, date__month=today.month)))
     month_bribes = sum(map(lambda x: x.cash, Cash_statistic.objects.filter(type='BRIBE',date__year=today.year, date__month=today.month)))
