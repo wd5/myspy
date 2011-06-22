@@ -68,7 +68,7 @@
 										 <p>		
 																	Технические характеристики:<br /> 
 																 {% for feature in product.feature_set.all %}
- 																	 - {{ feature.name }}: {{ feature.value }} <br> 																	 
+ 																	 - {{ feature.name }}: {{ feature.value|safe }} <br>
 																 {% endfor %}
 																
 
