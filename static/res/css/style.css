@@ -3145,7 +3145,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 
 		/* STYLING FIRST DROP DOWN */
 		#nav ul.dropdown #header_sprite{
-			width: 700px;
+			width: 1000px;
 			display:none;
 			position: absolute; 	
 			top: 100%; 
