@@ -4,7 +4,7 @@
 	{% menu request %}
 	<table cellpadding="0" cellspacing="0" border="0" id="client_edit_form_table" style="margin:20px auto">
 		<tr>
-			<td colspan="2" class="bottomborder order_fonts">	{{ order.title }}</td>
+			<td colspan="2" class="bottomborder order_fonts">	{{ order.title }}</td> {{ order.date }}
 		</tr>
 		<tr>
 			<td colspan="2" class="bottomborder order_fonts">	{{ order.order|safe }}</td>

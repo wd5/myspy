@@ -19,7 +19,7 @@
 		{% for task in tasks %}
 		<tr>
 			<td class="rightborder bottomborder textcenter order_fonts">
-				<a href="/myadmin/tasks/{{ task.id }}/">{{ task.title }}</a>
+				<a href="/myadmin/tasks/{{ task.id }}/">{{ task.title }}</a> {{ task.date }}
 			</td>
 			<td class="bottomborder textcenter">
 				<a href="/myadmin/tasks/edit/{{ task.id }}/" target="_blank"><img src="/static/res/img/edit.png"/></a>

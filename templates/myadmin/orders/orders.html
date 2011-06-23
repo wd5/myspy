@@ -17,7 +17,7 @@
 		{% for order in orders %}
 			<tr>
 				<td class="rightborder bottomborder textcenter order_fonts">
-					<a href="/myadmin/orders/{{ order.id }}/">{{ order.title }}</a> 
+					<a href="/myadmin/orders/{{ order.id }}/">{{ order.title }}</a> {{ order.date }}
 				</td>
 				<td class="rightborder bottomborder textcenter order_fonts">
 					{% if 'EE' in order.tracking_number %}

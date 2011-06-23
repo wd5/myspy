@@ -11,7 +11,7 @@
 			</tr>
 			<tr>
 				<td class="bottomborder">
-					{{ task.task|safe }}
+					{{ task.task|safe }} {{ task.date }}
 				</td>
 			</tr>
 			<tr>
@@ -45,7 +45,7 @@
 							<tr>							
 								<td class="bottomborder">								
 									<span style="color:#E66202;">{{ answer.user }}:</span></br>
-									{{ answer.answer|safe }}
+									{{ answer.answer|safe }} {{ answer.date }}
 									{% if answer.file %}
 									</br><p><a class="download_file" href="{{answer.file.url}}" target="_blank">{{ answer.file }}</a></p>
 									{% endif %}								

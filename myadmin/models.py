@@ -62,6 +62,7 @@ class Task(models.Model):
     is_done = models.BooleanField(verbose_name="Готово?")
     user = models.CharField(max_length=200)
     performers = models.ManyToManyField(User)
+    date = models.DateField(auto_now_add=True)
 
     class Meta:
         ordering = ['-id']
@@ -71,6 +72,7 @@ class TaskAnswer(models.Model):
     answer = models.TextField()
     user = models.CharField(max_length=200)
     file = models.FileField(upload_to='./taskfiles')
+    date = models.DateTimeField(auto_now_add=True)
 
 class TaskFile(models.Model):
     task = models.ForeignKey(Task)
@@ -86,6 +88,7 @@ class Order(models.Model):
     invoice = models.FileField(upload_to="./invoices")
     is_done = models.BooleanField(verbose_name="Доставлено?")
     user = models.CharField(max_length=200)
+    date = models.DateField(auto_now_add=True)
 
     class Meta:
         ordering = ['-id']
