@@ -42,18 +42,8 @@
     	</div>		
 		<div class="clear"></div>
 	<div><div><!-- /nav -->
-
     <div class="subnav2">
-        <a href="/cats">Каталог товара</a> »
-        {% for item in product.category.all %}
-            {% if item.name == item.section.name %}
-                <a href="/cats/{{ item.slug }}">{{ item.name }}</a>{% if forloop.last %}{% else %}/{% endif %}
-            {% else %}
-                <a href="/cats/{{ item.section.slug }}">{{ item.section.name }}</a> »
-                <a href="/cats/{{ item.slug }}">{{ item.name }}</a>
-            {% endif %}
-        {% endfor %} » {{ product.name }}
-            <div class="clear"></div>
+        <a href="/cats">Каталог товара</a> »&nbsp;<a href="/cats/{{ product.category.all.0.section.slug }}">{{ product.category.all.0.section }}</a> »&nbsp;<a href="/cats/{{ product.category.all.0.slug }}">{{ product.category.all.0 }}</a> »&nbsp;<a href="/products/{{ product.slug }}">{{ product }}</a>
 	</div>
 
 	<div id="container" class="fix "> 
