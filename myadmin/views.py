@@ -130,6 +130,50 @@ def delete_client(request, id):
     return HttpResponseRedirect('/myadmin/sales/all')
 
 @login_required
+def copy_client(request, id):
+    form = ClientForm()
+    client = Client.objects.get(id=id)
+    client.subtotal = client.discount = client.tracking_number = client.status = client.comment = client.ordered_at = client.delivery = client.tracking_status = client.referrer = client.execute_at = client.last_user = client.change_log = None
+    form = ClientForm(instance=client)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
+    formset = CartProductFormset()
+    if request.method == 'POST':
+        # Создаю объект корзины для клиента
+        cart = CartItem()
+        cart.cart_id = _generate_cart_id()
+        cart.save()
+        # Создаю объект клиента
+        client = Client()
+        # Сохраняю форму используя объект созданного клиента
+        form = ClientForm(request.POST, instance=client)
+        if form.is_valid():
+            newform = form.save(commit=False)
+            # Записываю корзину клиента
+            newform.cart_id = cart.id
+            newform.last_user = request.user.first_name
+            newform.save()
+            # Сохраняю форму используя объект корзины клиента
+            formset = CartProductFormset(request.POST, instance=cart)
+            if formset.is_valid():
+                # Обновляю количество товара на складе
+                for formitem in formset.cleaned_data:
+                    if formitem:
+                        product_name = formitem['product']
+                        quantity = formitem['quantity']
+                        product = Product.objects.get(name=product_name)
+                        true_quantity = product.quantity - quantity
+                        product.quantity = true_quantity
+                        product.save()
+                formset.save()
+                # Высчитываю сумму и скидку
+                subtotal(cart.id)
+            else:
+                pass
+            # После создания клиента тут же перекидываю на редактирование клиента
+            return HttpResponseRedirect(reverse('myadmin.views.edit_client', args=(client.id,)))
+    return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
+
+@login_required
 def edit_client(request, id):
     # Получаю нужные данные для работы с формами
     client = Client.objects.get(id=id)
