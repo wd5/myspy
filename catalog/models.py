@@ -9,8 +9,10 @@ class Section(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     is_active = models.BooleanField(default=True)
     SEO_text = tinymce_models.HTMLField(null=True, blank=True)
+    sort_number = models.IntegerField()
 
     class Meta:
+        ordering = ['sort_number']
         verbose_name_plural = 'Секции товара'
 
     def __unicode__(self):
