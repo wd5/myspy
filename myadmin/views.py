@@ -18,6 +18,7 @@ from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from madmin_func import clients_list, client_sms, update_store, subtotal, update_cash, cash_list, change_cashflow, change_balance
+from django.db.models import Q
 from settings import *
 
 def auth(request):
@@ -49,6 +50,23 @@ def week_boundaries(year, week):
 def sales(request, when):
     # Ожидаемое количество денег
     money = Waytmoney.objects.get(id=1).wayt_money
+    # Список клиентов за запрошеный период
+    clients = clients_list(when)
+    # Пейджинация
+#    try:
+#        page = int(request.GET.get('page', '1'))
+#    except ValueError:
+#        page = 1
+    # 100 клиентов на одну страницу
+#    paginator = Paginator(clients, 100)
+#    try:
+#        clients = paginator.page(page)
+#    except (EmptyPage, InvalidPage) :
+#        clients = paginator.page(paginator.num_pages)
+    return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def sales_active(request):
     # Применяю фильтр по статусам
     if request.method == 'POST':
         # Выбранные статусы
@@ -61,19 +79,7 @@ def sales(request, when):
         # Сортирую по id - так чтобы последний клиент был сверху
         clients.sort(key=lambda x: x.id, reverse=True)
     else:
-        # Список клиентов за запрошеный период
-        clients = clients_list(when)
-    # Пейджинация
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-    # 100 клиентов на одну страницу
-    paginator = Paginator(clients, 100)
-    try:
-        clients = paginator.page(page)
-    except (EmptyPage, InvalidPage) :
-        clients = paginator.page(paginator.num_pages)
+        clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
