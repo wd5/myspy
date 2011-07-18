@@ -57,7 +57,7 @@ def status_count(status):
     elif status == "BACK":
         status_with_count = "Обмен/Возврат(" + str(count) + ')'
     elif status == "CONTACT_AT":
-        status_with_count = "Связаться в назначенное время(" + str(count) + ')'
+        status_with_count = "Связаться(" + str(count) + ')'
     elif status == "REFUSED":
         status_with_count = "Снятие заявки клиентом(" + str(count) + ')'
     elif status == "CASH_IN":

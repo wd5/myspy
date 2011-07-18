@@ -74,7 +74,7 @@ def sales(request, when):
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         clients = paginator.page(paginator.num_pages)
-    return render_to_response("myadmin/sale/sales.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
 def add_client(request):
