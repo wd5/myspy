@@ -103,53 +103,52 @@
 		</div>
 	</div>
 	<div id="navigation">
+	    <form action="#" method="post">
+			<div class="lt_un">
+				<input type="submit" class="icon_apply" value="&nbsp;" />
+			</div>
 
-		<div class="lt_un">
-			<input type="submit" class="icon_apply" value="&nbsp;" />
-		</div>
+			<div class="clear"></div>
 
-		<div class="clear"></div>
-
-
-<div id="accordion">
-	<h3><a href="#">Активные</a> <span class="check"></span>  <span class="corn"></span></h3>
-	<div>
-		<ul class="set">
-        <li><input type="checkbox" id="ch1" /> <label for="ch1"><span>{% status_count "PROCESS" %}</span></label></li>
-			<li><input type="checkbox" id="ch2" /> <label for="ch2"><span>{% status_count "POSTSEND" %}</span></label></li>
-			<li><input type="checkbox" id="ch3" /> <label for="ch3"><span>{% status_count "COURIER_SEND" %}</span></label></li>
-			<li><input type="checkbox" id="ch4" /> <label for="ch4"><span>{% status_count "BACK" %}</span></label></li>
-			<li><input type="checkbox" id="ch5" /> <label for="ch5"><span>{% status_count "CONTACT_AT" %}</span></label></li>
-		</ul>
-	</div>
-	<h3><a href="#">Пассивные</a> <span class="check"></span>   <span class="corn"></span></h3>
-	<div>
-		<ul class="set">
-			<li><input type="checkbox" id="ch6" /> <label for="ch6"><span>{% status_count "COURIER_TAKE" %}</span></label></li>
-			<li><input type="checkbox" id="ch7" /> <label for="ch7"><span>{% status_count "BUYER_TAKE" %}</span></label></li>
-			<li><input type="checkbox" id="ch8" /> <label for="ch8"><span>{% status_count "WAYT_PRODUCT" %}</span></label></li>
-			<li><input type="checkbox" id="ch9" /> <label for="ch9"><span>{% status_count "POSTSENDED" %}</span></label></li>
-		</ul>
-	</div>
-	<h3><a href="#">Закрытые</a> <span class="check"></span> <span class="corn"></span></h3>
-	<div>
-		<ul class="set">
-			<li><input type="checkbox" id="ch11" /> <label for="ch11"><span>{% status_count "CASH_IN" %}</span></label></li>
-			<li><input type="checkbox" id="ch12" /> <label for="ch12"><span>{% status_count "REFUSED" %}</span></label></li>
-		</ul>
-	</div>
-	<h3><a href="#">Все клиенты</a> <span class="check"></span> <span class="corn"></span></h3>
-	<div>
-		<ul class="set">
-		</ul>
-	</div>
-</div>
-
+			<div id="accordion">
+				<h3><a href="#">Активные</a> <span class="check"></span>  <span class="corn"></span></h3>
+				<div>
+					<ul class="set">
+			        <li><input type="checkbox" id="ch1" /> <label for="ch1"><span>{% status_count "PROCESS" %}</span></label></li>
+						<li><input type="checkbox" id="ch2" /> <label for="ch2"><span>{% status_count "POSTSEND" %}</span></label></li>
+						<li><input type="checkbox" id="ch3" /> <label for="ch3"><span>{% status_count "COURIER_SEND" %}</span></label></li>
+						<li><input type="checkbox" id="ch4" /> <label for="ch4"><span>{% status_count "BACK" %}</span></label></li>
+						<li><input type="checkbox" id="ch5" /> <label for="ch5"><span>{% status_count "CONTACT_AT" %}</span></label></li>
+					</ul>
+				</div>
+				<h3><a href="#">Пассивные</a> <span class="check"></span>   <span class="corn"></span></h3>
+				<div>
+					<ul class="set">
+						<li><input type="checkbox" id="ch6" /> <label for="ch6"><span>{% status_count "COURIER_TAKE" %}</span></label></li>
+						<li><input type="checkbox" id="ch7" /> <label for="ch7"><span>{% status_count "BUYER_TAKE" %}</span></label></li>
+						<li><input type="checkbox" id="ch8" /> <label for="ch8"><span>{% status_count "WAYT_PRODUCT" %}</span></label></li>
+						<li><input type="checkbox" id="ch9" /> <label for="ch9"><span>{% status_count "POSTSENDED" %}</span></label></li>
+					</ul>
+				</div>
+				<h3><a href="#">Закрытые</a> <span class="check"></span> <span class="corn"></span></h3>
+				<div>
+					<ul class="set">
+						<li><input type="checkbox" id="ch11" /> <label for="ch11"><span>{% status_count "CASH_IN" %}</span></label></li>
+						<li><input type="checkbox" id="ch12" /> <label for="ch12"><span>{% status_count "REFUSED" %}</span></label></li>
+					</ul>
+				</div>
+				<h3><a href="#">Все клиенты</a> <span class="check"></span> <span class="corn"></span></h3>
+				<div>
+					<ul class="set">
+					</ul>
+				</div>
+			</div>
 
 
 
 
 
+    	</form>
 
 	</div>
 	<div id="extra">
