@@ -91,6 +91,7 @@
   						<span class="phone">тел: {{ client.phone }}</span>
   						<div class="clear"></div>
                         {% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a> {{ client.tracking_status }}{% endif %}
+
   						<span class="comment">{{ client.comment }}</span>
   					</div>
   				</div>
