@@ -48,7 +48,7 @@ div#footer{clear:both;width:100%}
 .top_menu ul {float:left;margin:0 0 0 17px;}
 .top_menu ul li{float:left;margin:0 10px 0 0;padding-top:7px;}
 .top_menu ul li a{color:#cccccc;font:bold 13px arial,Tahoma, Geneva, "Helvetica Neue", Helvetica,sans-serif;text-decoration:none}
-.top_menu ul li a:hover{text-decoration:underline}
+.top_menu ul li a:hover{text-decoration:underline} 
 
 .top_menu ul li.current {border-top:3px solid #cc3333;}
 .top_menu ul li.current a{color:#FFF;display:block;margin-top:-4px;}
@@ -81,7 +81,7 @@ div#footer{clear:both;width:100%}
 .items_list .main_info .goods a{}
 .items_list .main_info .price{font:16px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;margin-left:30px}
 .items_list .main_info .price small{font-size:11px;padding-left:13px;}
-.items_list .main_info .action{color:#993333;font-weight:bold;text-decoration:underline;margin-right:17px;}
+.items_list .main_info .action{color:#993333;font-weight:bold;text-decoration:none;margin-right:17px;}
 .items_list .main_info .address{font-style:italic;}
 .items_list .main_info .phone {margin:5px 0}
 .items_list .main_info .comment{font:italic 12px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;}

@@ -47,7 +47,8 @@
 		<div class="clear"></div>
         <!-- // -->
 		<div class="lt_un">
-            <input type="submit" class="icon_man" value="&nbsp;" onclick="window.location='/myadmin/client/add' " />
+            <!--<input type="submit" class="icon_man" value="&nbsp;" onclick="window.location='/myadmin/client/add' " />-->
+            <a href="/myadmin/client/add" target="_blank" class="icon_man"></a>
 		</div>
         <!-- // -->
 		<div class="search">
@@ -81,7 +82,7 @@
   						</span>
                         {% if client.subtotal %}
   						<span class="price">
-  							{{ client.subtotal }} руб {% if client.dicount %}<small>{{ client.discount }} руб</small>{% endif %}
+  							{{ client.subtotal }} руб  {% if client.discount %} <small> {{ client.discount }} руб</small>{% endif %}
   						</span>
                         {% endif %}
   						<div class="clear"></div>
