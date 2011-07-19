@@ -5,7 +5,7 @@
 <title>my-spy_admin</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link href="{{ STATIC_URL }}res/css/test.css" rel="stylesheet" type="text/css" />
-    <script src='{{ STATIC_URL }}res/js/jquery1.4.2.js'></script>
+    <script src='{{ STATIC_URL }}res/js/jquery-1.5.1.js'></script>
 	<script src="{{ STATIC_URL }}js/ui/jquery.ui.core.js"></script>
 	<script src="{{ STATIC_URL }}js/ui/jquery.ui.widget.js"></script>
 	<script src="{{ STATIC_URL }}js/ui/jquery.ui.accordion.js"></script>
@@ -13,10 +13,10 @@
     <script src="{{ STATIC_URL }}js/init.js"></script>
 	<script>
 	$(function() {
-		$( "#accordion" ).accordion({
+		/*$( "#accordion" ).accordion({
 			autoHeight: false,
 			navigation: true
-		});
+		});*/
 		$( ".set" ).buttonset();
 		$( ".ch" ).button();
 	});
@@ -91,7 +91,7 @@
   						<span class="phone">тел: {{ client.phone }}</span>
   						<div class="clear"></div>
                         {% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a> {{ client.tracking_status }}{% endif %}
-
+                        <div class="clear"></div>
   						<span class="comment">{{ client.comment }}</span>
   					</div>
   				</div>
@@ -103,7 +103,7 @@
 		</div>
 	</div>
 	<div id="navigation">
-	    <form action="/myadmin/sales/" method="post"> {% csrf_token %}
+	    <form action="/myadmin/sales/" method="post" id="filter"> {% csrf_token %}
 			<div class="lt_un">
 				<input type="submit" class="icon_apply" value="&nbsp;" />
 			</div>
@@ -111,33 +111,33 @@
 			<div class="clear"></div>
 
 			<div id="accordion">
-				<h3><a href="#">Активные</a> <span class="check"></span>  <span class="corn"></span></h3>
+				<h3><a href="javascript:void(0);" class="send_form1">Активные</a> <input type="checkbox" class="ch" id="hd1" /> <label for="hd1" class="maincheckbox1"></label> <!--<span class="corn"></span> --></h3>
 				<div>
 					<ul class="set">
-			        <li><input type="checkbox" id="ch1" value="PROCESS" name='status' /> <label for="ch1"><span>{% status_count "PROCESS" %}</span></label></li>
-						<li><input type="checkbox" value="POSTSEND" name="status" id="ch2" /> <label for="ch2"><span>{% status_count "POSTSEND" %}</span></label></li>
-						<li><input type="checkbox" id="ch3" value="COURIER_SEND" name="status" /> <label for="ch3"><span>{% status_count "COURIER_SEND" %}</span></label></li>
-						<li><input type="checkbox" id="ch4" value="BACK" name="status" /> <label for="ch4"><span>{% status_count "BACK" %}</span></label></li>
-						<li><input type="checkbox" id="ch5" value="CONTACT_AT" name="status" /> <label for="ch5"><span>{% status_count "CONTACT_AT" %}</span></label></li>
+				        <li><input type="checkbox" id="ch1" class="group1" value="PROCESS" name='status' /> <label for="ch1"><span>{% status_count "PROCESS" %}</span></label></li>
+						<li><input type="checkbox" id="ch2" class="group1" value="POSTSEND" name="status" /> <label for="ch2"><span>{% status_count "POSTSEND" %}</span></label></li>
+						<li><input type="checkbox" id="ch3" class="group1" value="COURIER_SEND" name="status" /> <label for="ch3"><span>{% status_count "COURIER_SEND" %}</span></label></li>
+						<li><input type="checkbox" id="ch4" class="group1" value="BACK" name="status" /> <label for="ch4"><span>{% status_count "BACK" %}</span></label></li>
+						<li><input type="checkbox" id="ch5" class="group1" value="CONTACT_AT" name="status" /> <label for="ch5"><span>{% status_count "CONTACT_AT" %}</span></label></li>
 					</ul>
 				</div>
-				<h3><a href="#">Пассивные</a> <span class="check"></span>   <span class="corn"></span></h3>
+				<h3><a href="javascript:void(0);" class="send_form2">Пассивные</a> <input type="checkbox" class="ch" id="hd2" /> <label for="hd2" class="maincheckbox2"></label>   <!--<span class="corn"></span> --></h3>
 				<div>
 					<ul class="set">
-						<li><input type="checkbox" id="ch6" value="COURIER_TAKE" name="status" /> <label for="ch6"><span>{% status_count "COURIER_TAKE" %}</span></label></li>
-						<li><input type="checkbox" id="ch7" value="BUYER_TAKE" name="status" /> <label for="ch7"><span>{% status_count "BUYER_TAKE" %}</span></label></li>
-						<li><input type="checkbox" id="ch8" value="WAYT_PRODUCT" name="status" /> <label for="ch8"><span>{% status_count "WAYT_PRODUCT" %}</span></label></li>
-						<li><input type="checkbox" id="ch9" value="POSTSENDED" name="status" /> <label for="ch9"><span>{% status_count "POSTSENDED" %}</span></label></li>
+						<li><input type="checkbox" id="ch6" class="group2" value="COURIER_TAKE" name="status" /> <label for="ch6"><span>{% status_count "COURIER_TAKE" %}</span></label></li>
+						<li><input type="checkbox" id="ch7" class="group2" value="BUYER_TAKE" name="status" /> <label for="ch7"><span>{% status_count "BUYER_TAKE" %}</span></label></li>
+						<li><input type="checkbox" id="ch8" class="group2" value="WAYT_PRODUCT" name="status" /> <label for="ch8"><span>{% status_count "WAYT_PRODUCT" %}</span></label></li>
+						<li><input type="checkbox" id="ch9" class="group2" value="POSTSENDED" name="status" /> <label for="ch9"><span>{% status_count "POSTSENDED" %}</span></label></li>
 					</ul>
 				</div>
-				<h3><a href="#">Закрытые</a> <span class="check"></span> <span class="corn"></span></h3>
+				<h3><a href="javascript:void(0);" class="send_form3">Закрытые</a> <input type="checkbox" class="ch" id="hd3" /> <label for="hd3" class="maincheckbox3"></label> <!--<span class="corn"></span> --></h3>
 				<div>
 					<ul class="set">
-						<li><input type="checkbox" id="ch11" value="CASH_IN" name="status" /> <label for="ch11"><span>{% status_count "CASH_IN" %}</span></label></li>
-						<li><input type="checkbox" id="ch12" value="REFUSED" name="status" /> <label for="ch12"><span>{% status_count "REFUSED" %}</span></label></li>
+						<li><input type="checkbox" id="ch11" class="group3" value="CASH_IN" name="status" /> <label for="ch11"><span>{% status_count "CASH_IN" %}</span></label></li>
+						<li><input type="checkbox" id="ch12" class="group3" value="REFUSED" name="status" /> <label for="ch12"><span>{% status_count "REFUSED" %}</span></label></li>
 					</ul>
 				</div>
-				<h3><a href="#">Все клиенты</a> <span class="check"></span> <span class="corn"></span></h3>
+				<h3><a href="#">Все клиенты</a> </h3>
 				<div>
 					<ul class="set">
 					</ul>
@@ -145,6 +145,14 @@
 			</div>
 
 
+
+			<div class="lt_un" style="margin-top:50px">
+				<select>
+					<option>Январь 2011</option>
+					<option>Февраль 2011</option>
+					<option>Март 2011</option>
+				</select>
+			</div>
 
 
 
