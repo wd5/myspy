@@ -12,6 +12,7 @@ $(document).ready( function() {
 	$(".send_form1").click( function() {  		
 			$('.group1').attr('checked', true);
 			$('.group1').next().addClass('ui-state-active');
+            $('.group2, .group3').removeAttr("checked");
 			$('.maincheckbox1').addClass('active');
 			$('#hd1').next().addClass('ui-state-active'); 
 			$('#filter').submit(); 
@@ -31,6 +32,7 @@ $(document).ready( function() {
 	$(".send_form2").click( function() {  		
 			$('.group2').attr('checked', true);
 			$('.group2').next().addClass('ui-state-active');
+            $('.group1, .group3').removeAttr("checked");
 			$('.maincheckbox2').addClass('active');
 			$('#hd2').next().addClass('ui-state-active'); 
 			$('#filter').submit(); 
@@ -50,6 +52,7 @@ $(document).ready( function() {
 	$(".send_form3").click( function() {  		
 			$('.group3').attr('checked', true);
 			$('.group3').next().addClass('ui-state-active');
+            $('.group1, .group2').removeAttr("checked");
 			$('.maincheckbox3').addClass('active');
 			$('#hd3').next().addClass('ui-state-active'); 
 			$('#filter').submit(); 

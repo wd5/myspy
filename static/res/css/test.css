@@ -72,7 +72,7 @@ div#footer{clear:both;width:100%}
 .items_list{clear:both;margin:25px 0 0 0px}
 .items_list .item span{display:block;float:left;margin-right:7px;}
 .items_list .item{clear:both;display:block;position:relative;line-height:20px;font-size:16px;margin:0 0 35px 0}
-.items_list .item .id span {text-decoration:underline;font-size:11px;}
+.items_list .item .id span {font-size:11px;}
 .items_list .item .id a{font-size:13px;text-decoration:none;}
 .items_list .item .id a:hover{text-decoration:underline;}
 .items_list .main_info{clear:both;}

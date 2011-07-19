@@ -80,6 +80,7 @@ def sales_active(request):
         clients.sort(key=lambda x: x.id, reverse=True)
     else:
         clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
+        statuses = [u'PROCESS',u'POSTSEND',u'COURIER_SEND',u'BACK',u'CONTACT_AT']
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
