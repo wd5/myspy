@@ -1,9 +1,17 @@
-{% for i in dates %}
-    {% if 'sales' in request_path %}
-        <a href="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
-    {% else %}
-        {% if 'cash' in request_path %}
-            <a href="/myadmin/cash/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
-        {% endif %}
+{% if 'sales' in request_path %}
+    <a href="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
+    <div class="lt_un" style="margin-top:50px">
+        <select>
+            {% for i in dates %}
+                <option>{{ i|date:"F Y" }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% else %}
+    {% if 'cash' in request_path %}
+        {% for i in dates %}
+        <a href="/myadmin/cash/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
+        {% endfor %}
     {% endif %}
-{% endfor %}
+{% endif %}
+

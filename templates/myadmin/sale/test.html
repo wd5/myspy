@@ -47,7 +47,7 @@
 		<div class="clear"></div>
         <!-- // -->
 		<div class="lt_un">
-			<input type="button" class="icon_man" />
+            <input type="submit" class="icon_man" value="&nbsp;" onclick="window.location='/myadmin/client/add' " />
 		</div>
         <!-- // -->
 		<div class="search">
@@ -146,14 +146,7 @@
 
 
 
-			<div class="lt_un" style="margin-top:50px">
-				<select>
-					<option>Январь 2011</option>
-					<option>Февраль 2011</option>
-					<option>Март 2011</option>
-				</select>
-			</div>
-
+            {% date_tags request.path %}
 
 
     	</form>
