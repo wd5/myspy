@@ -1,10 +1,9 @@
 {% if 'sales' in request_path %}
-    <a href="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</a>
     <div class="lt_un" style="margin-top:50px">
         <!--<select onchange="window.location='/'">-->
         <select onchange="window.location=this.value" id="archive">
             {% for i in dates %}
-                <option value="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</option>
+                <option {% if i|date:"nY" in request_path %} selected="selected"{% endif %} value="/myadmin/sales/{{ i.month }}{{ i.year }}">{{ i|date:"F Y" }}</option>
             {% endfor %}
         </select>
     </div>
@@ -15,4 +14,3 @@
         {% endfor %}
     {% endif %}
 {% endif %}
-

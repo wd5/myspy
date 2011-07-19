@@ -119,3 +119,7 @@ div#footer{clear:both;width:100%}
 .set label.ui-state-active{background: url(../img/checkbox_active.gif) no-repeat 0 0;}
 
 .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
+
+#accordion h3.current a {
+    color: #cc3333;
+}
