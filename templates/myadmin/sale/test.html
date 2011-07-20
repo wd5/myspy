@@ -59,10 +59,7 @@
     $(document).ready(function () {
         $('.test_id').change(function () {
             var value = $(this).val();
-            var tstr = '{{ statuses }}';
-            stat = tstr.split("&#39;, u&#39;");
             $.post("/myadmin/test_json/", {param: value});
-            alert(stat);
         });
     });
 	</script>
