@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
                       url(r'^$', 'myadmin.views.auth', name="auth-page"),
+                      url(r'^test_json/$', 'myadmin.views.test_json', name="json-page"),
                       url(r'^logout/$', 'myadmin.views.logout_view', name="logout-page"),
                       url(r'^sales/$', 'myadmin.views.sales_active', name="active-sales-page"),
                       url(r'^sales/(?P<when>[-\w]+)/$', 'myadmin.views.sales', name="date_sales-page"),

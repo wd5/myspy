@@ -1,7 +1,7 @@
           # -*- coding: utf-8 -*-
 from django import template
 from datetime import date
-from cart.models import Client
+from cart.models import Client, STATUS_CHOICES
 from myadmin.models import Cash
 
 register = template.Library()
@@ -65,3 +65,10 @@ def status_count(status):
     else:
         status_with_count = status
     return status_with_count
+
+@register.inclusion_tag("myadmin/tags/select.html")
+def select(client):
+    return {
+        'need_statuses': STATUS_CHOICES,
+        'client' : client,
+        }

@@ -514,3 +514,13 @@ def statistic(request):
         q.append([x.product.category.all()[0],cash])
     q.sort(key=lambda x: x[1], reverse=True)
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
+
+
+def test_json(request):
+    if request.method == 'POST':
+        param = request.POST['param']
+        client_id = param.split('.')[0]
+        status = param.split('.')[1]
+        client = Client.objects.get(id=client_id)
+        client.status = status
+        client.save()
