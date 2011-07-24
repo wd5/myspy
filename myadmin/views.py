@@ -524,3 +524,7 @@ def test_json(request):
         client = Client.objects.get(id=client_id)
         client.status = status
         client.save()
+
+def get_client(request, id):
+    client = Client.objects.get(id=id)
+    return render_to_response("myadmin/sale/client.html", locals(), context_instance=RequestContext(request))
