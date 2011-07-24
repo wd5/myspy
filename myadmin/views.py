@@ -73,12 +73,9 @@ def sales_active(request):
         statuses = []
         # Клиенты соответсвующие статусам
         clients = []
-        clients_2 = []
         for status in request.POST.getlist('status'):
             statuses.append(status)
-            client = Client.objects.filter(status=status)
-            clients += client
-            clients_2.append(client.get_status_display())
+            clients += Client.objects.filter(status=status)
         # Сортирую по id - так чтобы последний клиент был сверху
         clients.sort(key=lambda x: x.id, reverse=True)
     else:
