@@ -68,15 +68,15 @@ DELIVERY_CHOICES = (
 STATUS_CHOICES = (
     ('PROCESS', 'Обработать'),
     ('POSTSEND', 'Отправить почтой'),
-    ('POSTSENDED', 'Отправлено почтой'),
     ('COURIER_SEND', 'Отправить курьером'),
+    ('BACK', 'Обмен/Возврат'),
+    ('CONTACT_AT', 'Связаться'),
     ('COURIER_TAKE', 'Передано курьеру'),
     ('BUYER_TAKE', 'Передано покупателю'),
     ('WAYT_PRODUCT', 'Ожидание поступления товара'),
-    ('BACK', 'Обмен/Возврат'),
-    ('CONTACT_AT', 'Связаться'),
-    ('REFUSED', 'Снятие заявки клиентом'),
+    ('POSTSENDED', 'Отправлено почтой'),
     ('CASH_IN', 'Деньги внесены'),
+    ('REFUSED', 'Снятие заявки клиентом'),
 )
 
 class Client(models.Model):
