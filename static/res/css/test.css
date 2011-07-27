@@ -2,7 +2,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 background-position:0 0;
 background-repeat:no-repeat;
 border:0 none;
-font-size:100%;
 font-style:inherit;
 font-weight:inherit;
 margin:0;
@@ -69,23 +68,72 @@ div#footer{clear:both;width:100%}
 .search .btn input{width:44px;height:22px;background: url(../img/icons.gif) no-repeat -62px 0;border:0;cursor:pointer;}
 
 /* */
-.items_list{clear:both;margin:25px 0 0 0px}
-.items_list .item span{display:block;float:left;margin-right:7px;}
-.items_list .item{clear:both;display:block;position:relative;line-height:20px;font-size:16px;margin:0 0 35px 0}
-.items_list .item .id span {font-size:11px;}
+.items_list{clear:both;margin:0px;color:#333;border-top:1px solid #dedede;background: #F1F1F1;}
+.items_list td{
+	border-bottom: 1px solid #DEDEDE;
+	padding: 10px 5px;
+	vertical-align: middle;
+	font-size: 12px;
+}
+/*.items_list tr:hover td{
+	background: white;
+}*/
+.items_list .item span{
+	display:block;
+	float:left;
+	width: 100%;
+}
+.items_list .action{
+	color:#993333;
+	font-weight:bold;
+	text-decoration:none;
+	margin-right:17px;
+	position:relative;
+	min-width: 190px;
+}
+.items_list .action span{
+	position:relative;
+	cursor: pointer;
+}
+.items_list .action .ps_selector{
+	position:absolute;
+	display:none;
+	top:100%;
+	z-index:999;
+	background:white;
+	border:1px solid #333;
+	padding: 3px;
+	left:-3px;
+	color: #3366CC;
+	
+}
+.items_list .action .ps_selector li .selected{
+	display:none;
+}
+.items_list .action .ps_selector li:hover{
+	background: #DEDEDE;
+}
+.items_list .action .test_id{
+	display:none;
+}
+.items_list .item{line-height:20px;font-size:16px;}
+.items_list .item .id{font-size:11px;}
 .items_list .item .id a{font-size:13px;text-decoration:none;}
 .items_list .item .id a:hover{text-decoration:underline;}
-.items_list .main_info{clear:both;}
-.items_list .main_info .name{font-weight:bold;}
-.items_list .main_info .goods{margin-left:30px}
-.items_list .main_info .goods a{}
-.items_list .main_info .price{font:16px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;margin-left:30px}
-.items_list .main_info .price small{font-size:11px;padding-left:13px;}
-.items_list .main_info .action{color:#993333;font-weight:bold;text-decoration:none;margin-right:17px;}
-.items_list .main_info .address{font-style:italic;}
-.items_list .main_info .phone {margin:5px 0}
-.items_list .main_info .comment{font:italic 12px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;}
+.items_list {clear:both;}
+.items_list .name{font-weight:bold;}
+.items_list .goods{}
+.items_list .goods a{}
+.items_list .price{font:16px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;margin-left:30px}
+.items_list .price small{font-size:11px;padding-left:13px;}
 
+.items_list .address{font-style:italic;}
+.items_list .phone {}
+.items_list .comment{font:italic 12px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;}
+.items_list .clientedit td{width: 100%;}
+.items_list .clientedit #client_edit_form{
+	display: none;
+}
 
 /* */
 #extra .ltime{padding-top:85px;}
@@ -122,4 +170,45 @@ div#footer{clear:both;width:100%}
 
 #accordion h3.current a {
     color: #cc3333;
+}
+#create_edit{
+	position: absolute;
+	z-index: 999;
+	width: 100%;
+	min-height: 100%;
+	display: none;
+}
+#create_bg{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: black;
+	display: none;
+	z-index: 800;
+	opacity: 0.7;
+}
+#create_edit #create_edit_block{
+	background: none repeat scroll 0 0 #333;
+	box-shadow: 0 0 5px black; /* Параметры тени */
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
+    -webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding: 10px;
+	margin: 0 auto;
+	width: 500px;
+}
+#client_edit_form_table td, #client_edit_form_table th{
+	color: white;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+#add_formstats{
+	color: #ccc;
+}
+#client_edit_form_table th{
+	text-align: right;
+	padding-right: 5px;
 }

@@ -2,7 +2,7 @@
 {% block site_wrapper %}
 {% load myadmin_tags %}
 	{% menu request %}
-	<form action="" method="post">{% csrf_token %}
+	<form id="client_edit_form" action="" method="post">{% csrf_token %}
 		<table id="client_edit_form_table" class="margincenter">
 		<tr>
 			<td colspan="2" style="text-align:center; padding:5px;">
@@ -17,7 +17,7 @@
 				</td>
                 {% if client.ordered_at %}
 				<td style="padding:5px;">
-					<a href="delete" class="alignright" style="color:#bc0d0d; vertical-align:bottom;">Удалить клиента</a><br><br>
+					<a id="delite_client" href="delete" class="alignright" style="color:#bc0d0d; vertical-align:bottom;">Удалить клиента</a><br><br>
                     <a href="copy" class="alignright" style="color:#20B2AA; vertical-align:bottom;">Новая заявка</a>
 				</td>
                 {% endif %}

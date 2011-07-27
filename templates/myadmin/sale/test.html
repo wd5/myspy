@@ -8,10 +8,10 @@
     <script src='{{ STATIC_URL }}res/js/jquery-1.5.1.js'></script>
 	<script src="{{ STATIC_URL }}js/ui/jquery.ui.core.js"></script>
 	<script src="{{ STATIC_URL }}js/ui/jquery.ui.widget.js"></script>
-	<script src="{{ STATIC_URL }}js/ui/jquery.ui.accordion.js"></script>
 	<script src="{{ STATIC_URL }}js/ui/jquery.ui.button.js"></script>
-    <script src="{{ STATIC_URL }}js/init.js"></script>
-	<script>
+	<script src="{{ STATIC_URL }}js/jquery.form.js"></script>
+    
+	<script type="text/javascript">
     $(document).ajaxSend(function(event, xhr, settings) {
         function getCookie(name) {
             var cookieValue = null;
@@ -57,16 +57,170 @@
 		$( ".ch" ).button();
 	});
     $(document).ready(function () {
+    var $create_edit = $('#create_edit');
+    var $create_edit_block = $('#create_edit_block');
+    var clid, url, $target_client;
+    var $create_bg = $('#create_bg');
         $('.test_id').change(function () {
             var value = $(this).val();
             $.post("/myadmin/test_json/", {param: value});
         });
+		$('.test_id').each(function(){
+			var $thisis = $(this).parents('.action');
+			$(this).find('option').each(function(){
+					$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+			});
+		});
+		$('.ps_selector li').live('click',function(){
+			var $this_li_p = $(this).parents('.action').children('span').children('p');
+			 var value = $(this).children('option').val();
+			 $(this).parents('.action').find('p').text($(this).children('option').text());
+			  $.post("/myadmin/test_json/", {param: value}, function(){	
+			  		//alert('!');
+			  		invisible($this_li_p);
+			});
+		});
+		//редактирование кклиента
+		var isnew = false;
+		$('.items_list .name a').live('click',function(){
+			$('.clientedit').remove();
+			$target_client = $(this).parents('tr');
+			var oftop = $create_edit.fadeIn().css({position:'fixed',top:'0'}).children('#create_edit_block').html('<span class="load">Загруза...</span>').offset().top;
+			$create_bg.fadeIn();
+			clid = parseFloat($(this).parents('tr').find('.id').text(),10);
+			url = '../client/'+clid+' #client_edit_form';
+			//alert(url);
+			$create_edit_block.load(url,function(){
+				$create_edit.fadeIn().css({position:'absolute',top:oftop});
+				$create_edit_block.children('.load').hide().end().find('#client_edit_form').slideDown().attr('action','/myadmin/client/'+clid+'/');
+				$('#delite_client').attr('href','/myadmin/client/'+clid+'/delete');
+				
+			});
+			isnew = false;
+			return false;
+		});
+		$('#create_edit, #create_bg').click(function(e){
+			if((e.target.id == 'create_edit')||(e.target.id == 'create_bg')){
+				
+				$('#create_edit').fadeOut();
+				$create_bg.fadeOut(100);
+			}
+		});
+		//удаление
+		$('#delite_client').live('click',function(){
+			$.get('/myadmin/client/'+clid+'/delete',function(){
+				
+			});
+			$create_edit.hide();
+				$create_bg.fadeOut(100,function(){
+					$target_client.fadeOut(1500,function(){
+						$(this).remove()
+					});
+				});
+			return false;
+		});
+		//добавление нового клиента
+		$('.lt_un input').live('click',function(){
+			$('.clientedit').remove();
+			$target_client = $(this).parents('tr');
+			var oftop = $create_edit.fadeIn().css({position:'fixed',top:'0'}).children('#create_edit_block').html('<span class="load">Загруза...</span>').offset().top;
+			$create_bg.fadeIn();
+			url = "/myadmin/client/add #client_edit_form"
+			$create_edit_block.load(url,function(){
+				$create_edit.fadeIn().css({position:'absolute',top:oftop});
+				$create_edit_block.children('.load').hide().end().find('#client_edit_form').slideDown().attr('action','/myadmin/client/add');
+				
+			});
+			isnew = true;
+			return false;
+		});
+		//Отправка данных
+		$('#client_edit_form .selectbutton').live('click',function(){
+			$('#client_edit_form').ajaxForm(function(msg){
+				if(isnew){
+					if($('#id_name').val() == ''){
+						$('#id_name').parents('tr').find('label').css({color:'red'});
+						window.scroll(0,0); 
+					}else if($('#id_phone').val() == ''){
+						$('#id_phone').parents('tr').find('label').css({color:'red'});
+						window.scroll(0,0); 
+					}else{
+						url = '../client/'+msg+'/get .item td';
+						$create_edit.hide();
+						$create_bg.fadeOut(100);
+						$('.items_list tbody').prepend('<tr class="item"></tr>').find('tr').eq(0).load(url,function(){
+							var $thisis = $target_client.find('.action');
+							$(this).css({opacity:0}).animate({opacity:1},2000);
+							$target_client.find('option').each(function(){
+									$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+							});
+							invisible($thisis.children('span').children('p'));
+						});
+					}
+				}else{
+					if($('#id_name').val() == ''){
+						$('#id_client-name').parents('tr').find('label').css({color:'red'});
+						window.scroll(0,0); 
+					}else if($('#id_client-phone').val() == ''){
+						$('#id_phone').parents('tr').find('label').css({color:'red'});
+						window.scroll(0,0); 
+					}else{
+						url = '../client/'+clid+'/get .item td';
+						$create_edit.hide();
+						$create_bg.fadeOut(100);
+						//alert(url);
+						$target_client.load(url,function(){
+							var $thisis = $target_client.find('.action');
+							$target_client.find('option').each(function(){
+									$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+							});
+							invisible($thisis.children('span').children('p'));
+						});
+					}
+				}
+				
+		       // window.location.reload("");
+		    });
+		});
+		function invisible($intarg){
+					var str = $intarg.text();
+							var regText = ""+str+".(\\d+).";
+							var reg = new RegExp(regText);
+							//alert(reg);
+							$('#accordion .ui-button-text span').each(function(){
+								if(reg.test($(this).text())){
+									//alert($(this).parents('li').find('input').attr('checked'));
+									if(!($(this).parents('li').find('input').attr('checked'))){
+										$intarg.parents('tr').fadeOut(1000);
+									}
+								}
+							});
+			
+		}
+		var dsdfsfd;
+		
+		$('.action>span>p').click(function(){
+			$('.ps_selector').hide();
+			dsdfsfd = this;
+			$(this).parents('span').children('.ps_selector').show().addClass('active_selector_ps');
+		});
+		$('body').click(function(e){
+		//	alert(e.target);
+		//	alert(dsdfsfd);
+			if(e.target != dsdfsfd){
+				$('.active_selector_ps').hide();
+			}
+		});
     });
 	</script>
-
+<script src="{{ STATIC_URL }}js/init.js"></script>
 </head>
 <body>
 <div id="container">
+	<div id="create_bg"></div>
+	<div id="create_edit">
+		<div id="create_edit_block"></div>
+	</div>
 	<div id="header">
    		<!-- // -->
 		<div class="top_menu">
@@ -89,7 +243,7 @@
 		<div class="clear"></div>
         <!-- // -->
 		<div class="lt_un">
-            <input type="submit" class="icon_man" value="&nbsp;" onclick="window.location='/myadmin/client/add' " />
+            <input type="submit" class="icon_man" value="&nbsp;" onclick="" />
 		</div>
         <!-- // -->
 		<div class="search">
@@ -107,42 +261,61 @@
 	</div>
 	<div id="wrapper">
 		<div id="content">
-
-  			<div class="items_list">
+			<table class="items_list" cellpadding="0" cellspacing="0" border="1">
                 {% for client in clients %}
-  				<!-- // -->
-  				<div class="item">
-  					<div class="id">
-  						<span>{{ client.id }}</span>
-  						<a href="/myadmin/client/{{ client.id }}" target="_blank">Редактировать</a>
-  					</div>
-  					<div class="main_info">
-  						<span class="name">{{ client.surname }} {{ client.name }} {{ client.patronymic }}</span>
-  						<span class="goods">
-                            {{ client.get_order|safe }}
-  						</span>
-                        {% if client.subtotal %}
-  						<span class="price">
-  							{{ client.subtotal }} руб {% if client.discount %}<small>{{ client.discount }} руб</small>{% endif %}
-  						</span>
-                        {% endif %}
-  						<div class="clear"></div>
-                        {% select client %}
-  						<span class="action">{{ client.get_status_display }}</span>
-  						<span class="address">{% if client.city %}{{ client.city }};{% endif %} {{ client.address }}{% if client.postcode %} - Индекс: {{ client.postcode }} {% endif %}</span>
-  						<div class="clear"></div>
-  						<span class="phone">тел: {{ client.phone }}</span>
-  						<div class="clear"></div>
-                        {% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a> {{ client.tracking_status }}{% endif %}
-                        <div class="clear"></div>
-  						<span class="comment">{{ client.comment }}</span>
-  					</div>
-  				</div>
-                <!-- // -->
-                <!-- // -->
+                <tr class="item">
+                	<td class="id">
+	  					{{ client.id }}
+	  				</td>
+	  				<td class="action">
+						
+	  					<span >
+						<p>{{ client.get_status_display }}</p>
+						<ul class="ps_selector">
+							
+						</ul>
+						</span>
+	  					{% select client %}
+	  				</td>
+	  				<td>
+	  					<span class="name">
+	  						<a href="/myadmin/client/{{ client.id }}" target="_blank">
+	  							{{ client.surname }} {{ client.name }} {{ client.patronymic }}
+	  						</a>
+	  					</span>
+	  				</td>
+	  				<td class="time"></td>
+	  				<td>
+	  					<span class="phone">{{ client.phone }}</span>
+	  				</td>
+	  				<td>
+	  					<span class="goods">
+	                            {{ client.get_order|safe }}
+	  						</span>
+	  				</td>
+	  				<td>
+	  					 {% if client.subtotal %}
+	  						<span class="price">
+	  							{{ client.subtotal }}&nbsp;руб </br>{% if client.discount %}<small>{{ client.discount }}&nbsp;руб</small>{% endif %}
+	  						</span>
+	                     {% endif %}
+	  				</td>
+	  				<td>
+	  					<div class="main_info">
+	  						
+	                        
+	  						
+	  						<span class="address">{% if client.city %}{{ client.city }};{% endif %} {{ client.address }}{% if client.postcode %} - Индекс: {{ client.postcode }} {% endif %}</span>
+	  						<div class="clear"></div>
+	  						<span class="comment">{{ client.comment }}</span>
+	  					</div>
+					</td>
+					<td>
+	  					{% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a> {{ client.tracking_status }}{% endif %}
+	  				</td>
+                </tr>
                 {% endfor %}
-  			</div>
-
+			</table>
 		</div>
 	</div>
 	<div id="navigation">

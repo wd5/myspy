@@ -2,7 +2,7 @@
 from datetime import date, timedelta
 from django.shortcuts import render_to_response
 from django.core import urlresolvers
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -122,7 +122,8 @@ def add_client(request):
             else:
                 pass
             # После создания клиента тут же перекидываю на редактирование клиента
-            return HttpResponseRedirect(reverse('myadmin.views.edit_client', args=(client.id,)))
+            # return HttpResponseRedirect(reverse('myadmin.views.edit_client', args=(client.id,)))
+            return HttpResponse(client.id)
     return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -524,6 +525,7 @@ def test_json(request):
         client = Client.objects.get(id=client_id)
         client.status = status
         client.save()
+        return HttpResponse(status=200)
 
 def get_client(request, id):
     client = Client.objects.get(id=id)
