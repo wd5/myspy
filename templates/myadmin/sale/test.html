@@ -68,13 +68,14 @@
 		$('.test_id').each(function(){
 			var $thisis = $(this).parents('.action');
 			$(this).find('option').each(function(){
-					$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+				var copy_wrap = $(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>').wrapInner('<p class="'+$(this).val()+'"></p>').find('p').unwrap();
+				//copy_wrap.css({background:'red'});
 			});
 		});
 		$('.ps_selector li').live('click',function(){
 			var $this_li_p = $(this).parents('.action').children('span').children('p');
-			 var value = $(this).children('option').val();
-			 $(this).parents('.action').find('p').text($(this).children('option').text());
+			 var value = $(this).children('p').attr('class');
+			 $(this).parents('.action').children('span').children('p').text($(this).children('p').text());
 			  $.post("/myadmin/test_json/", {param: value}, function(){	
 			  		//alert('!');
 			  		invisible($this_li_p);
@@ -185,6 +186,7 @@
 		function invisible($intarg){
 					var str = $intarg.text();
 							var regText = ""+str+".(\\d+).";
+							//alert(str);
 							var reg = new RegExp(regText);
 							//alert(reg);
 							$('#accordion .ui-button-text span').each(function(){
