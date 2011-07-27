@@ -28,7 +28,7 @@ def auth(request):
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(request, user)
-            return HttpResponseRedirect("/myadmin/sales/all/")
+            return HttpResponseRedirect("/myadmin/sales/")
         else:
             error = True
     return render_to_response("myadmin/auth.html", locals(), context_instance=RequestContext(request))
