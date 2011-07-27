@@ -17,7 +17,7 @@ from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order, 
 from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
-from madmin_func import clients_list, client_sms, update_store, subtotal, update_cash, cash_list, change_cashflow, change_balance
+from madmin_func import clients_list, client_sms, update_store, subtotal, update_cash, update_cash2, cash_list, change_cashflow, change_balance
 from django.db.models import Q
 from settings import *
 
@@ -523,8 +523,10 @@ def test_json(request):
         client_id = param.split('.')[0]
         status = param.split('.')[1]
         client = Client.objects.get(id=client_id)
+        last_status = client.status
         client.status = status
         client.save()
+        update_cash2(client, last_status)
         return HttpResponse(status=200)
 
 def get_client(request, id):

@@ -344,3 +344,56 @@ def change_balance(form):
         cash.save()
     balance.total = balance.encash + balance.webmoney + balance.yandex
     balance.save()
+
+def update_cash2(client, client_status):
+    # Если статус деньги внесены
+    if client.status == 'CASH_IN':
+        # Если предыдущий статус такой же, то ничего не делать
+        if client_status == client.status:
+            pass
+        # Если предыдущий статус был другой
+        else:
+            # Создаю денежный поток
+            newcashflow = Cash()
+            # Последний баланс
+            last_balance = Cash.objects.all().latest('id')
+            # Если доставка EMS
+            if client.delivery == 'EMS':
+                # Добавляю к стоимости 300 рублей
+                newcashflow.cashflow = client.subtotal + EMS
+                newcashflow.balance = last_balance.balance + client.subtotal + EMS
+                newcashflow.comment = client.id
+            # Если доставка курьером
+            elif client.delivery == 'COURIER':
+                # Вычитаю из стоимости 300 рублей
+                newcashflow.cashflow = client.subtotal - COURIER
+                newcashflow.balance = last_balance.balance + client.subtotal - COURIER
+                newcashflow.comment = client.id
+            else:
+                # Бесплатная доставка
+                newcashflow.cashflow = client.subtotal
+                newcashflow.balance = last_balance.balance + client.subtotal
+                newcashflow.comment = client.id
+            newcashflow.cause = 'FROM_CLIENT'
+            newcashflow.type = 'ENCASH'
+            newcashflow.save()
+            balance = Balance.objects.get(id=1)
+            balance.encash += newcashflow.cashflow
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
+    else:
+        # Если был изменен статус деньги внесены
+        if client_status == 'CASH_IN':
+            # Удаляю денежный поток и пересчитываю баланс
+            cashflow = Cash.objects.get(comment=client.id)
+            cashflows_recalc = Cash.objects.filter(pk__gt=cashflow.id).reverse()
+            true_balance = cashflow.balance - cashflow.cashflow
+            cashflow.delete()
+            for cashflow_recalc in cashflows_recalc:
+                cashflow_recalc.balance = true_balance + cashflow_recalc.cashflow
+                true_balance = cashflow_recalc.balance
+                cashflow_recalc.save()
+            balance = Balance.objects.get(id=1)
+            balance.encash -= cashflow.cashflow
+            balance.total = balance.encash + balance.webmoney + balance.yandex
+            balance.save()
