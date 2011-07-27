@@ -121,7 +121,7 @@
 			return false;
 		});
 		//добавление нового клиента
-		$('.lt_un input').live('click',function(){
+		$('.lt_un .icon_man').live('click',function(){
 			$('.clientedit').remove();
 			$target_client = $(this).parents('tr');
 			var oftop = $create_edit.fadeIn().css({position:'fixed',top:'0'}).children('#create_edit_block').html('<span class="load">Загруза...</span>').offset().top;
