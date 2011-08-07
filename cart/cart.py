@@ -56,20 +56,23 @@ def add_to_cart(request):
         # Получаю все продукты в корзине
         cart = CartItem.objects.get(cart_id = _cart_id(request))
         cart_products = CartProduct.objects.filter(cartitem=cart.id)
-        # Проверяю есть ли такой продукт уже в корзине
-        for item in cart_products:
-            # Если уже есть то обновляю количество
-            if item.product_id == p.id:
-                item.quantity += quantity
-                item.save()
-            # Если нету то добавляю
-            else:
-                cart = CartItem.objects.get(cart_id = _cart_id(request))
-                CartProduct(cartitem = cart, product = p).save()
         # Если корзина пуста то добавляю товар
         if not cart_products:
             cart = CartItem.objects.get(cart_id = _cart_id(request))
             CartProduct(cartitem = cart, product = p).save()
+        else:
+            cart_items = []
+            # Проверяю есть ли такой продукт уже в корзине
+            for item in cart_products:
+                # Если уже есть то обновляю количество
+                if item.product_id == p.id:
+                    item.quantity += quantity
+                    item.save()
+                    cart_items.append(item.product_id)
+            # Если товара нету в коржине то добавляю
+            if p.id not in cart_items:
+                cart = CartItem.objects.get(cart_id = _cart_id(request))
+                CartProduct(cartitem = cart, product = p).save()
     # Если нету то добавляю
     else:
         ci = CartItem()
