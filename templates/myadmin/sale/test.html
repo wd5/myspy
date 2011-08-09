@@ -57,6 +57,7 @@
 		$( ".ch" ).button();
 	});
     $(document).ready(function () {
+    lines();
     var $create_edit = $('#create_edit');
     var $create_edit_block = $('#create_edit_block');
     var clid, url, $target_client;
@@ -100,12 +101,9 @@
 			isnew = false;
 			return false;
 		});
-		$('#create_edit, #create_bg').click(function(e){
-			if((e.target.id == 'create_edit')||(e.target.id == 'create_bg')){
-				
+		$('#create_edit .close').click(function(e){		
 				$('#create_edit').fadeOut();
 				$create_bg.fadeOut(100);
-			}
 		});
 		//удаление
 		$('#delite_client').live('click',function(){
@@ -153,9 +151,11 @@
 							var $thisis = $target_client.find('.action');
 							$(this).css({opacity:0}).animate({opacity:1},2000);
 							$target_client.find('option').each(function(){
-									$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+									//$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+									$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>').wrapInner('<p class="'+$(this).val()+'"></p>').find('p').unwrap();
 							});
 							invisible($thisis.children('span').children('p'));
+							lines();
 						});
 					}
 				}else{
@@ -173,9 +173,11 @@
 						$target_client.load(url,function(){
 							var $thisis = $target_client.find('.action');
 							$target_client.find('option').each(function(){
-									$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+									//$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>');
+									$(this).clone().appendTo($thisis.find('.ps_selector')).wrap('<li></li>').wrapInner('<p class="'+$(this).val()+'"></p>').find('p').unwrap();
 							});
 							invisible($thisis.children('span').children('p'));
+							lines();
 						});
 					}
 				}
@@ -201,7 +203,7 @@
 		}
 		var dsdfsfd;
 		
-		$('.action>span>p').click(function(){
+		$('.action>span>p').live('click',function(){
 			$('.ps_selector').hide();
 			dsdfsfd = this;
 			$(this).parents('span').children('.ps_selector').show().addClass('active_selector_ps');
@@ -214,6 +216,9 @@
 			}
 		});
     });
+    function lines(){
+    	$('.items_list tr:even').css({background:'#fff'});
+    }
 	</script>
 <script src="{{ STATIC_URL }}js/init.js"></script>
 </head>
@@ -221,6 +226,7 @@
 <div id="container">
 	<div id="create_bg"></div>
 	<div id="create_edit">
+		<div class="close">X</div>
 		<div id="create_edit_block"></div>
 	</div>
 	<div id="header">
