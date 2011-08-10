@@ -96,6 +96,7 @@
 				$create_edit.fadeIn().css({position:'absolute',top:oftop});
 				$create_edit_block.children('.load').hide().end().find('#client_edit_form').slideDown().attr('action','/myadmin/client/'+clid+'/');
 				$('#delite_client').attr('href','/myadmin/client/'+clid+'/delete');
+				$('#new_order').attr('href','/myadmin/client/'+clid+'/copy');
 				
 			});
 			isnew = false;
