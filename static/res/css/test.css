@@ -82,6 +82,7 @@ div#footer{clear:both;width:100%}
 	display:block;
 	float:left;
 	width: 100%;
+	min-width: 100px;
 }
 .items_list .action{
 	color:#993333;
@@ -128,7 +129,7 @@ div#footer{clear:both;width:100%}
 .items_list .name{font-weight:bold;}
 .items_list .goods{}
 .items_list .goods a{}
-.items_list .price{font:16px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;margin-left:30px}
+.items_list .price{font:16px "Myriad Pro",Myriad,Helvetica,Arial,sans-serif;}
 .items_list .price small{font-size:11px;padding-left:13px;}
 
 .items_list .address{border-bottom: 1px solid #ccc}
