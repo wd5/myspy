@@ -29,12 +29,12 @@
                                             <img class="main_img_tov" class="marketfull_image" src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ page_title }}" height="400px" />
                                             {% else %}
                                                 Фото товара отсутствует
-                                            {% endif %}     
-                                            <div class="clr"></div>                                  
+                                            {% endif %}
+                                            <div class="clr"></div>
 					{% for item in product.productphoto_set.all %}
 						<img class="prew_img_tov" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}" height="150px"/>
 					{% endfor %}
-					
+
 					</div>
 					</center>
 					<div id="opac_bg"></div>
@@ -83,13 +83,13 @@
      															 <div class="item-img-sm"><a href="#"><img class="product_image" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}"/></a></div>
      														 {% endfor %}
    														 {% else %}
-   									
+
    														 {% endif %}
    									</div>
    									</center>
    									<div class="clr"></div>
 								<center><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" title="{{ page_title }}" alt="{{ product.name }}"/></center>
-								
+
 
    														
    								</div> 
