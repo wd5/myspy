@@ -1,6 +1,7 @@
           # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from filebrowser.sites import site
 import settings
 
 from django.contrib import admin
@@ -9,7 +10,7 @@ handler500 = 'myspy.catalog.views.internal_error'
 
 urlpatterns = patterns('',
     (r'^', include('myspy.catalog.urls')),
-    (r'^admin/filebrowser/', include('filebrowser.urls')),
+    (r'^admin/filebrowser/', include(site.urls)),
     (r'^cart/', include('myspy.cart.urls')),
     (r'^blog/', include('myspy.blog.urls')),
     (r'^myadmin/', include('myspy.myadmin.urls')),
