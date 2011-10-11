@@ -1,5 +1,4 @@
 from django.db import models
-from tinymce import models as tinymce_models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -17,8 +16,8 @@ class Entry(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     category = models.ManyToManyField(Category)
     date = models.DateTimeField()
-    entry = tinymce_models.HTMLField()
-    thumbnail_entry = tinymce_models.HTMLField()
+    entry = models.TextField()
+    thumbnail_entry = models.TextField()
 
     def __unicode__(self):
         return self.title
