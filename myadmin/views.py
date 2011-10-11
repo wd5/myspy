@@ -68,7 +68,6 @@ def sales(request, when):
 @login_required
 def sales_active(request):
     # Применяю фильтр по статусам
-    money = Waytmoney.objects.get(id=1).wayt_money
     if request.method == 'POST':
         # Выбранные статусы
         statuses = []
