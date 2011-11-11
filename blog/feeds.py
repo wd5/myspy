@@ -3,7 +3,7 @@ from blog.models import Entry
 
 class RssSiteNewsFeed(Feed):
     title = "my-SPY Blog"
-    link = "/blog/rss/"
+    link = "my-spy.ru/blog/rss/"
 
     def items(self):
         return Entry.objects.order_by('-date')[:5]
