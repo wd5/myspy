@@ -7,3 +7,6 @@ class RssSiteNewsFeed(Feed):
 
     def items(self):
         return Entry.objects.order_by('-date')[:5]
+
+    def item_description(self, item):
+        return item.entry
