@@ -1,3 +1,4 @@
+          # -*- coding: utf-8 -*-
 from datetime import datetime
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.shortcuts import render_to_response
@@ -16,6 +17,7 @@ def blog(request):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
+    page_title = "Блог"
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))
 
 def archive(request, when):
@@ -29,10 +31,12 @@ def archive(request, when):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
+    page_title = "Архив блога"
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))
 
 def entry(request, entry_slug):
     entry = Entry.objects.get(slug=entry_slug)
+    page_title = entry.title
     return render_to_response("blog/entry.html", locals(), context_instance=RequestContext(request))
 
 def category(request, category_slug):
@@ -47,4 +51,5 @@ def category(request, category_slug):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
+    page_title = category.name
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))
