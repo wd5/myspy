@@ -79,7 +79,6 @@ class Product(models.Model):
         return ('product-page', [str(self.slug)])
 
     class Meta:
-        ordering = ['position']
         verbose_name_plural = 'Товар'
 
 class ProductPhoto(models.Model):
