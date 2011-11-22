@@ -14,7 +14,7 @@ def index(request):
      подслушивающие устройства. Так же у нас в продаже шпионская техника, оборудование,
       глушилка мобильных телефонов, мини камера."""
     cats = Category.objects.all().order_by('id')
-    sections = Section.objects.all()
+    sections = Section.objects.filter(is_active=True)
     return render_to_response("main/cats.html", locals(), context_instance=RequestContext(request))
 
 def show_category(request, category_slug):
