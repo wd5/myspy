@@ -25,7 +25,7 @@ def show_category(request, category_slug):
     else:
         try:
             category = Category.objects.get(slug=category_slug)
-            products = category.product_set.filter(is_active=True)
+            products = category.product_set.filter(is_active=True).order_by('categoryproduct__position')
             if category.section.name == category.name:
                 page_title = "%s" % category.section
             else:
@@ -38,7 +38,7 @@ def show_category(request, category_slug):
             page_title = "%s" % section
             products = []
             for cat in category:
-                products += cat.product_set.filter(is_active=True)
+                products += cat.product_set.filter(is_active=True).order_by('categoryproduct__position')
     return render_to_response("main/catalog.html", locals(), context_instance=RequestContext(request))
 
 def show_product(request, product_slug):
