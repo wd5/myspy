@@ -70,7 +70,6 @@ class Product(models.Model):
     # Временные отметки
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    position = models.PositiveSmallIntegerField("Position")
 
     def __unicode__(self):
         return self.name
