@@ -52,6 +52,9 @@ class CategoryProduct(models.Model):
     product = models.ForeignKey('Product', verbose_name='Товар')
     position = models.PositiveSmallIntegerField("Position")
 
+    class Meta:
+        ordering = ['position']
+
 class Product(models.Model):
     category = models.ManyToManyField(Category, verbose_name='Категория', through=CategoryProduct)
     name = models.CharField(max_length=255, unique=True, verbose_name='Название')
