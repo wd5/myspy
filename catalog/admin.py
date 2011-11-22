@@ -19,7 +19,6 @@ class ProductsAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'quantity', 'created_at', 'updated_at',)
     list_display_links = ('name',)
     list_per_page = 50
-    ordering = ['-created_at']
     search_fields = ['name', 'description']
     prepopulated_fields = {'slug' : ('name',)}
 
