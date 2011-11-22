@@ -34,24 +34,26 @@ class Category(models.Model):
     description = tinymce_models.HTMLField()
     meta_keywords = models.TextField(blank=True)
     meta_descriotion = models.TextField(blank=True)
+    position = models.PositiveSmallIntegerField("Position")
 
     def __unicode__(self):
         return self.name
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['position']
         verbose_name_plural = 'Категории товара'
 
     @models.permalink
     def get_absolute_url(self):
         return ('catalog-page', [str(self.slug)])
 
-def validate_even(value):
-        if len(value) > 500:
-            raise ValidationError(u'Количество символов: %s. Максимально разрешенное: 500'% len(value) )
+class CategoryProduct(models.Model):
+    category = models.ForeignKey('Category')
+    product = models.ForeignKey('Product', verbose_name='Товар')
+    position = models.PositiveSmallIntegerField("Position")
 
 class Product(models.Model):
-    category = models.ManyToManyField(Category, verbose_name='Категория')
+    category = models.ManyToManyField(Category, verbose_name='Категория', through=CategoryProduct)
     name = models.CharField(max_length=255, unique=True, verbose_name='Название')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='Ссылка')
     price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name='Цена')
@@ -68,6 +70,7 @@ class Product(models.Model):
     # Временные отметки
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    position = models.PositiveSmallIntegerField("Position")
 
     def __unicode__(self):
         return self.name
@@ -77,7 +80,7 @@ class Product(models.Model):
         return ('product-page', [str(self.slug)])
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['position']
         verbose_name_plural = 'Товар'
 
 class ProductPhoto(models.Model):

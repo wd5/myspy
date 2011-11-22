@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from catalog.models import Product, ProductPhoto, Category, Section, Feature, FeatureName, File
+from catalog.models import Product, ProductPhoto, Category, Section, Feature, FeatureName, File, CategoryProduct
 from cart.models import Client
 
 class PhotoInline(admin.StackedInline):
@@ -25,7 +25,12 @@ class ProductsAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductsAdmin)
 
+class ProductInline(admin.TabularInline):
+    model = CategoryProduct
+    sortable_field_name = "position"
+
 class CategoriesAdmin(admin.ModelAdmin):
+    inlines = [ProductInline]
     list_display = ('name', 'created_at', 'updated_at',)
     list_display_links = ('name',)
     list_per_page = 20
@@ -35,8 +40,14 @@ class CategoriesAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoriesAdmin)
 
+class CategoryInline(admin.TabularInline):
+    fields = ('name', 'position',)
+    model = Category
+    sortable_field_name = "position"
+
 class SectionsAdmin(admin.ModelAdmin):
-        prepopulated_fields = {'slug' : ('name',)}
+    inlines = [CategoryInline]
+    prepopulated_fields = {'slug' : ('name',)}
 
 admin.site.register(Section, SectionsAdmin)
 
