@@ -14,8 +14,11 @@ class FilesInline(admin.StackedInline):
 
 admin.site.register(ProductPhoto)
 
+class CategoryProductInline(admin.TabularInline):
+    model = CategoryProduct
+
 class ProductsAdmin(admin.ModelAdmin):
-    inlines = [PhotoInline, FeaturesInline, FilesInline]
+    inlines = [PhotoInline, FeaturesInline, FilesInline, CategoryProductInline]
     list_display = ('name', 'price', 'quantity', 'created_at', 'updated_at',)
     list_display_links = ('name',)
     list_per_page = 50
