@@ -1,6 +1,5 @@
 		<ul id="menu-menu" class="mnav dropdown fix">
-			<li {% if request_path == '/' %} class="current-menu-item" {% endif %}><a href="/">Главная</a></li>
-            <li {% if request_path == '/cats/' %} class="current-menu-item" {% endif %}><a href="/cats">Каталог товара</a>
+            <li {% if request_path == '/' %} class="current-menu-item" {% endif %}><a href="/">Каталог товара</a>
             	<div id="header_sprite">
             		<div  id="header_sprite_head"></div>
             		<div  id="header_sprite_body">
@@ -25,7 +24,7 @@
 		      			 	 </div>
 							{% endfor %}
 							<div style="float:left;">
-		                    <li> <a href="{% url catalog.views.cats %}" title="" style="font-size:15px; text-align:center;">Все товары</a>
+		                    <li> <a href="{% url catalog.views.index %}" title="" style="font-size:15px; text-align:center;">Все товары</a>
 		                    </div>
 						</ul>
 					</div>

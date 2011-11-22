@@ -13,9 +13,6 @@ def index(request):
     meta_description = """Интернет магазин, где можно купить шпионские штучки, камеры,
      подслушивающие устройства. Так же у нас в продаже шпионская техника, оборудование,
       глушилка мобильных телефонов, мини камера."""
-    return render_to_response("main/index.html", locals(), context_instance=RequestContext(request))
-
-def cats(request):
     cats = Category.objects.all().order_by('id')
     sections = Section.objects.all()
     return render_to_response("main/cats.html", locals(), context_instance=RequestContext(request))
