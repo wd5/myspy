@@ -244,6 +244,7 @@
   padding: 7px 7px 8px;
   margin: 0;
   list-style: none;
+  color: #333;
 }
 .chzn-container .chzn-results .active-result {
   cursor: pointer;
