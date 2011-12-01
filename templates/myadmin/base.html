@@ -4,11 +4,10 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}res/css/admin.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="{{ STATIC_URL }}js/anytimec.css" type="text/css" media="screen" />
 	<script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery1.4.2.js'></script>
-    <script type='text/javascript' src='{{ STATIC_URL }}res/js/chosen.jquery.min.js'></script>
 
 		<script type="text/javascript" src="{{ STATIC_URL }}js/anytimec.js"></script>
-		
-		
+
+
 	<script type='text/javascript'>
 		jQuery(document).ready(function(){
 			//alert('!');
@@ -40,7 +39,6 @@
 			  jQuery("#id_execute_at, #id_client-execute_at").AnyTime_picker(
 			     { format: "%Y-%m-%d %H:%i:%s", firstDOW: 1 }
 			   );
-            jQuery("#cartproduct_set-0-product").chosen();
 		});
 	</script>
 </head>

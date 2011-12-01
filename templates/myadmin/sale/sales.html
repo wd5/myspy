@@ -144,7 +144,7 @@
                                 {% status_count "POSTSENDED" %}
 								</label>
 								</td>
-								
+
 							</tr>
 							<tr>
 								<td>
@@ -165,7 +165,7 @@
 									Все
 									</label>
 								</td>
-							</tr>	
+							</tr>
 							<tr>
 								<td>
 									<label>
@@ -173,12 +173,12 @@
 									Все
 									</label>
 								</td>
-							</tr>												
+							</tr>
 						</tbody>
-					</table>					
+					</table>
 					<input type="submit" value="Выбрать" class="selectbutton" /><br/><br/>
-					<a href="/myadmin/sales/all/" class="selectbutton">Все клиенты</a>					
-			</form>			
+					<a href="/myadmin/sales/all/" class="selectbutton">Все клиенты</a>
+			</form>
 		</div>
 	</div>
 <div id="period">
@@ -188,7 +188,7 @@
 	<a href="/myadmin/sales/today/">За сегодня</a>
 	<a href="/myadmin/sales/week/">За неделю</a>
 	<a href="/myadmin/sales/month/">За месяц</a>
-	<a href="/myadmin/sales/year/">За год</a><br>	
+	<a href="/myadmin/sales/year/">За год</a><br>
 </div>
 <table id="allsales" cellpadding="5px" cellspacing="0">
 	<tr>
@@ -201,11 +201,11 @@
 			        {% if clients.has_previous %}
 			            <a href="?page={{ clients.previous_page_number }}">&laquo;</a>
 			        {% endif %}
-			
+
 			        <span class="current">
 			            {{ clients.number }} из {{ clients.paginator.num_pages }}
 			        </span>
-			
+
 			        {% if clients.has_next %}
 			            <a href="?page={{ clients.next_page_number }}">&raquo;</a>
 			        {% endif %}
@@ -297,11 +297,11 @@
 			        {% if clients.has_previous %}
 			            <a href="?page={{ clients.previous_page_number }}">&laquo;</a>
 			        {% endif %}
-			
+
 			        <span class="current">
 			            {{ clients.number }} из {{ clients.paginator.num_pages }}
 			        </span>
-			
+
 			        {% if clients.has_next %}
 			            <a href="?page={{ clients.next_page_number }}">&raquo;</a>
 			        {% endif %}
