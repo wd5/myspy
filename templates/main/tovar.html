@@ -51,6 +51,9 @@
             <a href="/cats/{{ product.category.all.0.slug }}">{{ product.category.all.0 }}</a> »&nbsp;
         {% endif %}
         {{ product }}
+        <div class="for_tags">
+        	
+        </div>
 	</div>
 
 	<div id="container" class="fix "> 
@@ -166,7 +169,7 @@ alert('aaaa');
 -->
 
 <script type="text/javascript">
-		$j('.product_image').click(function()
+		$j('.product_image').mouseover(function()
 			{
 				$j('.fmedia>center>img').attr('src',$j(this).attr('src'));		
 				return false;
