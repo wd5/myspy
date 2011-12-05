@@ -43,18 +43,28 @@
 						        	<table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">
 						        		<tr>
 								        	<td style="vertical-align:top; padding:20px;">
-								        		<a href="{{ cat.get_absolute_url }}"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
-								        	</td>
-								        	<td style="vertical-align:top; padding:20px;">
+
                                                 {% if cat.slug == 'cctv' %}
+                                                    <a href="http://ceptum.ru/cats/cctv-komplekt/"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                    </td>
+                                                    <td style="vertical-align:top; padding:20px;">
                                                     <a class="item-head cats_discr" href="http://ceptum.ru/cats/cctv-komplekt/">
                                                 {% else %}
                                                     {% if cat.slug == 'recorders' %}
+                                                        <a href="http://ceptum.ru/section/reg/"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                        </td>
+                                                        <td style="vertical-align:top; padding:20px;">
                                                     <a class="item-head cats_discr" href="http://ceptum.ru/section/reg/">
                                                     {% else %}
                                                         {% if cat.slug == 'cctv-camera' %}
+                                                            <a href="http://ceptum.ru/section/cam/"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                            </td>
+                                                            <td style="vertical-align:top; padding:20px;">
                                                             <a class="item-head cats_discr" href="http://ceptum.ru/section/cam/">
                                                         {% else %}
+                                                                <a href="{{ cat.get_absolute_url }}"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                                </td>
+                                                                <td style="vertical-align:top; padding:20px;">
                                                             <a class="item-head cats_discr" href="{{ cat.get_absolute_url }}">
                                                         {% endif %}
                                                     {% endif %}
