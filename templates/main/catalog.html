@@ -35,7 +35,7 @@
         		 <div class="for_tags">
                      {% if section %}
                          {% for tag in category %}
-                             {{ tag.name }} {{ tag.get_absolute_url }}
+                            <a href="{{ tag.get_absolute_url }}" title="По тегу '{{ tag.name }}'">{{ tag.name }} </a>  
                          {% endfor %}
                      {% endif %}
         	
