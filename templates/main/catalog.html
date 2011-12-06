@@ -31,15 +31,15 @@
 
 		
 			<div class="subnav2">
-       			 <a href="/">Каталог товара</a> {% if section %}»&nbsp;{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}»&nbsp;<a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %} »&nbsp;{{ category.name }} {% endif %}
+       			 
         		 <div class="for_tags">
                      {% if section %}
                          {% for tag in category %}
                             <a href="{{ tag.get_absolute_url }}" title="По тегу '{{ tag.name }}'">{{ tag.name }} </a>  
                          {% endfor %}
                      {% endif %}
-        	
         		</div>
+        		<a href="/">Каталог товара</a> {% if section %}»&nbsp;{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}»&nbsp;<a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %} »&nbsp;{{ category.name }} {% endif %}
 				 <div class="clear"></div>
 			</div>
 		

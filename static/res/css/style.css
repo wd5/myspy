@@ -3151,6 +3151,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 			top: 100%;
 			left: -150px;
 			text-shadow: none;
+			z-index: 999;
 		}
 		#nav ul.dropdown #header_sprite_head{
 			height: 10px;
@@ -3478,16 +3479,16 @@ sub {font-size:.7em;vertical-align: bottom;}
 	bottom: 0px;
 	padding: 10px 10px 4px 10px;
 }
-.subnav2 a{
-	z-index: 999;
-	position: relative;
+.subnav2>a{
+	
 }
 .subnav2 .for_tags{
 	margin-top: -3px;
     position: absolute;
     text-align: center;
     top: 0;
-    width: 100%;
+    width: 50%;
+    margin: 0 25%;
 }
 .subnav2 .for_tags a{
 	display: inline-block;
