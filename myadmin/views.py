@@ -85,7 +85,7 @@ def sales_active(request):
 @login_required
 def search(request):
     search_world = request.GET['q']
-    clients = Client.objects.filter(Q(name__icontains=search_world) | Q(surname__icontains=search_world) | Q(patronymic__icontains=search_world) | Q(tracking_number__icontains=search_world) | Q(phone__icontains=search_world) )
+    clients = Client.objects.filter(Q(name__icontains=search_world) | Q(surname__icontains=search_world) | Q(patronymic__icontains=search_world) | Q(tracking_number__icontains=search_world) | Q(phone__icontains=search_world) | Q(address__icontains=search_world))
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
