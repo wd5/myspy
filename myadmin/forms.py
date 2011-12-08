@@ -1,10 +1,11 @@
           # -*- coding: utf-8 -*-
-from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, Select, Textarea
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django import forms
 from models import Cash, Task, TaskAnswer, Order, TYPE_CHOICES
+from cart.models import CartProduct, CartItem
 from cart.models import Client
 from tinymce.widgets import TinyMCE
 from django.contrib.auth.models import User
@@ -29,6 +30,13 @@ class ClientForm(ModelForm):
             help_text_html = u'<br />%s',
             errors_on_separate_row = False)
 
+class CartProductForm(ModelForm):
+    class Meta:
+        model = CartProduct
+        widgets = {
+            'product': Select(attrs={'class': 'chzn-select'}),
+        }
+
 class BaseProductFormset(BaseInlineFormSet):
     def clean(self):
         self.validate_unique()
@@ -40,7 +48,7 @@ class BaseProductFormset(BaseInlineFormSet):
                 if product in products:
                     raise ValidationError('test')
                 products.append(product)
-
+                
 class CashForm(ModelForm):
     comment = forms.CharField(widget=forms.Textarea(attrs={'rows':'3'}))
     class Meta:

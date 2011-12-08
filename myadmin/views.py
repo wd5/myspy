@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from cart.models import Client, CartItem, CartProduct
-from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm, OrderForm
+from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm, OrderForm, CartProductForm
 from django.forms.models import inlineformset_factory
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
@@ -187,7 +187,7 @@ def edit_client(request, id):
     client = Client.objects.get(id=id)
     cartid = client.cart.id
     cart = CartItem.objects.get(id=cartid)
-    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, form=CartProductForm, formset=BaseProductFormset, extra=1)
     if request.method == 'POST':
         # Получаю предыдущие статусы клиента
         client_status = client.status
@@ -230,7 +230,7 @@ def edit_client(request, id):
             formset = CartProductFormset(instance=cart)
             return render_to_response("myadmin/sale/client_form.html", locals(), context_instance=RequestContext(request))
     # Создаю формы
-    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, form=CartProductForm, formset=BaseProductFormset, extra=1)
     formset = CartProductFormset(instance=cart)
     client = Client.objects.get(id=id)
     form = ClientForm(instance=client, prefix='client')
