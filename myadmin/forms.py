@@ -37,6 +37,7 @@ class CartProductForm(ModelForm):
             'product': Select(attrs={'class': 'chzn-select'}),
         }
 
+
 class BaseProductFormset(BaseInlineFormSet):
     def clean(self):
         self.validate_unique()
