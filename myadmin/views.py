@@ -11,7 +11,6 @@ from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskFor
 from django.forms.models import inlineformset_factory
 from cart.cart import _generate_cart_id
 from django.core.urlresolvers import reverse
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from catalog.models import Product, Category
 from models import Cash, Balance, Waytmoney, Task, TaskAnswer, TaskFile, Order, Product_statistic, Cash_statistic
 from django.contrib.auth import logout
@@ -81,6 +80,12 @@ def sales_active(request):
     else:
         clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
         statuses = [u'PROCESS',u'POSTSEND',u'COURIER_SEND',u'BACK',u'CONTACT_AT']
+    return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
+
+@login_required
+def search(request):
+    search_world = request.GET['q']
+    clients = Client.objects.filter(Q(name__icontains=search_world) | Q(surname__icontains=search_world) | Q(patronymic__icontains=search_world) | Q(tracking_number__icontains=search_world) | Q(phone__icontains=search_world) )
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
