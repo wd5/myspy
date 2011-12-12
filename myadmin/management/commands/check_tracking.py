@@ -12,7 +12,7 @@ class Command(BaseCommand):
             if client.tracking_number:
                 try:
                     url = 'http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo'
-                    values = {'BarCode' : 'EA223940523RU',
+                    values = {'BarCode' : client.tracking_number,
                               'CDAY' : '12', 'CMONTH' : '12', 'CYEAR' : '2011', 'PATHCUR' : 'rp/servise/ru/home/postuslug/trackingpo',
                               'PATHPAGE' : 'RP/INDEX/RU/Home/Search', 'PATHWEB' : 'RP/INDEX/RU/Home', 'searchsign' : '1'}
                     data = urllib.urlencode(values)
