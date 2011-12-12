@@ -4,11 +4,11 @@
 	<td class="id">
 		{{ client.id }}
 	</td>
-	<td class="action">				
+	<td class="action">
 	  	<span >
 		<p>{{ client.get_status_display }}</p>
 		<ul class="ps_selector">
-			
+
 		</ul>
 		</span>
 			{% select client %}
@@ -40,7 +40,7 @@
 			<div class="clear"></div>
 			<span class="comment">{{ client.comment }}</span>
 		</div>
-		
+
 	</td>
 	<td>
 		{% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a> {{ client.tracking_status }}{% endif %}

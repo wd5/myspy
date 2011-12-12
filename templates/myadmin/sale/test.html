@@ -112,7 +112,7 @@
 	  					</div>
 					</td>
 					<td>
-	  					{% if client.tracking_number %}<a href="http://www.emspost.ru/tracking/{{ client.tracking_number }}" target="_blank">{{ client.tracking_number }}</a> {{ client.tracking_status }}{% endif %}
+	  					{% if client.tracking_number %}{{ client.tracking_number }} {{ client.tracking_status }}{% endif %}
 	  				</td>
                 </tr>
                 {% endfor %}

@@ -29,6 +29,7 @@ class Command(BaseCommand):
                         try:
                             last_status = i.split("</td>")[1][4:] + " " + i.split("</td>")[3][4:] + " " + i.split("</td>")[4][4:]
                             client.tracking_status = last_status
+                            print last_status
                         except :
                             pass
                     client.save()
