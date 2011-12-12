@@ -19,7 +19,6 @@ class Command(BaseCommand):
                     req = urllib2.Request(url, data)
                     response = urllib2.urlopen(req)
                 except urllib2.HTTPError:
-                    print "sleeep - except"
                     time.sleep(1200)
                     continue
                 doc = response.read()
