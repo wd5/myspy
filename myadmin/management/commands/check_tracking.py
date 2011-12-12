@@ -1,6 +1,8 @@
           # -*- coding: utf-8 -*-
+import urllib
 from django.core.management.base import BaseCommand
 import urllib2, re, time
+from BeautifulSoup import BeautifulSoup
 from cart.models import Client
 
 class Command(BaseCommand):
@@ -9,22 +11,24 @@ class Command(BaseCommand):
         for client in clients:
             if client.tracking_number:
                 try:
-                    response = urllib2.urlopen('http://www.emspost.ru/tracking/%s' % client.tracking_number)
+                    url = 'http://www.russianpost.ru/resp_engine.aspx?Path=rp/servise/ru/home/postuslug/trackingpo'
+                    values = {'BarCode' : 'EA223940523RU',
+                              'CDAY' : '12', 'CMONTH' : '12', 'CYEAR' : '2011', 'PATHCUR' : 'rp/servise/ru/home/postuslug/trackingpo',
+                              'PATHPAGE' : 'RP/INDEX/RU/Home/Search', 'PATHWEB' : 'RP/INDEX/RU/Home', 'searchsign' : '1'}
+                    data = urllib.urlencode(values)
+                    req = urllib2.Request(url, data)
+                    response = urllib2.urlopen(req)
                 except urllib2.HTTPError:
+                    print "sleeep - except"
                     time.sleep(1200)
                     continue
-                result = re.findall(ur"<tr class=\"(.*)\"><td>(.+?)</tr>", response.read())
-                try:
-                    i = result[len(result) - 1][1]
-                    a = i.split('<td>')
-                    if a[4][:-5] == 'Единичный':
-                        t_status = "%s %s" % (a[0][:-5], a[1][:-5])
-                    elif a[4][:-5] == 'Иная':
-                        t_status = "%s %s" % (a[0][:-5], a[1][:-5])
-                    else:
-                        t_status = "%s %s" % (a[4][:-5], a[1][:-5])
-                    client.tracking_status = t_status[:-6]
-                    client.save()
-                    time.sleep(10)
-                except :
-                    pass
+                doc = response.read()
+                soup = BeautifulSoup(''.join(doc))
+                content = soup.findAll("table")[10]
+                for i in str(content.find("tbody")).split("</tr>"):
+                    try:
+                        last_status = i.split("</td>")[1][4:] + " " + i.split("</td>")[3][4:] + " " + i.split("</td>")[4][4:]
+                        client.tracking_status = last_status
+                    except :
+                        pass
+                time.sleep(5)
