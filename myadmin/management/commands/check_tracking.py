@@ -23,11 +23,15 @@ class Command(BaseCommand):
                     continue
                 doc = response.read()
                 soup = BeautifulSoup(''.join(doc))
-                content = soup.findAll("table")[10]
-                for i in str(content.find("tbody")).split("</tr>"):
-                    try:
-                        last_status = i.split("</td>")[1][4:] + " " + i.split("</td>")[3][4:] + " " + i.split("</td>")[4][4:]
-                        client.tracking_status = last_status
-                    except :
-                        pass
-                time.sleep(5)
+                try:
+                    content = soup.findAll("table")[10]
+                    for i in str(content.find("tbody")).split("</tr>"):
+                        try:
+                            last_status = i.split("</td>")[1][4:] + " " + i.split("</td>")[3][4:] + " " + i.split("</td>")[4][4:]
+                            client.tracking_status = last_status
+                        except :
+                            pass
+                    client.save()
+                    time.sleep(5)
+                except :
+                    pass
