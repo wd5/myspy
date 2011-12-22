@@ -7,15 +7,15 @@ from django.http import HttpResponseRedirect
 from cart import cart
 
 def index(request):
-#    page_title = "Магазин домашней безопасности, шпионская техника"
-#    meta_keywords = """шпионские штучки магазин, шпионские штучки купить, купить подслушивающее устройство,
-#     шпионская техника, шпионские камеры, шпионское оборудование продажа, магазин шпионских товаров"""
-#    meta_description = """Интернет магазин, где можно купить шпионские штучки, камеры,
-#     подслушивающие устройства. Так же у нас в продаже шпионская техника, оборудование,
-#      глушилка мобильных телефонов, мини камера."""
-#    cats = Category.objects.all().order_by('id')
-#    sections = Section.objects.filter(is_active=True)
-    return render_to_response("index.html", locals(), context_instance=RequestContext(request))
+    page_title = "Магазин домашней безопасности, шпионская техника"
+    meta_keywords = """шпионские штучки магазин, шпионские штучки купить, купить подслушивающее устройство,
+     шпионская техника, шпионские камеры, шпионское оборудование продажа, магазин шпионских товаров"""
+    meta_description = """Интернет магазин, где можно купить шпионские штучки, камеры,
+     подслушивающие устройства. Так же у нас в продаже шпионская техника, оборудование,
+      глушилка мобильных телефонов, мини камера."""
+    cats = Category.objects.all().order_by('id')
+    sections = Section.objects.filter(is_active=True)
+    return render_to_response("main/cats.html", locals(), context_instance=RequestContext(request))
 
 def show_category(request, category_slug):
     if request.method == 'POST':
