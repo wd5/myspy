@@ -6,8 +6,6 @@ import settings
 
 from django.contrib import admin
 admin.autodiscover()
-handler404 = 'myspy.catalog.views.not_found_error'
-handler500 = 'myspy.catalog.views.internal_error'
 
 urlpatterns = patterns('',
     (r'^', include('myspy.catalog.urls')),
