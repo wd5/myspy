@@ -17,7 +17,7 @@ def blog(request):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
-    page_title = "Блог"
+    page_title = "Блог - Страница " + str(page)
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))
 
 def archive(request, when):
@@ -31,7 +31,8 @@ def archive(request, when):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
-    page_title = "Архив блога"
+    print when
+    page_title = "Архив блога за " + str(when[:-4]) + "." + str(when[-4:]) + " - Страница " + str(page) + " - my-spy.ru"
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))
 
 def entry(request, entry_slug):
@@ -51,5 +52,5 @@ def category(request, category_slug):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
-    page_title = category.name
+    page_title = category.name.encode('utf-8') + " - Страница " + str(page)
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))

@@ -51,7 +51,7 @@ def show_product(request, product_slug):
             cart.add_to_cart(request)
             url = urlresolvers.reverse('show_cart')
             return HttpResponseRedirect(url)
-    page_title = "%s" % product.name
+    page_title = "%s - my-spy.ru" % product.name
     meta_keywords = page_title
     meta_description = "%s - %s" % (page_title, product.mini_html_description)
     return render_to_response("main/tovar.html", locals(), context_instance=RequestContext(request))
