@@ -42,9 +42,9 @@ def show_category(request, category_slug):
             for cat in category:
                 products += cat.product_set.filter(is_active=True).order_by('categoryproduct__position')
         if category_slug == 'antibugs':
-            page_title += ': блокиратор сотовой связи и телефонов'
-            meta_description = "блокиратор сотовой связи сотовых телефонов"
-            meta_keywords = "Блокиратор сотовой связи, блокиратор сотовых телефонов от интернет-магазина my-spy.ru"
+            page_title += ': блокираторы сотовой связи(сотовых телефонов), обнаружители камер'
+            meta_description = "блокиратор сотовой связи сотовых телефонов, обнаружитель камер"
+            meta_keywords = "Блокиратор сотовой связи, блокиратор сотовых телефонов, обнаружитель камер от интернет-магазина my-spy.ru"
         elif category_slug == 'audio':
             page_title = 'Миниатюрные диктофоны, цифровые мини диктофоны – my-spy.ru'
             meta_description = "Мини диктофоны с радиусом слышимости от 9 до 20 метров и со временем работы в режиме записи  от 4 до 300 часов"
