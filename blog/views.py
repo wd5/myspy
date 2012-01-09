@@ -31,7 +31,6 @@ def archive(request, when):
         entrys = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         entrys = paginator.page(paginator.num_pages)
-    print when
     page_title = "Архив блога за " + str(when[:-4]) + "." + str(when[-4:]) + " - Страница " + str(page) + " - my-spy.ru"
     return render_to_response("blog/main.html", locals(), context_instance=RequestContext(request))
 
