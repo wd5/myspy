@@ -18,6 +18,8 @@ class Entry(models.Model):
     date = models.DateTimeField()
     entry = models.TextField()
     thumbnail_entry = models.TextField()
+    keywords = models.CharField(max_length=300, blank=True, null=True)
+    description = models.CharField(max_length=300, blank=True, null=True)
 
     def __unicode__(self):
         return self.title
