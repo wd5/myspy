@@ -37,6 +37,8 @@ def archive(request, when):
 def entry(request, entry_slug):
     entry = Entry.objects.get(slug=entry_slug)
     page_title = entry.title
+    meta_keywords = entry.keywords
+    meta_description = entry.description
     return render_to_response("blog/entry.html", locals(), context_instance=RequestContext(request))
 
 def category(request, category_slug):
