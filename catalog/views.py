@@ -102,3 +102,6 @@ def delivery(request):
 
 def internal_error(request):
     return render_to_response('500.html', locals(), context_instance=RequestContext(request))
+
+def not_found_error(request):
+    return render_to_response('404.html', locals(), context_instance=RequestContext(request))
