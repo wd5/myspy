@@ -120,12 +120,11 @@
 												<div class="textcol">
 													<table><tr>
 													<td>
-														<h2 class="prodtitles" style="font-size:18px;"><span>{{ product.name }}</span></h2>
                                                         {% for file in product.file_set.all %}
                                                         <p><a class="download_file" href="{{file.file.url}}" target="_blank">{{ file.name }}</a></p>
                                                         {% endfor %}
 														<div class="wpsc_description">
-															<p> {{ product.html_description|safe }}</p>
+															{{ product.html_description|safe }}
 														</div>
                                                     
 														<div class="single_additional_description">
