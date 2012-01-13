@@ -115,7 +115,7 @@ $(document).ready(function () {
         $create_edit_block.load(url,function(){
             $create_edit.fadeIn().css({position:'absolute',top:oftop});
             $create_edit_block.children('.load').hide().end().find('#client_edit_form').slideDown().attr('action','/myadmin/client/add');
-
+            $(".chzn-select").chosen();
         });
         isnew = true;
         return false;
