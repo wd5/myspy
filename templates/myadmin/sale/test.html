@@ -73,7 +73,7 @@ $(function(){
   });
   $search_form.bind("reset", function() {
     $search_submit.attr("disabled", "disabled");
-  });  
+  });
 });
 </script>
 		</div>
@@ -139,7 +139,7 @@ $(function(){
 		</div>
 	</div>
 	<div id="navigation">
-	    <form action="/myadmin/sales/" method="post" id="filter"> {% csrf_token %}
+	    <form action="{{ request.path }}" method="post" id="filter"> {% csrf_token %}
 			<div class="lt_un">
 				<input type="submit" class="icon_apply" value="&nbsp;" />
 			</div>

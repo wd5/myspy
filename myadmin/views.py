@@ -1,6 +1,7 @@
           # -*- coding: utf-8 -*-
 from datetime import date, timedelta
 from django.shortcuts import render_to_response
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -51,17 +52,16 @@ def sales(request, when):
     money = Waytmoney.objects.get(id=1).wayt_money
     # Список клиентов за запрошеный период
     clients = clients_list(when)
-    # Пейджинация
-#    try:
-#        page = int(request.GET.get('page', '1'))
-#    except ValueError:
-#        page = 1
-    # 100 клиентов на одну страницу
-#    paginator = Paginator(clients, 100)
-#    try:
-#        clients = paginator.page(page)
-#    except (EmptyPage, InvalidPage) :
-#        clients = paginator.page(paginator.num_pages)
+    if request.method == 'POST':
+        statuses = []
+        # Клиенты соответсвующие статусам
+        clients_post = []
+        for status in request.POST.getlist('status'):
+            statuses.append(status)
+            clients_post += clients.filter(status=status)
+            # Сортирую по id - так чтобы последний клиент был сверху
+        clients_post.sort(key=lambda x: x.id, reverse=True)
+        clients = clients_post
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
