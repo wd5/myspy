@@ -602,12 +602,12 @@ sub {font-size:.7em;vertical-align: bottom;}
 		h1, h2, h3, h4, h5, h6{color: #000;font-weight: normal;margin:0;padding: 0; line-height: 1.4em;}
 		h1 a, h2 a, h3 a, h4 a, h5 a{color: #000;}
 
-		h1{font-size: 32px;}
-		h2{font-size: 28px;}
-		h3{font-size: 24px;}
-		h4{font-size: 20px;}
-		h5{font-size: 16px;}
-		h6{font-size: 12px;}
+		h1{font-size: 18px;}
+		h2{font-size: 16px;}
+		h3{font-size: 14px;}
+		h4{font-size: 13px;}
+		h5{font-size: 12px;}
+		h6{font-size: 11px;}
 
 
 
@@ -3608,6 +3608,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .cats_discr h2{
 	color: #FF3800;
+	font-size:28px;
 }
 .cats_discr h2:hover{
 	text-decoration: underline;
@@ -3616,6 +3617,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 .cats_discr h1:hover{
 	text-decoration: underline;
 }
+.cats_discr h1{font-size:32px}
 #blog_posts{
 	padding: 20px;
 	width: 800px;
