@@ -54,7 +54,7 @@ div#footer{clear:both;width:100%}
 
 .top_menu .user{float:right;color:#CCC;margin:0 58px 0 0;}
 .top_menu .user span{float:left;display:block;margin:0 7px 0 0;}
-.top_menu .user a.logout{display:block;float:right;width:13px;height:17px;background: url(../img/icons.gif) no-repeat -107px 0;}
+.top_menu .user a.logout{display:block;float:right;width:13px;height:17px;background: url(../img/icons.gif) no-repeat -36px -44px;}
 
 .lt_un{width:200px;float:left;padding:8px 0 0 0;text-align:center;}
 .lt_un .icon_man{display:block;border:0;background: url(../img/icons.gif) no-repeat 0 0;width:61px;height:21px;cursor:pointer;margin:0 auto;}
@@ -63,9 +63,13 @@ div#footer{clear:both;width:100%}
 .search .input{float:left;background:#FFF;border:1px solid #acacac;}
 .search .input input{border:0;background:none;float:left;}
 .search .input .q{width:333px;padding:0 0 0 7px;outline:none;}
-.search .input .reset{fl oat:right;background: url(../img/icons.gif) no-repeat -62px -23px;width:35px;height:20px;cursor:pointer;}
+.search .input .reset{fl oat:right;background: url(../img/icons.gif) no-repeat 0 -44px;width:35px;height:20px;cursor:pointer;}
 .search .btn{float:left;width:44px;height:22px;margin:0 0 0 7px;}
-.search .btn input{width:44px;height:22px;background: url(../img/icons.gif) no-repeat -62px 0;border:0;cursor:pointer;}
+.search .btn input{width:52px;height:21px;background: url(../img/icons.gif) no-repeat -62px 0;border:0;cursor:pointer;}
+.search .btn input:hover { background-position: -62px -22px }
+.search .btn input:active { background-position: -62px -44px }
+.search .btn input[disabled] { background-position: -62px -66px }
+.search .btn input { background-position: expression(this.disabled ? '-62px -66px' : '') }
 
 /* */
 .items_list{clear:both;margin:0px;color:#333;border-top:1px solid #dedede;background: #F1F1F1;}

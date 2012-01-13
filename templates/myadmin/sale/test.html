@@ -48,15 +48,34 @@
 		</div>
         <!-- // -->
 		<div class="search">
-			<form action="/myadmin/sales/search/">
+			<form action="/myadmin/sales/search/" id="sale-search">
 				<div class="input">
 					<input type="text" name="q" class="q" />
 					<input type="reset" value="&nbsp;" class="reset" />
 				</div>
 				<div class="btn">
-					<input type="submit" value="&nbsp;" />
+					<input type="submit" value="&nbsp;" disabled="disabled" />
 				</div>
 			</form>
+<script>
+$(function(){
+  $search_form = $("#sale-search");
+  $search_submit = $search_form.find("input[type=submit]");
+  $search_reset = $search_form.find("input[type=reset]");
+  $search_input = $search_form.find("input[type=text]");
+  $search_input.live('change keyup', function() {
+    if ($(this).val().length > 0) {
+	  $search_submit.removeAttr("disabled");
+	}
+	else {
+	  $search_submit.attr("disabled", "disabled");
+	}
+  });
+  $search_form.bind("reset", function() {
+    $search_submit.attr("disabled", "disabled");
+  });  
+});
+</script>
 		</div>
         <!-- // -->
 	</div>
