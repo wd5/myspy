@@ -92,7 +92,7 @@ def search(request):
 def add_client(request):
     # Создаю формы
     form = ClientForm()
-    CartProductFormset = inlineformset_factory(CartItem, CartProduct, formset=BaseProductFormset, extra=1)
+    CartProductFormset = inlineformset_factory(CartItem, CartProduct, form=CartProductForm, formset=BaseProductFormset, extra=1)
     formset = CartProductFormset()
     if request.method == 'POST':
         # Создаю объект корзины для клиента
