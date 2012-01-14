@@ -20,7 +20,6 @@
 <!--[if lte IE 7]>
 <link rel='stylesheet' href='{{ STATIC_URL }}res/css/ie7.css' type='text/css' media='all' />
 <![endif]-->
-<script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery1.4.2.js'></script>
 <script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery1.7.2.js'></script>
 <script type='text/javascript' src='{{ STATIC_URL }}res/js/dropdown.js'></script>
 <script type="text/javascript" src="{{ STATIC_URL }}res/js/jquery-hoverintent.js"></script>
@@ -70,9 +69,9 @@
 /* ]]> */
 </script>
 </head>
-<body class="home page page-id-8 page-template page-template-page-feature-php">
+<body>
         {% block site_wrapper %}
         {% endblock %}
     {% include "metrika.html" %}
-    </body>
+</body>
 </html>
