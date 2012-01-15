@@ -107,7 +107,6 @@ INSTALLED_APPS = (
     'tinymce',
     'south',
     'sentry',
-    'sentry.client',
     'raven.contrib.django',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
