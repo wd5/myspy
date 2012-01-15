@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^tinymce/', include('tinymce.urls')),
     (r'^grappelli/', include('grappelli.urls')),
-#    (r'^sentry/', include('sentry.web.urls')),
+    (r'^sentry/', include('sentry.web.urls')),
 )
 
 if settings.DEBUG:
