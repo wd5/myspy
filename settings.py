@@ -107,21 +107,52 @@ INSTALLED_APPS = (
     'tinymce',
     'south',
     'sentry',
+    'sentry.client',
     'raven.contrib.django',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
-TINYMCE_DEFAULT_CONFIG = {
-    'theme': 'advanced',
-    'mode': 'textareas',
-    'plugins' : 'paste, fullscreen, legacyoutput, preview, style, media',
-    'theme_advanced_buttons3_add' : 'pastetext,pasteword,selectall,fullscreen,preview,styleprops,media',
-    'fullscreen_new_window' : 'true',
-    'fullscreen_settings' : {
-                'theme_advanced_path_location' : 'top'
+SENTRY_KEY = 'my secret key'
+SENTRY_SERVERS = ['http://sentry.local/api/store/']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+        },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        },
+    'handlers': {
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         }
-}
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+            },
+        },
+    }
+
 try:
     from local_settings import *
 except ImportError:
