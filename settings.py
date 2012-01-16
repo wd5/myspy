@@ -116,6 +116,7 @@ INSTALLED_APPS = (
 #SENTRY_KEY = 'my secret key'
 #SENTRY_SERVERS = ['http://sentry.local/api/store/']
 #SENTRY_CLIENT = 'raven.contrib.django.DjangoClient'
+SENTRY_URL_PREFIX = '/sentry'
 
 LOGGING = {
     'version': 1,
