@@ -81,6 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'myspy.ReferMiddleware.ReferMiddleware',
+    'sentry.middleware.SentryMiddleware',
 )
 
 ROOT_URLCONF = 'myspy.urls'
@@ -106,8 +107,8 @@ INSTALLED_APPS = (
     'filebrowser',
     'tinymce',
     'south',
-#    'sentry',
-#    'raven.contrib.django',
+    'sentry',
+    'raven.contrib.django',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
