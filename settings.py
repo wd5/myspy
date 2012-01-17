@@ -106,6 +106,7 @@ INSTALLED_APPS = (
     'myspy.blog',
     'filebrowser',
     'tinymce',
+    'djkombu',
     'south',
     'sentry',
     'raven.contrib.django',
