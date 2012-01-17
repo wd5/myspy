@@ -11,7 +11,7 @@ def blog(request):
         first_entry = Entry.objects.order_by()[0].date
     except IndexError:
         raise Http404
-    entrys = get_list_or_404(Entry.objects.filter(date__range=(first_entry, datetime.now())))
+    entrys = get_list_or_404(Entry, date__range=(first_entry, datetime.now()))
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
@@ -52,7 +52,7 @@ def entry(request, entry_slug):
 
 def category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    entrys = get_list_or_404(Entry.objects.filter(category=category))
+    entrys = get_list_or_404(Entry, category=category)
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
