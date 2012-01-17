@@ -35,7 +35,7 @@ def show_category(request, category_slug):
             meta_keywords = category.meta_keywords
             meta_description = category.meta_descriotion
         except :
-            section = Section.objects.get(slug=category_slug)
+            section = get_object_or_404(Section, slug=category_slug)
             category = section.category_set.filter(is_active=True)
             page_title = "%s" % section
             products = []
@@ -99,9 +99,3 @@ def about(request):
 def delivery(request):
     page_title = "Доставка и оплата"
     return render_to_response('main/delivery.html', locals(), context_instance=RequestContext(request))
-
-def internal_error(request):
-    return render_to_response('500.html', locals(), context_instance=RequestContext(request))
-
-def not_found_error(request):
-    return render_to_response('404.html', locals(), context_instance=RequestContext(request))
