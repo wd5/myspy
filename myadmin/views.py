@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.utils.datastructures import MultiValueDictKeyError
 from cart.models import Client, CartItem, CartProduct
 from forms import ClientForm, BaseProductFormset, CashForm, BalanceForm, TaskForm, TaskAnswerForm, OrderForm, CartProductForm
 from django.forms.models import inlineformset_factory
@@ -84,7 +85,10 @@ def sales_active(request):
 
 @login_required
 def search(request):
-    search_world = request.GET['q']
+    try:
+        search_world = request.GET['q']
+    except MultiValueDictKeyError:
+        return HttpResponseRedirect("/myadmin/sales/")
     clients = Client.objects.filter(Q(name__icontains=search_world) | Q(surname__icontains=search_world) | Q(patronymic__icontains=search_world) | Q(tracking_number__icontains=search_world) | Q(phone__icontains=search_world) | Q(address__icontains=search_world))
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
