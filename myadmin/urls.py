@@ -33,4 +33,5 @@ urlpatterns = patterns('',
                       url(r'^orders/(?P<id>[-\w]+)/is_done$', 'myadmin.views.order_done', name="order-done"),
                       url(r'^orders/edit/(?P<id>[-\w]+)/$', 'myadmin.views.edit_order', name="edit-order"),
                       url(r'^orders/edit/(?P<id>[-\w]+)/delete$', 'myadmin.views.delete_order', name="delete-order"),
+                      url(r'^charts/$', 'myadmin.views.charts', name="charts-page"),
                       url(r'^statistic/$', 'myadmin.views.statistic', name="statistic-page"),)
