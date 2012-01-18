@@ -542,12 +542,12 @@ def get_client(request, id):
     client = Client.objects.get(id=id)
     return render_to_response("myadmin/sale/client.html", locals(), context_instance=RequestContext(request))
 
-from qsstats import QuerySetStats
+#from qsstats import QuerySetStats
 @login_required
 def charts(request):
-    queryset = Client.objects.all()
-    qsstats = QuerySetStats(queryset, date_field='ordered_at')
-    latest_client = Client.objects.all().latest('id').ordered_at
-    first_client = Client.objects.order_by()[0].ordered_at
-    values = qsstats.time_series(first_client, latest_client)
+#    queryset = Client.objects.all()
+#    qsstats = QuerySetStats(queryset, date_field='ordered_at')
+#    latest_client = Client.objects.all().latest('id').ordered_at
+#    first_client = Client.objects.order_by()[0].ordered_at
+#    values = qsstats.time_series(first_client, latest_client)
     return render_to_response("myadmin/charts.html", locals(), context_instance=RequestContext(request))

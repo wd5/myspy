@@ -110,7 +110,7 @@ INSTALLED_APPS = (
     'south',
     'sentry',
     'raven.contrib.django',
-    'googlecharts',
+#    'googlecharts',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
