@@ -5,6 +5,7 @@ from django.template import RequestContext
 from catalog.models import Category, Product, Section
 from django.http import HttpResponseRedirect, HttpResponse
 from cart import cart, settings
+from django.core.mail import send_mail
 import threading
 
 def index(request):
