@@ -63,46 +63,6 @@
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
     });
-    /* <![CDATA[ */
-	var $j = jQuery.noConflict();
-	$j(document).ready(function () {	
-			$j('#cycle').cycle({ 
-			    fx: 'fade',
-				sync: 1,
-				timeout: 15000,
-			    speed:  1500, 
-				pager:  '#featurenav',
-				cleartype:  true,
-    			cleartypeNoBg:  true
-			 });
-			$j("div#featurenav").children("a").each(function() {
-				if($j(this).html() == "1") { $j(this).html("Жучки");}
-				if($j(this).html() == "2") { $j(this).html("Защита от прослушки");}
-				if($j(this).html() == "3") { $j(this).html("Миникамеры");}
-				if($j(this).html() == "4") { $j(this).html("GPS Мониторинг");}
-			});
-		$j('.prew_img_tov').click(function()
-			{
-				$j('.main_img_tov').attr('src',$j(this).attr('src'));	
-				return false;	
-			});
-			
-			$j('#img_full').click(function(event){
-				if (event.target == this){	
-				$j('#opac_bg').hide();		
-				$j('#img_full').hide();
-				}
-				return false;
-			});	
-				
-			$j('.item-img-big a').click(function(){
-				alert('@');
-				$j('#opac_bg').show();
-				$j('#img_full').show();
-				return false;
-			});
-	});
-/* ]]> */
 </script>
 </head>
 <body>
