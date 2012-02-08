@@ -501,21 +501,22 @@ def statistic(request):
                 ooo =  True
         # Если товара нету в списке то считаю его
         if not ooo:
-                all = products_statistic.filter(product=statistic_item.product)
-                new_product = Product_statistic()
-                new_product.product = statistic_item.product
-                new_product.quantity = 0
-                new_product.cash = 0
-                for u in all:
-                    new_product.quantity += u.quantity
-                    new_product.cash += u.cash
-                products.append(new_product)
+            all = products_statistic.filter(product=statistic_item.product)
+            new_product = Product_statistic()
+            new_product.product = statistic_item.product
+            new_product.quantity = 0
+            new_product.cash = 0
+            for u in all:
+                new_product.quantity += u.quantity
+                new_product.cash += u.cash
+            products.append(new_product)
     products.sort(key=lambda x: x.cash, reverse=True)
 
     last_cat_id = Category.objects.all().latest('id').id
 
     q = []
 
+    print 'lalal'
     for i in range(1,last_cat_id):
         cash = 0
         cats = Product_statistic.objects.filter(product__category=i)
@@ -523,6 +524,7 @@ def statistic(request):
             cash += x.cash
         q.append([x.product.category.all()[0],cash])
     q.sort(key=lambda x: x[1], reverse=True)
+    print 'lalal'
     return render_to_response("myadmin/statistic/statistic.html", locals(), context_instance=RequestContext(request))
 
 

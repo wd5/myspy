@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.core import urlresolvers
 from django.template import RequestContext
 from catalog.models import Category, Product, Section
-from django.http import HttpResponseRedirect
-from cart import cart
+from django.http import HttpResponseRedirect, HttpResponse
+from cart import cart, settings
+import threading
 
 def index(request):
     page_title = "Магазин домашней безопасности, шпионская техника"
@@ -99,3 +100,14 @@ def about(request):
 def delivery(request):
     page_title = "Доставка и оплата"
     return render_to_response('main/delivery.html', locals(), context_instance=RequestContext(request))
+
+def take_vk_comment(request):
+    if request.method == 'POST':
+        param = request.POST['comment']
+        if settings.SEND_ADMIN_EMAIL:
+            t = threading.Thread(target= send_mail, args=[
+              u'Новый комментарий',
+              u'%s' % param, settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], 'fail_silently=False'])
+            t.setDaemon(True)
+            t.start()
+    return HttpResponse()
