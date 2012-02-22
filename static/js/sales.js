@@ -75,7 +75,7 @@ $(document).ready(function () {
         var oftop = $create_edit.fadeIn().css({position:'fixed',top:'0'}).children('#create_edit_block').html('<span class="load">Загруза...</span>').offset().top;
         $create_bg.fadeIn();
         clid = parseFloat($(this).parents('tr').find('.id').text(),10);
-        url = '../client/'+clid+' #client_edit_form';
+        url = '/myadmin/client/'+clid+' #client_edit_form';
         //alert(url);
         $create_edit_block.load(url,function(){
             $create_edit.fadeIn().css({position:'absolute',top:oftop});
