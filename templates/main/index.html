@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load cache %}
 {% load catalog_filters %}
 {% load cart_filters  %}
 {% block site_wrapper %}
     <div id="page" class="fix">
   <div id="wrapper" class="fix" >
-	
+
     <div id="header" class="fix">
 		<a href="/" style="float:left"><img class="headerimage" src="{{ STATIC_URL }}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
 		<div class="basket" style="float:left">
@@ -13,9 +14,9 @@
 		<div class="icons">
 			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
 			<a href='mailto:info@my-spy.ru'>info@my-spy.ru</a>
-		</div>	
+		</div>
 	</div>
-	
+
 	<div id="nav" class="fix">
 		<ul class="fix homebutton">
 			<li class="page_item navfirst">
@@ -23,151 +24,79 @@
 			</li>
 		</ul>
 
-		{% category_list request.path %}	
-		</div>		
-	<div class="clear"></div>
-	<div><!-- /nav --><br>
-	<div id="container" class="fix ">
-		<div id="feature">
-			<div class="postwrap fix">
-				<div class="hentry fix" style="height:350px">
-					<div id="cycle" class="fix" style="height:350px">
-						
-						<div id="Жучки" class="fcontainer">
-							<div class="fcontent">
-								<div class="fheading"><h1 class="ftitle">Жучки</h1></div>
-								<div class="ftext">
-									<p>
-                                        <strong>Жучки, подслушивающие устройства</strong> - на дальнее или ближнее расстояние.
-                                        Для записи или прослушивания в реальном времени.<br><br>
-                                        Мини диктофоны, GSM и радио устройства.
-									</p>
-									<a class="featurelink" href="/cats/bugs">Жучки</a><br>
-									<a class="featurelink" href="/cats/all-goods">Все товары</a>
-								</div>
-							</div>
-							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/zhuchki0.png" alt="Жучки" /></div>
-							<div class="clear"></div>
+    {% category_list request.path %} <!-- Категории -->
+ 	</div>
+		<div class="clear"></div>
+	<div><div><!-- /nav -->
+{% cache 1000 maincontent %}
+    <div id="maincontent">
+		<div id="content">
+			<div class="postwrap fix" style="padding:30px;">
+		        <table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">
+		        	<tr>
+			        {% for section in sections %}
+			        	
+	                        {% if not section.name == section.category_set.all.0.name %}
+	                       	<tr><td colspan="2"><center><a class="cats_discr" href="{{ section.get_absolute_url }}"> <h1>{{ section.name }}</h1></a><br></center></td></tr>
+	                        {% endif %}
+	                       
+	                       {% for cat in section.category_set.all %}
+			                   <td style="vertical-align:top; padding:20px;">
+						        	<table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">
+						        		<tr>
+								        	<td style="vertical-align:top; padding:20px;">
 
-						</div>
-                        						<div id="Защита от прослушки" class="fcontainer">
-							<div class="fcontent">
-								<div class="fheading"><h1 class="ftitle">Защита от прослушки</h1></div>
-								<div class="ftext">
-									<p>
-                                        Глушилки и обнаружители сотовых сигналов, GPS, радио жучков, GSM, 3G.<br>
-                                        <strong>Защита и поиск подслушивающих устройств.</strong>
-									</p>
-									<a class="featurelink" href="/cats/antibugs">Защита от прослушки</a><br>
-									<a class="featurelink" href="/cats/all-goods">Все товары</a>
-								</div>
-							</div>
-							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/detectors_jammers.jpg" alt="Защита от прослушки" /></div>
-							<div class="clear"></div>
-						</div>
-						
-						<div id="Миникамеры" class="fcontainer">
-							<div class="fcontent">
-								<div class="fheading"><h1 class="ftitle">Мини камеры</h1></div>
-								<div class="ftext">
-									<p>
-										<strong>Мини камеры</strong> для любых нужд, будь то камера с детектором движения или мини камера для спорта, чтобы запечатлеть яркие моменты вашей жизни.
-									</p>
-									<a class="featurelink" href="/cats/minicams/">Мини камеры</a><br>
-									<a class="featurelink" href="/cats/all-goods/">Все товары</a>
-								</div>
-							</div>
-							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/minicame.png" alt="Миникамеры" /></div>
-							<div class="clear"></div>
-						</div>
-						
-						<div id="GPS_слежение" class="fcontainer">
-							<div class="fcontent">
-								<div class="fheading"><h1 class="ftitle">GPS слежение</h1>										</div>
-								<div class="ftext">
-									<p>
-										GPS слежение за людьми или GPS мониторинг автомобилей - для этих и любых других целей, где требуется постоянный контроль за чем либо, существую специальные устройства - <strong>GPS трекеры.</strong>
-									</p>
-									<a class="featurelink" href="/cats/gps-spy/">GPS трекеры</a><br>
-									<a class="featurelink" href="/cats/all-goods/">Все товары</a>
-								</div>
-							</div>
-							<div class="fmedia"><img src="{{ STATIC_URL}}res/img/gps00000.png" alt="GPS слежение" /></div>
-							<div class="clear"></div>
-						</div>
-						
-					</div>
-				</div>
-			<div class="hl"></div>
-			<div id="feature-footer" class="fix">
-				<div id="featurenav" class=""> 
-			
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-	<div class="clear"></div>
-	
-	<div class="fboxes fix">
-		<div class="fboxdividers fix">
-			
-			<div class="fbox">
-				<div class="fboxcopy">
-					<div class="fboxtitle"><h3>Скидки</h3></div>
-					<div class="fboxtext">
-                        При покупке от 2х товаров <b>скидка 10%.</b><br><br>
-                        *Скидка действует на все товары кроме диктофонов.
-					</div>
-				</div>
-			</div>
-			
-			<div class="fbox">
-				<div class="fboxcopy">
-					<div class="fboxtitle"><h3>Контакты</h3></div>
-					<div class="fboxtext">
-						<p>Позвоните или напишите нам и мы ответим на любые ваши вопросы.</p>
-						<b><p>С 9:00 до 23:00 без обеда и выходных.</p></b>
-						<b>Тел:+7 (915) 122-52-91 </b><br>
-						<b>Email: <a href="mailto:info@my-spy.ru">info@my-spy.ru</a></b><br>
-						<b>ICQ:</b> 606232807 <br>
-					</div>
-				</div>
-			</div>
-			
-			<div class="fbox">
-				<div class="fboxcopy">
-					<div class="fboxtitle"><h3>Доставка</h3></div>
-					<div class="fboxtext">
-                        Доставка <b>по Москве</b> в пределах МКАД осуществляется <b>бесплатно курьером в день заказа.</b>(при заказе от 1000 рублей)<br><br>
-                        Доставка по <b>регионам России</b> осуществляется <b>наложенным платежом</b> курьерской службой "EMS почта России".<br>
-                        <a href="/delivery">Подробнее о доставке.</a>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-	</div>
-	<div class="clear"></div>
-	<div class="postwrap">
-		<div id="seocolum">
-            Заботитесь о своей безопасности? Интересует <b>шпионская техника</b> и другие подобные устройства? Тогда вы попали по адресу.<br><br>
-
-            Наш магазин предлагает широкий выбор самых разнообразных шпионских примочек, которые будут незаменимы для тех, кто знает, как ими пользоваться.
-            А также для тех, кто только собирается познать все тонкости обращения со шпионской техникой. Таким образом, <b>шпионские штучки купить</b> теперь проще простого.
-            Необходимо лишь оформить заказ в нашем магазине.<br><br>
-
-            Здесь вы можете <b>купить прослушивающее устройство</b>, системы скрытого наблюдения и много других полезных вещей.
-            Большой ассортимент товара позволит выбрать наиболее оптимальный и подходящий конкретно для вашей ситуации товар. И совершенно не важно, нужна ли вам такая
-            техника для работы или для личных целей. В любом случае вам будет предложен качественный товар, который успел оценить уже не один покупатель.<br><br>
-
-            К нам постоянно приходят покупатели по таким запросам, как <b>шпионская техника</b> или <b>шпионское оборудование продажа</b>, а это означает, что на качество наших
-            товаров можно положиться.<br><br>
-            
-            Вы все еще медлите и раздумываете, можно ли сэкономить на собственной безопасности? Не стоит. Ведь пока вы это делаете, кто-то другой уже может приобретать у нас товар.
-		</div>
-	</div>
-  </div>
-</div>
-<script type='text/javascript' src='{{ STATIC_URL }}res/js/jquery-cycle.js'></script>
+                                                {% if cat.slug == 'cctv' %}
+                                                    <a href="http://ceptum.ru/cats/cctv-komplekt/"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                    </td>
+                                                    <td style="vertical-align:top; padding:20px;">
+                                                    <a class="item-head cats_discr" href="http://ceptum.ru/cats/cctv-komplekt/">
+                                                {% else %}
+                                                    {% if cat.slug == 'recorders' %}
+                                                        <a href="http://ceptum.ru/section/reg/"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                        </td>
+                                                        <td style="vertical-align:top; padding:20px;">
+                                                    <a class="item-head cats_discr" href="http://ceptum.ru/section/reg/">
+                                                    {% else %}
+                                                        {% if cat.slug == 'cctv-camera' %}
+                                                            <a href="http://ceptum.ru/section/cam/"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                            </td>
+                                                            <td style="vertical-align:top; padding:20px;">
+                                                            <a class="item-head cats_discr" href="http://ceptum.ru/section/cam/">
+                                                        {% else %}
+                                                                <a href="{{ cat.get_absolute_url }}"><img width="150px" src="{{ cat.image.thumb_url }}"/></a>
+                                                                </td>
+                                                                <td style="vertical-align:top; padding:20px;">
+                                                            <a class="item-head cats_discr" href="{{ cat.get_absolute_url }}">
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endif %}
+													<h2>{{ cat.name }}</h2>
+												</a>
+									            <p>{{ cat.description|safe }}</p>
+								            </td>
+								    	</tr>
+						        	</table>
+					        	</td>
+					        	{% if not section.name == section.category_set.all.0.name %}
+							        {% if forloop.counter|div:2 == 0 %}
+										</tr><tr>
+									{% endif %}
+								{% endif %}
+	                      	{% endfor %}
+						{% if forloop.counter|div:2 == 0 %}
+										</tr><tr>
+									{% endif %}
+				        {% if not section.name == section.category_set.all.0.name %}
+							</tr>
+							<tr><td colspan="2"  style="padding:20px; border-top: 5px solid #ccc;"></td></tr>	
+							<tr>
+						{% endif %}
+			        {% endfor %}
+			        </tr>
+				</table>
+        	</div>
+        </div>
+   </div>
+{% endcache %}
 {% endblock %}
