@@ -1,5 +1,7 @@
+{% load cache %}
 		<ul id="menu-menu" class="mnav dropdown fix">
             <li {% if request_path == '/' %} class="current-menu-item" {% endif %}><a href="/">Каталог товара</a>
+                {% cache 1000 header_sprite %}
             	<div id="header_sprite">
             		<div  id="header_sprite_head"></div>
             		<div  id="header_sprite_body">
@@ -29,6 +31,7 @@
 						</ul>
 					</div>
 				</div>
+                {% endcache %}
 			</li>
 			<li {% if request_path == '/delivery' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
 			<li {% if request_path == '/about' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
