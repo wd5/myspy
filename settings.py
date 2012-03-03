@@ -156,7 +156,7 @@ LOGGING = {
     }
 
 PYMORPHY_DICTS = {
-    'ru': { 'dir': './ru' },
+    'ru': { 'dir': './pymorphy_dicts' },
     }
 
 try:
