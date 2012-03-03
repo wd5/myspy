@@ -1,47 +1,41 @@
 {% load cache %}
-		<ul id="menu-menu" class="mnav dropdown fix">
-            <li {% if request_path == '/' %} class="current-menu-item" {% endif %}><a href="/">Каталог товара</a>
-                {% cache 1000 header_sprite %}
-            	<div id="header_sprite">
-            		<div  id="header_sprite_head"></div>
-            		<div  id="header_sprite_body">
-						<ul>
-							{% for section in sections %}
-							<div style="float:left;">
-		       				 <li style="float:left;"> <a href="{{ section.get_absolute_url }}" title="" style="font-size:15px; text-align:center;">{{ section.name }}</a>
-		                          {% if not section.category_set.all.0.name == section.name %}
-		                          
-			          				  <ul style="float:left; width:100%;">
-			               				 {% for category in section.category_set.all %}
-			                                {% if not category.name == section.name %}
-			                    			<li style="width:100%;">
-			                      				  <a href="{{ category.get_absolute_url }}" title="" style="text-align:center; color:#ccc;">{{ category.name }}</a>
-			                    			</li>
-			                                {% endif %}
-			              			  	{% endfor %}
-			          				  </ul>
-		          				  
-		                          {% endif %}
-		      			 	 </li>
-		      			 	 </div>
-							{% endfor %}
-							<div style="float:left;">
-		                    <li> <a href="{% url catalog.views.index %}" title="" style="font-size:15px; text-align:center;">Все товары</a>
-		                    </div>
-						</ul>
-					</div>
-				</div>
-                {% endcache %}
-			</li>
-			<li {% if request_path == '/delivery' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
-			<li {% if request_path == '/about' %} class="current-menu-item" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
-            <li {% if request_path == '/blog/' %} class="current-menu-item" {% endif %}><a href="{% url blog.views.blog %}">Блог</a></li>
+		<ul class="menu1">
+			<li{% if request_path == '/' %} class="sel" {% endif %}><a href="/">Каталог товара</a></li>
+			<li{% if request_path == '/delivery' %} class="sel" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
+			<li{% if request_path == '/about' %} class="sel" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
+			<li{% if request_path == '/blog/' %} class="sel" {% endif %}><a href="{% url blog.views.blog %}">Блог</a></li>
 		</ul>
 		
+		{% cache 1000 menu2 %}
+		<ul class="menu2">
+			{% for section in sections %}
+				{% if not section.category_set.all.0.name == section.name %}
+				<li>
+					<a href="{{ section.get_absolute_url }}">{{ section.name }}</a>
+					<div>
+						<ul>
+							{% for category in section.category_set.all %}
+								{% if not category.name == section.name %}
+									<li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+				</li>
+                                {% else %}
+				<li>
+					<a href="{{ section.get_absolute_url }}">{{ section.name }}</a>
+				</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+		{% endcache %}
+		
+<!--
 		<form method="get" class="searchform" action="">
 			<span class="left"></span>
 			<input type="text" value="Поиск" name="s" class="s" onfocus="if (this.value == 'Поиск') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Поиск';}" />
 			<span class="right"></span>
 			<input type="submit" class="searchsubmit" value="Go" />
 		</form>
-			
+-->

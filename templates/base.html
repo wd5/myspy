@@ -63,6 +63,20 @@
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
     });
+	$(document).ready(function(){
+		$(function(){
+	        $(window).scroll(function () {
+	            if ($(this).scrollTop() > 300) $("#back-top").fadeIn();
+	            else                           $("#back-top").fadeOut(400);
+	        });
+	        $('#back-top a').click(function () {
+	            $('body,html').animate({
+	                scrollTop: 0
+	            }, 800);
+	            return false;
+	        });
+		});
+	});
 </script>
 </head>
 <body>
