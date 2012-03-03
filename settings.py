@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'sentry',
     'raven.contrib.django',
     'googlecharts',
+    'pymorphy',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -152,6 +153,10 @@ LOGGING = {
             'propagate': False,
             },
         },
+    }
+
+PYMORPHY_DICTS = {
+    'ru': { 'dir': './ru' },
     }
 
 try:

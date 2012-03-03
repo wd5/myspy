@@ -3,46 +3,17 @@
 {% load cart_filters  %}
 {% block site_wrapper %}
     <div id="page" class="fix">
-  <div id="wrapper" class="fix" >
-	
-    <div id="header" class="fix">
-		<a href="/" style="float:left"><img class="headerimage" src="{{ STATIC_URL }}res/img/my-spy-logo.png" alt="Магазин домашней безопасности"/></a>
-		<div class="basket" style="float:left">
-			{% cart_box request %}
-		</div>
-		<div class="icons">
-			<div>+7 (915) 122-52-91 <small>c 9:00 до 23:00 без выходных</small></div>
-			<a href='mailto:info@my-spy.ru'>info@my-spy.ru</a>
-		</div>	
-	</div>
-	
-	<div id="nav" class="fix">
-		<ul class="fix homebutton">
-			<li class="page_item navfirst">
-				<a class="home" href="/" title="Home" style="background-image: url('{{ STATIC_URL }}res/img/home-icon.png');">Home</a>
-			</li>
-		</ul>
-	
-					<center id="img_full">
-					<div id="img_full_in">
-						{% if product.productphoto_set.all.0.image.url %}
-                                            <img class="main_img_tov" class="marketfull_image" src="{{ product.productphoto_set.all.0.image.thumb_url }}" alt="{{ page_title }}" height="400px" />
-                                            {% else %}
-                                                Фото товара отсутствует
-                                            {% endif %}
-                                            <div class="clr"></div>
-					{% for item in product.productphoto_set.all %}
-						<img class="prew_img_tov" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}" height="150px"/>
-					{% endfor %}
+        <div id="wrapper" class="fix" >
 
-					</div>
-					</center>
-					<div id="opac_bg"></div>
-    {% category_list request.path %} 
-    	</div>		
-		<div class="clear"></div>
-	<div><div><!-- /nav -->
-    <div class="subnav2">
+            <div class="header">
+                <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.jpg" alt="Магазин домашней безопасности"/></a>
+                {% category_list request.path %}
+                {% cart_box request %}
+                <div class="tel" alt="+7 (915) 122-52-91">c 9:00 до 23:00<br />(без выходных)</div>
+                <a href="mailto:info@my-spy.ru" class="mail">info@my-spy.ru</a>
+            </div>
+
+            <div class="subnav2">
         <a href="/">Каталог товара</a> »&nbsp;
         {% if product.category.all.0.section.slug == product.category.all.0.slug %}
             <a href="/cats/{{ product.category.all.0.section.slug }}">{{ product.category.all.0.section }}</a> »&nbsp;

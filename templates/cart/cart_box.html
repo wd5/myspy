@@ -1,5 +1,6 @@
+{% load pymorphy_tags %}
 <noindex>
 	<a class="cart-box-1" href="/cart/">Оформить заказ</a>
 	<a class="cart-box-2" href="/cart/"><img src="{{ STATIC_URL }}/static/res/img/basket.jpg" alt="basket"></a>
-	<div class="bask">В вашей корзине <b>{{ box_count }}</b> товар (а)</div>
+	<div class="bask">В вашей корзине {{ box_count }} {{ "товар"|plural:box_count }} </div>
 </noindex>
