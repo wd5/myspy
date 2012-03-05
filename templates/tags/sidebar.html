@@ -10,8 +10,8 @@
 		<ul class="menu2">
 			{% for section in sections %}
 				{% if not section.category_set.all.0.name == section.name %}
-				<li>
-					<a href="{{ section.get_absolute_url }}">{{ section.name }}</a>
+				<li{% if forloop.first %} class="first{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}{% if forloop.last %} class="last{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}>
+					<a href="{{ section.get_absolute_url }}"{% if section.get_absolute_url == request_path %} class="active"{% else %}{% for category in section.category_set.all %}{% if not category.name == section.name %}{% if category.get_absolute_url == request_path %} class="active"{% endif %}{% endif %}{% endfor %}{% endif %}>{{ section.name }}</a>
 					<div>
 						<ul>
 							{% for category in section.category_set.all %}
@@ -23,8 +23,8 @@
 					</div>
 				</li>
                                 {% else %}
-				<li>
-					<a href="{{ section.get_absolute_url }}">{{ section.name }}</a>
+				<li{% if forloop.first %} class="first{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}{% if forloop.last %} class="last{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}>
+					<a href="{{ section.get_absolute_url }}" {% if section.get_absolute_url == request_path %}class="active"{% endif %}>{{ section.name }}</a>
 				</li>
 				{% endif %}
 			{% endfor %}

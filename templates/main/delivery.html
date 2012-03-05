@@ -6,7 +6,7 @@
         <div id="wrapper" class="fix" >
 
             <div class="header">
-                <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.jpg" alt="Магазин домашней безопасности"/></a>
+                <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.gif" alt="Магазин домашней безопасности"/></a>
                 {% category_list request.path %}
                 {% cart_box request %}
                 <div class="tel" alt="+7 (915) 122-52-91">c 9:00 до 23:00<br />(без выходных)</div>
@@ -38,6 +38,7 @@
 		</div> 
 	</div>	
 		
-  </div>
-</div>
+<div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
+</div><!-- *wrapper -->
+</div><!-- *page -->
 {% endblock %}

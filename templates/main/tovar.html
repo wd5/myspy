@@ -4,16 +4,15 @@
 {% block site_wrapper %}
     <div id="page" class="fix">
         <div id="wrapper" class="fix" >
-
             <div class="header">
-                <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.jpg" alt="Магазин домашней безопасности"/></a>
+                <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.gif" alt="Магазин домашней безопасности"/></a>
                 {% category_list request.path %}
                 {% cart_box request %}
                 <div class="tel" alt="+7 (915) 122-52-91">c 9:00 до 23:00<br />(без выходных)</div>
                 <a href="mailto:info@my-spy.ru" class="mail">info@my-spy.ru</a>
             </div>
 
-            <div class="subnav2">
+    <div class="subnav2">
         <a href="/">Каталог товара</a> »&nbsp;
         {% if product.category.all.0.section.slug == product.category.all.0.slug %}
             <a href="/cats/{{ product.category.all.0.section.slug }}">{{ product.category.all.0.section }}</a> »&nbsp;
@@ -26,59 +25,49 @@
 
 	<div id="container" class="fix "> 
 		<div id="feature"> 
-			<div class="postwrap fix"> 
+			<div class="postwrap fix tovar-blk1"> 
 				<div class="hentry fix"> 
 					<div id="cycle" class="fix">
 						<div id="{{ product.name }}" class="fcontainer" style="background:">
 							<div class="fcontent">
 								<div class="fheading">
-									<h3 class="sub">{{ product.name }}</h3><h1 class="ftitle"></h1></div>
-									<div class="ftext">
-										<p>{{ product.mini_html_description|safe }}</p>
-                                        {% if not product.in_stock %}
-                                        <p><strong><em><span style="color: #ff0000">К сожалению данная модель закончилась, но вы можете сделать предзаказ по телефону.</span></em></strong></p>
-                                        {% endif %}
-											<div class="wpsc_product_price alignleft"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></p></div><br>
+									<h3 class="sub">{{ product.name }}</h3><h1 class="ftitle"></h1>
+								</div>
+								<div class="ftext">
+									<p>{{ product.mini_html_description|safe }}</p>
+									{% if not product.in_stock %}
+										<p><strong><em><span style="color: #ff0000">К сожалению данная модель закончилась, но вы можете сделать предзаказ по телефону.</span></em></strong></p>
+									{% endif %}
+									<div class="wpsc_product_price alignleft"><br /><span id="product_price_26" class="pricedisplay">{{ product.price }} руб.</span><br/></div><br/>
 
+									{% if product.in_stock %}
+									<form method="post" action="" class="cart alignright"> {% csrf_token %}
+										<input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" />
+										<img src="{{ STATIC_URL }}res/img/atc.gif" alt="Купить" class="wpsc_buy_button"/>
+									</form>
+									{% endif %}
 
-                                            {% if product.in_stock %}
-										    <form method="post" action="" class="cart alignright"> {% csrf_token %}
-      											<input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" />
-      											<input type='image' src='{{ STATIC_URL }}res/img/atc.gif' id='product_26_submit_button' class='wpsc_buy_button' name='submit'  value="Купить" />
-  										    </form>
-                                            {% endif %}
- 
-  										    <br/><br/>
-										</div>
-									</div>
-								</div> 
-								
-								<div class="fmedia">
-																<center>
-								<div>
-								 {% if product.productphoto_set.all %}
-     													 {% for item in product.productphoto_set.all %}
-     															 <div class="item-img-sm"><a href="#"><img class="product_image" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}"/></a></div>
-     														 {% endfor %}
-   														 {% else %}
-
-   														 {% endif %}
-   									</div>
-   									</center>
-   									<div class="clr"></div>
-								<center><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" title="{{ page_title }}" alt="{{ product.name }}"/></center>
-
-
-   														
-   								</div> 
-								<div class="clear"></div> 
+									<br/><br/>
+								</div>
 							</div>
+							
+							<div class="fmedia">
+								<center>
+									<div>
+										{% if product.productphoto_set.all %}
+										 {% for item in product.productphoto_set.all %}
+												 <div class="item-img-sm"><a href="#"><img class="product_image" src="{{ item.image.thumb_url }}" title="{{ page_title }}" alt="{{ page_title }}"/></a></div>
+											 {% endfor %}
+										 {% else %}
+										{% endif %}
+									</div>
+								</center>
+								<div class="clr"></div>
+								<center><img src="{{ product.productphoto_set.all.0.image.thumb_url }}" title="{{ page_title }}" alt="{{ product.name }}"/></center>
+							</div> 
+							<div class="clear"></div>
 						</div>
 					</div> 
-					<div class="hl"></div> 
-					<div id="feature-footer" class="fix">
-						<div id="featurenav" class=""></div>
-					</div>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -114,7 +103,7 @@
 																
 
 															</p>
-														
+														</div>
 													</td></tr></table>
 												</div>
 												
@@ -159,4 +148,7 @@ function sendComment(num, last_comment) {
     $.post("/take_vk_comment", {comment: last_comment});
 }
 </script>
+<div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
+</div><!-- *wrapper -->
+</div><!-- *page -->
 {% endblock %}

@@ -7,25 +7,24 @@
     <div id="wrapper" class="fix" >
 
         <div class="header">
-            <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.jpg" alt="Магазин домашней безопасности"/></a>
+            <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.gif" alt="Магазин домашней безопасности"/></a>
             {% category_list request.path %}
             {% cart_box request %}
             <div class="tel" alt="+7 (915) 122-52-91">c 9:00 до 23:00<br />(без выходных)</div>
             <a href="mailto:info@my-spy.ru" class="mail">info@my-spy.ru</a>
         </div>
-
+		
         <div class="subnav2">
-       			 
-        		 <div class="for_tags">
-                     {% if section %}
-                         {% for tag in category %}
-                            <a href="{{ tag.get_absolute_url }}" title="По тегу '{{ tag.name }}'">{{ tag.name }} </a>  
-                         {% endfor %}
-                     {% endif %}
-        		</div>
-        		<a href="/">Каталог товара</a> {% if section %}»&nbsp;{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}»&nbsp;<a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %} »&nbsp;{{ category.name }} {% endif %}
-				 <div class="clear"></div>
+			<div class="for_tags">
+				{% if section %}
+					{% for tag in category %}
+						<a href="{{ tag.get_absolute_url }}" title="По тегу '{{ tag.name }}'">{{ tag.name }} </a>  
+					{% endfor %}
+				{% endif %}
 			</div>
+			<a href="/">Каталог товара</a> {% if section %}»&nbsp;{{ section.name }}{% else %}{% if not category.section.slug == category.slug %}»&nbsp;<a href="/cats/{{ category.section.slug }}">{{ category.section.name }}</a>{% endif %} »&nbsp;{{ category.name }} {% endif %}
+			<div class="clear"></div>
+		</div>
 		
 
 		<div id="maincontent">
@@ -50,7 +49,7 @@
                                         {% if product.in_stock %}
 											<form method="post" action="" class="cart"> {% csrf_token %}
       											<input type="hidden" name="product_slug" value="{{ product.slug }}" id="{{ product.id }}" /> <br />
-      											<input type='image' src='{{ STATIC_URL }}res/img/atc.gif' id='product_26_submit_button' class='wpsc_buy_button' name='submit'  value="Купить" />
+      											<img src="{{ STATIC_URL }}res/img/atc.gif" alt="Купить" class="wpsc_buy_button"/>
   										    </form>
                                         {% endif %}
 									</td>
@@ -99,7 +98,9 @@
             {{ category.SEO_text|safe }}
         </div>
         {% endif %}
-	</div>
-  </div>
-</div>
+		</div>
+		</div>
+<div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
+</div><!-- *wrapper -->
+</div><!-- *page -->
 {% endblock %}
