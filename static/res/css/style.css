@@ -847,7 +847,10 @@ sub {font-size:.7em;vertical-align: bottom;}
 		padding:0;
 		background-color: #fff;
 	}
-
+	
+	.tovar-blk1{
+		margin-bottom: 16px;
+	}
 	#respond p{margin-left: 23px;}
 	.hentry .billboard {
 		text-align: center;
@@ -2215,7 +2218,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 		}
 
 		a.wpsc_product_title:hover{
-		background-color: #ABFB0C;
+		background-color: #f1f1f2;
 		text-decoration: none;
 		}
 
@@ -3421,7 +3424,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .item-desc h2:hover{
 	text-decoration: none;
-	background: #abfb0c;
+	background: #f1f1f2;
 }
 .item-head {
 
@@ -3484,7 +3487,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .subnav2 .for_tags{
 	margin-top: -3px;
-	position: absolute;
+	/*position: absolute;*/
 	text-align: center;
 	top: 0;
 	width: 50%;
@@ -3496,6 +3499,8 @@ sub {font-size:.7em;vertical-align: bottom;}
 	border-radius: 5px;
 	padding: 4px 10px 5px;
 	font-size: 14px;
+	color: #fff;
+	margin-bottom: 2px;
 	-webkit-transition: all 0.3s ease-in-out 0s;
 	-moz-transition: all 0.3s ease-in-out 0s;
 	-o-transition: all 0.3s ease-in-out 0s;
@@ -3505,7 +3510,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 .subnav2 .for_tags a:hover{
 	text-decoration: none;
 	color: #fff;
-	background: #000;
+	background: #888;
 }
 .basket {
 	position: relative;
@@ -3612,7 +3617,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .cats_discr h2:hover{
 	text-decoration: underline;
-	background: #abfb0c;
+	background: #f1f1f2;
 }
 .cats_discr h1:hover{
 	text-decoration: underline;
@@ -3728,7 +3733,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .header .menu2 {
 	height: 51px;
-	background: url('../img/menu2-bg.gif') repeat-x 0 0;
+	background: #333 url('../img/menu2-bg.gif') no-repeat 0 0;
 	display: block;
 	list-style: none;
 	position: absolute;
@@ -3736,7 +3741,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 	width: 1120px;
 }
 .header .menu2 li {
-	background: #333 url('../img/menu2-li.gif') no-repeat 0 0;
+	background: url('../img/menu2-li.gif') no-repeat 0 0;
 	display: block;
 	float: left;
 	color: #fff;
@@ -3747,18 +3752,40 @@ sub {font-size:.7em;vertical-align: bottom;}
 	background: none;
 	padding-left: 0;
 }
+.header .menu2 li a {
+	padding: 0 23px 0 23px;
+}
 .header .menu2 li a ,
 .header .menu2 li a:hover {
 	display: block;
 	font: 18px "Myriad Pro",Tahoma,sans-serif;
 	line-height: 50px;
 	height: 51px;
-	padding: 0 22px 0 22px;
 	color: #fff;
 	text-decoration: none;
 }
-.header .menu2 li:hover a {
+.header .menu2 li:first-child a {
+	padding: 0 25px 0 25px;
+}
+.header .menu2 li:hover a ,
+.header .menu2 li a.active {
 	background: #808080;
+}
+.header .menu2 li.first-2:hover a ,
+.header .menu2 li.first a.active ,
+.header .menu2 li.first-2 a.active {
+	background: url('../img/menu2-li-first-hvr2.gif') no-repeat 0 0;
+}
+.header .menu2 li.last-2:hover a ,
+.header .menu2 li.last a.active ,
+.header .menu2 li.last-2 a.active {
+	background: url('../img/menu2-li-last-hvr2.gif') no-repeat right 0;
+}
+.header .menu2 li.first:hover a {
+	background: url('../img/menu2-li-first-hvr.gif') no-repeat 0 0;
+}
+.header .menu2 li.last:hover a {
+	background: url('../img/menu2-li-last-hvr.gif') no-repeat right 0;
 }
 .header .menu2 li div {
 	display: none;
@@ -3771,7 +3798,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .header .menu2 li ul {
 	list-style: none;
-	padding: 11px 22px 22px 22px;
+	padding: 11px 22px 22px 25px;
 	display: block;
 }
 .header .menu2 li:first-child div {
@@ -3789,6 +3816,8 @@ sub {font-size:.7em;vertical-align: bottom;}
 	margin-bottom: 4px;
 }
 .header .menu2 li ul li a ,
+.header .menu2 li ul li:first-child a ,
+.header .menu2 li:first-child ul li a ,
 .header .menu2 li ul li a:hover {
 	display: inline;
 	font: 18px "Myriad Pro",Tahoma,sans-serif;
@@ -3799,6 +3828,12 @@ sub {font-size:.7em;vertical-align: bottom;}
 	text-decoration: none;
 	background: none;
 	white-space:nowrap;
+}
+.header .menu2 li.first:hover li a ,
+.header .menu2 li.last:hover li a ,
+.header .menu2 li.first-2:hover li a ,
+.header .menu2 li.last-2:hover li a {
+	background: none;
 }
 .header .menu2 li ul li a:hover {
 	text-decoration: underline;
@@ -3812,7 +3847,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 #back-top {
 	position: fixed;
 	top: 10px;
-	margin-left: 20px;
+	margin-left: -100px;
 	display: none;
 }
 #back-top a {
@@ -3839,7 +3874,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 	height: 78px;
 	display: block;
 	margin-bottom: 7px;
-	background: #EDEDED url(../img/up-arrow.png) no-repeat center center;
+	background: #ccc url(../img/up-arrow.png) no-repeat center center;
 
 	/* rounded corners */
 	-webkit-border-radius: 15px;
@@ -3854,3 +3889,17 @@ sub {font-size:.7em;vertical-align: bottom;}
 #back-top a:hover span {
 	background-color: #474747;
 }
+/*--------------------------- tovar-cart -------*/
+.tovar-cart {
+	min-width: 1000px;
+}
+/*--------------------------- tovar -------*/
+img.wpsc_buy_button {
+	margin-top: 3px;
+	cursor: pointer;
+	border: none;
+}
+
+
+
+

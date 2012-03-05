@@ -1,56 +1,44 @@
-{% extends "base.html" %}
-{% load catalog_filters %}
-{% load cart_filters  %}
-{% block site_wrapper %}
-    <div id="page" class="fix">
-    <div id="wrapper" class="fix" >
+{% load pymorphy_tags %}
+[[*В вашей корзине {% if cart_items %}{{ cart_items.count }} {{ "товар"|plural:cart_items.count }}{% else %}0 {{ "товар"|plural:0 }}{% endif %}*]]
 
-    <div class="header">
-        <a href="/" class="logo"><img src="{{ STATIC_URL }}res/img/logo.jpg" alt="Магазин домашней безопасности"/></a>
-        {% category_list request.path %}
-        {% cart_box request %}
-        <div class="tel" alt="+7 (915) 122-52-91">c 9:00 до 23:00<br />(без выходных)</div>
-        <a href="mailto:info@my-spy.ru" class="mail">info@my-spy.ru</a>
-    </div>
-
-	<div id="container" class="fix ">
-		<div id="maincontent">
-			<div id="content">
-				<div class="postwrap fix">
-						<div class="copy fix">
-						{% if cart_items %}
-							<div class="textcontent">							
-								<a class="make_purchase back_to_shop" href="{{ request.META.HTTP_REFERER }}" style="background-image: none;">Вернуться к покупкам</a>
-								<br/><br/>
-								<p>Пожалуйста, проверьте ваш заказ.</p>
-								<table class="productcart">
-									<tr class="firstrow">
-										<td class='firstcol'></td>
-										<td>Наименование:</td>
-										<td>Количество:</td>
-										<td>Цена:</td>
-										<td></td>
-									</tr>
-									{% for item in cart_items %}
-									<tr class="product_row">
-										<td class="firstcol"><img src='{{ item.product.thumbnail_image.thumb_url }}'  style="height:48px" /></td>
-										<td class="firstcol"><a href='{{ item.product.get_absolute_url }}'>{{ item.product.name }}</a></td><td>
-											<form action="" method="post" class="adjustform">{% csrf_token %}
-												<input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" />
-												<input type="hidden" name="item_id" value="{{ item.id }}" />
-												<input type="submit" name="Update" value="Обновить" style="background-image: none;"/>
-											</form>
-										</td>
-										<td><span class="pricedisplay">{{ item.product.price }} Руб</span></td>
-										<td>
-											<form action="#" method="post" class="adjustform">{% csrf_token %}
-												<input type="hidden" name="item_id" value="{{ item.id }}" />
-												<button class='remove_button' type="submit" name="Remove"><span>Удалить</span></button><br />
-											</form>
-										</td>
-									</tr>
-									{% endfor %}
-							</table>
+	<div id="content" class="tovar-cart">
+		<div class="postwrap fix">
+			<div class="copy fix">
+				{% if cart_items %}
+					<div class="textcontent">							
+						<a class="make_purchase back_to_shop" href="{{ request.META.HTTP_REFERER }}" style="background-image: none;">Вернуться к покупкам</a>
+						<br/><br/>
+						<p>Пожалуйста, проверьте ваш заказ.</p>
+						
+						<table class="productcart">
+							<tr class="firstrow">
+								<td class='firstcol'></td>
+								<td>Наименование:</td>
+								<td>Количество:</td>
+								<td>Цена:</td>
+								<td></td>
+							</tr>
+							{% for item in cart_items %}
+							<tr class="product_row">
+								<td class="firstcol"><img src='{{ item.product.thumbnail_image.thumb_url }}'  style="height:48px" /></td>
+								<td class="firstcol"><a href='{{ item.product.get_absolute_url }}'>{{ item.product.name }}</a></td><td>
+									<form action="" method="post" class="adjustform">{% csrf_token %}
+										<input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" />
+										<input type="hidden" name="item_id" value="{{ item.id }}" />
+										<input type="submit" name="Update" value="Обновить" style="background-image: none;" onclick="return fn_cart_click(this,false)"/>
+									</form>
+								</td>
+								<td><span class="pricedisplay">{{ item.product.price }} Руб</span></td>
+								<td>
+									<form action="#" method="post" class="adjustform">{% csrf_token %}
+										<input type="hidden" name="item_id" value="{{ item.id }}" />
+										<input type="hidden" name="Remove" value="1" />
+										<button class='remove_button' type="submit" onclick="return fn_cart_click(this,false)"><span>Удалить</span></button><br />
+									</form>
+								</td>
+							</tr>
+							{% endfor %}
+						</table>
 						<div>
 							<table class="productcart">
 								<tr class='total_price'>
@@ -63,31 +51,27 @@
 								</tr>
 							</table>
 							<form method="post" action="" class='wpsc_checkout_forms'> {% csrf_token %}
-							    <h2>Пожалуйста, заполните контактную информацию:</h2>
+								<h2>Пожалуйста, заполните контактную информацию:</h2>
 								<p>Области, отмеченные звёздочкой, должны быть заполненны.<br />
 								<table class='wpsc_checkout_table'>
-      							 	{{ form.as_table }}
-      							 	<tr>
-      							 		<td colspan='2'>
-       										<input class="make_purchase" type="submit" onclick="yaCounterCOUNTER_ID.reachGoal('ORDER'); return true;" value="Сделать заказ" name="Good" alt="сделать заказ" style="background-image: none;"/>
-       									</td>
-       								</tr>
-       							</table>
-  					  		</form>
+									{{ form.as_table }}
+									<tr>
+										<td colspan='2'>
+											<input class="make_purchase" type="submit" onclick="if(typeof(yaCounterCOUNTER_ID)!=='undefined'){yaCounterCOUNTER_ID.reachGoal('ORDER');}return fn_cart_click(this,true);" value="Сделать заказ" name="Good" alt="сделать заказ" style="background-image: none;"/>
+										</td>
+									</tr>
+								</table>
+							</form>
 						</div>
 						<div class="clear"></div>	
 						<div class="clear"></div>
 					</div>	
-					{% else %}{% if is_order %}
-   		  				Спасибо за заказ, в ближайшее время мы с вами свяжемся.
-    				{% else %}
-    					Ваша корзина пуста.
-					{% endif %}{% endif %}					
+				{% else %}{% if is_order %}
+					Спасибо за заказ, в ближайшее время мы с вами свяжемся.<br />&nbsp;
+				{% else %}
+					Ваша корзина пуста.<br />&nbsp;
+				{% endif %}{% endif %}					
 			</div>
 		</div>
 		<div class="clear"></div>
 	</div>
-		
-  </div>
-</div>
-{% endblock %}
