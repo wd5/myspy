@@ -155,10 +155,6 @@ LOGGING = {
         },
     }
 
-PYMORPHY_DICTS = {
-    'ru': { 'dir': './pymorphy_dicts' },
-    }
-
 try:
     from local_settings import *
 except ImportError:
