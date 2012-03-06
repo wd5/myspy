@@ -3752,9 +3752,23 @@ sub {font-size:.7em;vertical-align: bottom;}
 	background: none;
 	padding-left: 0;
 }
-.header .menu2 li a {
-	padding: 0 23px 0 23px;
+.header .menu2 li a.i0 ,
+.header .menu2 li a.i1 ,
+.header .menu2 li a.i2 ,
+.header .menu2 li a.i3 ,
+.header .menu2 li a.i4 ,
+.header .menu2 li a.i5 ,
+.header .menu2 li a.i6 {
+	text-align: center;
 }
+.header .menu2 li a.i0 { width: 94px; }
+.header .menu2 li a.i1 { width: 215px; }
+.header .menu2 li a.i2 { width: 196px; }
+.header .menu2 li a.i3 { width: 178px; }
+.header .menu2 li a.i4 { width: 156px; }
+.header .menu2 li a.i5 { width: 157px; }
+.header .menu2 li a.i6 { width: 106px; }
+
 .header .menu2 li a ,
 .header .menu2 li a:hover {
 	display: block;
@@ -3763,9 +3777,6 @@ sub {font-size:.7em;vertical-align: bottom;}
 	height: 51px;
 	color: #fff;
 	text-decoration: none;
-}
-.header .menu2 li:first-child a {
-	padding: 0 25px 0 25px;
 }
 .header .menu2 li:hover a ,
 .header .menu2 li a.active {
@@ -3842,6 +3853,10 @@ sub {font-size:.7em;vertical-align: bottom;}
 	float: none;
 	position: absolute;
 	margin: 147px 0 0 905px;
+}
+.header .menu2 li.last ,
+.header .menu2 li.last-2 {
+	float: right;
 }
 /*--------------------------- back-top -------*/
 #back-top {

@@ -1,3 +1,4 @@
+{% load cache %}
 		<ul class="menu1">
 			<li{% if request_path == '/' %} class="sel" {% endif %}><a href="/">Каталог товара</a></li>
 			<li{% if request_path == '/delivery' %} class="sel" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
@@ -5,11 +6,12 @@
 			<li{% if 'blog' in request_path %} class="sel" {% endif %}><a href="{% url blog.views.blog %}">Блог</a></li>
 		</ul>
 		
+		{% cache 1000 menu2 %}
 		<ul class="menu2">
 			{% for section in sections %}
 				{% if not section.category_set.all.0.name == section.name %}
 				<li{% if forloop.first %} class="first{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}{% if forloop.last %} class="last{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}>
-					<a href="{{ section.get_absolute_url }}"{% if section.get_absolute_url == request_path %} class="active"{% else %}{% for category in section.category_set.all %}{% if not category.name == section.name %}{% if category.get_absolute_url == request_path %} class="active"{% endif %}{% endif %}{% endfor %}{% endif %}>{{ section.name }}</a>
+					<a href="{{ section.get_absolute_url }}" class="i{{ forloop.counter0 }}{% if section.get_absolute_url == request_path %} active{% else %}{% for category in section.category_set.all %}{% if not category.name == section.name %}{% if category.get_absolute_url == request_path %} active{% endif %}{% endif %}{% endfor %}{% endif %}">{{ section.name }}</a>
 					<div>
 						<ul>
 							{% for category in section.category_set.all %}
@@ -22,12 +24,13 @@
 				</li>
                                 {% else %}
 				<li{% if forloop.first %} class="first{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}{% if forloop.last %} class="last{% if section.category_set.all.0.name == section.name %}-2{% endif %}"{% endif %}>
-					<a href="{{ section.get_absolute_url }}" {% if section.get_absolute_url == request_path %}class="active"{% endif %}>{{ section.name }}</a>
+					<a href="{{ section.get_absolute_url }}"  class="i{{ forloop.counter0 }}{% if section.get_absolute_url == request_path %} active{% endif %}">{{ section.name }}</a>
 				</li>
 				{% endif %}
 			{% endfor %}
 		</ul>
-
+		{% endcache %}
+		
 <!--
 		<form method="get" class="searchform" action="">
 			<span class="left"></span>
