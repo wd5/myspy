@@ -1,6 +1,10 @@
 {% load pymorphy_tags %}
 <noindex>
 	<a class="cart-box-1" href="#" id="cart_box_1">Оформить заказ</a>
-	<a class="cart-box-2" href="#" id="cart_box_2"><img src="{{ STATIC_URL }}/static/res/img/basket.jpg" alt="basket"></a>
+    {% if box_count %}
+        <a class="cart-box-2" href="#" id="cart_box_2"><img src="{{ STATIC_URL }}/static/res/img/basket_full.png" alt="basket"></a>
+    {% else %}
+        <a class="cart-box-2" href="#" id="cart_box_2"><img src="{{ STATIC_URL }}/static/res/img/basket.jpg" alt="basket"></a>
+    {% endif %}
 	<div class="bask" id="the_box_count">В вашей корзине {{ box_count }} {{ "товар"|plural:box_count }} </div>
 </noindex>
