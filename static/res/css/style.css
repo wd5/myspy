@@ -3718,7 +3718,7 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 .header .cart-box-2 {
 	position: absolute;
-	margin: 82px 0 0 711px;
+	margin: 63px 0 0 711px;
 }
 .header .tel {
 	position: absolute;
@@ -3915,6 +3915,62 @@ img.wpsc_buy_button {
 	border: none;
 }
 
-
-
-
+.wpsc_checkout_forms th {
+	vertical-align: middle;
+}
+.wpsc_checkout_forms input ,
+.wpsc_checkout_forms .phone-inp {
+	background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #CCCCCC #AAAAAA #AAAAAA #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 110%;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: normal;
+    padding: 5px 3px 3px 5px;
+	margin: 0;
+	width: 153px;
+	height: 16px;
+}
+.wpsc_checkout_forms .phone-inp {
+	
+}
+.wpsc_checkout_forms .phone-inp-click-area {
+	position: absolute;
+	background: url('../img/tel-bg.gif') no-repeat 1px 2px;
+	margin: 0;
+	width: 153px;
+	height: 16px;
+	cursor: text;
+}
+.wpsc_checkout_forms .phone-inp input {
+	position: absolute;
+	border: none;
+	background: none;
+	padding: 0;
+	margin: -1px 0 0 0;
+	width: 25px;
+	font: 13px Arial,sans-serif;
+}
+.wpsc_checkout_forms .phone-inp .phone1 {
+	margin-left: 19px;
+}
+.wpsc_checkout_forms .phone-inp .phone2 {
+	margin-left: 45px;
+}
+.wpsc_checkout_forms .phone-inp .phone3 {
+	margin-left: 72px;
+	width: 17px;
+}
+.wpsc_checkout_forms .phone-inp .phone4 {
+	margin-left: 90px;
+	width: 17px;
+}
+.wpsc_checkout_forms .make_purchase{
+	width: auto;
+	height: auto;
+}

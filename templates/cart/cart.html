@@ -1,5 +1,6 @@
 {% load pymorphy_tags %}
 [[*В вашей корзине {% if cart_items %}{{ cart_items.count }} {{ "товар"|plural:cart_items.count }}{% else %}0 {{ "товар"|plural:0 }}{% endif %}*]]
+[[*{% if cart_items %}{{ cart_items.count }}{% else %}0{% endif %}*]]
 
 	<div id="content" class="tovar-cart">
 		<div class="postwrap fix">
