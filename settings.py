@@ -111,9 +111,20 @@ INSTALLED_APPS = (
     'raven.contrib.django',
     'googlecharts',
     'pymorphy',
+    'djcelery',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+import djcelery
+djcelery.setup_loader()
+
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "guest"
+BROKER_PASSWORD = "guest"
+BROKER_VHOST = "/"
+
 
 SENTRY_URL_PREFIX = '/sentry'
 

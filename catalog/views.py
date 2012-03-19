@@ -7,8 +7,15 @@ from django.http import HttpResponseRedirect, HttpResponse
 from cart import cart, settings
 from django.core.mail import send_mail
 import threading
+from celery.decorators import task
+
+@task
+def add(x, y):
+    print x
 
 def index(request):
+    result = add.delay(4,4)
+    print result.get()
     page_title = "Магазин домашней безопасности, шпионская техника"
     meta_keywords = """шпионские штучки магазин, шпионские штучки купить, купить подслушивающее устройство,
      шпионская техника, шпионские камеры, шпионское оборудование продажа, магазин шпионских товаров,

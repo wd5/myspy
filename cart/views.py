@@ -5,6 +5,7 @@ from forms import OrderForm
 from settings import *
 import cart
 
+
 def show_cart(request):
     page_title = 'Корзина'
     is_order = False
