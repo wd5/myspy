@@ -38,7 +38,9 @@ def show_cart(request):
                 if d.hour > 0 and d.hour < 8:
                     add.apply_async(args=[cart_items,form], eta=datetime.now().replace(hour=9))
                 else:
+                    print "++++"
                     add.delay(cart_items, form)
+                    print "++++"
                 #cart.send_sms(cart_items, form)
             # Отправляем админу email
             if SEND_ADMIN_EMAIL:
