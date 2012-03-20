@@ -131,23 +131,32 @@ alert('aaaa');
 				return false;
 		});
 	</script>
-<!-- Put this script tag to the <head> of your page -->
-<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?22"></script>
 
+<div id="vk_api_transport"></div>
 <script type="text/javascript">
-  VK.init({apiId: 2246739, onlyWidgets: true});
-</script>
+    window.vkAsyncInit = function() {
+        VK.init({
+            apiId: 2246739, onlyWidgets: true
+        });
+    };
+
+    setTimeout(function() {
+        var el = document.createElement("script");
+        el.type = "text/javascript";
+        el.src = "http://userapi.com/js/api/openapi.js?22";
+        el.async = true;
+        document.getElementById("vk_api_transport").appendChild(el);
+    }, 0);
+    VK.Observer.subscribe('widgets.comments.new_comment', sendComment);
+    VK.Widgets.Comments("vk_comments", {limit: 10, width: "500", attach: false});
+
+    function sendComment(num, last_comment) {
+        $.post("/take_vk_comment", {comment: last_comment});
+}</script>
 
 <!-- Put this div tag to the place, where the Comments block will be -->
 <div id="vk_comments"></div>
-<script type="text/javascript">
-VK.Observer.subscribe('widgets.comments.new_comment', sendComment);
-VK.Widgets.Comments("vk_comments", {limit: 10, width: "500", attach: false});
 
-function sendComment(num, last_comment) {
-    $.post("/take_vk_comment", {comment: last_comment});
-}
-</script>
 <div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
 </div><!-- *wrapper -->
 </div><!-- *page -->
