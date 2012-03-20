@@ -138,6 +138,8 @@ alert('aaaa');
         VK.init({
             apiId: 2246739, onlyWidgets: true
         });
+        VK.Observer.subscribe('widgets.comments.new_comment', sendComment);
+        VK.Widgets.Comments("vk_comments", {limit: 10, width: "500", attach: false});
     };
 
     setTimeout(function() {
@@ -147,8 +149,6 @@ alert('aaaa');
         el.async = true;
         document.getElementById("vk_api_transport").appendChild(el);
     }, 0);
-    VK.Observer.subscribe('widgets.comments.new_comment', sendComment);
-    VK.Widgets.Comments("vk_comments", {limit: 10, width: "500", attach: false});
 
     function sendComment(num, last_comment) {
         $.post("/take_vk_comment", {comment: last_comment});
