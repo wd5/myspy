@@ -35,7 +35,9 @@ def show_cart(request):
             # Отправляем админу смс
             if SEND_SMS:
                 d = datetime.today()
+                print d.hour
                 if d.hour > 0 and d.hour < 8:
+                    print "----"
                     add.apply_async(args=[cart_items,form], eta=datetime.now().replace(hour=9))
                 else:
                     print "++++"
