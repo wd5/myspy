@@ -147,18 +147,16 @@ alert('aaaa');
         el.async = true;
         document.getElementById("vk_api_transport").appendChild(el);
     }, 0);
-</script>
+    VK.Observer.subscribe('widgets.comments.new_comment', sendComment);
+    VK.Widgets.Comments("vk_comments", {limit: 10, width: "500", attach: false});
+
+    function sendComment(num, last_comment) {
+        $.post("/take_vk_comment", {comment: last_comment});
+}</script>
 
 <!-- Put this div tag to the place, where the Comments block will be -->
 <div id="vk_comments"></div>
-<script type="text/javascript">
-VK.Observer.subscribe('widgets.comments.new_comment', sendComment);
-VK.Widgets.Comments("vk_comments", {limit: 10, width: "500", attach: false});
 
-function sendComment(num, last_comment) {
-    $.post("/take_vk_comment", {comment: last_comment});
-}
-</script>
 <div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
 </div><!-- *wrapper -->
 </div><!-- *page -->
