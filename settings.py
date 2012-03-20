@@ -119,8 +119,6 @@ INSTALLED_APPS = (
 import djcelery
 djcelery.setup_loader()
 
-BROKER_URL = "django://"
-
 SENTRY_URL_PREFIX = '/sentry'
 
 LOGGING = {
