@@ -4,7 +4,7 @@
 			<li{% if request_path == '/about' %} class="sel" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
 			<li{% if 'blog' in request_path %} class="sel" {% endif %}><a href="{% url blog.views.blog %}">Блог</a></li>
 		</ul>
-		
+
 		<ul class="menu2">
 			{% for section in sections %}
 				{% if not section.category_set.all.0.name == section.name %}
