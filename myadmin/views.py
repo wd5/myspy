@@ -72,13 +72,23 @@ def sales_active(request):
     # Клиенты соответсвующие статусам
     clients = []
     for status in request.GET.getlist('status'):
+        print status
         statuses.append(status)
         clients += Client.objects.filter(status=status)
     # Сортирую по id - так чтобы последний клиент был сверху
     clients.sort(key=lambda x: x.id, reverse=True)
-    if not clients:
+    if not statuses:
         clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
         statuses = [u'PROCESS',u'POSTSEND',u'COURIER_SEND',u'BACK',u'CONTACT_AT']
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+    paginator = Paginator(clients, 50)
+    try:
+        clients = paginator.page(page)
+    except (EmptyPage, InvalidPage) :
+        clients = paginator.page(paginator.num_pages)
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required

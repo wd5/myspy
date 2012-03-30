@@ -82,7 +82,7 @@ $(function(){
 	<div id="wrapper">
 		<div id="content">
 			<table class="items_list" cellpadding="0" cellspacing="0" border="1">
-                {% for client in clients %}
+                {% for client in clients.object_list %}
                 <tr class="item">
                 	<td class="id">
 	  					{{ client.id }}
@@ -136,7 +136,22 @@ $(function(){
                 </tr>
                 {% endfor %}
 			</table>
-		</div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if clients.has_previous %}
+                        <a href="?page={{ clients.previous_page_number }}">Сюда</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Страница {{ clients.number }} из {{ clients.paginator.num_pages }}.
+                    </span>
+
+                    {% if clients.has_next %}
+                        <a href="?{{ request.GET.urlencode }}&page={{ clients.next_page_number }}">Туда</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
 	</div>
 	<div id="navigation">
 	    <form action="{% if 'search' not in request.path %}{{ request.path }}{% else %}/myadmin/sales/{% endif %}" method="get" id="filter">
