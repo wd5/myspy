@@ -83,7 +83,7 @@ def sales_active(request):
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
-    paginator = Paginator(clients, 50)
+    paginator = Paginator(clients, 100)
     try:
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :
