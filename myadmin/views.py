@@ -81,11 +81,14 @@ def sales_active(request):
         clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
         statuses = [u'PROCESS',u'POSTSEND',u'COURIER_SEND',u'BACK',u'CONTACT_AT']
     need_url = request.path + '?' + urllib.urlencode([('status', i) for i in statuses])
+    clients_number = 100
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
+        if request.GET.get('page', '1') == 'all':
+            clients_number = len(clients)
         page = 1
-    paginator = Paginator(clients, 100)
+    paginator = Paginator(clients, clients_number)
     try:
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :
