@@ -148,7 +148,7 @@ $(function(){
                     </span>
 
                     {% if clients.has_next %}
-                        {% if when %}
+                        {% if not need_url %}
                             <a href="{{ need_url }}?page={{ clients.next_page_number }}">Туда</a>
                             <a href="{{ need_url }}?page=all">Показать всех</a>
                         {% else %}
@@ -162,7 +162,7 @@ $(function(){
         </div>
 	</div>
 	<div id="navigation">
-	    <form action="/myadmin/sales/" method="get" id="filter">
+	    <form action="{% if 'search' not in request.path %}{{ request.path }}{% else %}/myadmin/sales/{% endif %}" method="get" id="filter">
 			<div class="lt_un">
 				<input type="submit" class="icon_apply" value="&nbsp;" />
 			</div>

@@ -53,8 +53,20 @@ def sales(request, when):
     # Ожидаемое количество денег
     #money = Waytmoney.objects.get(id=1).wayt_money
     # Список клиентов за запрошеный период
-    clients = clients_list(when)
-    clients_number = 100
+    clients_raw = clients_list(when)
+    # Выбранные статусы
+    statuses = []
+    # Клиенты соответсвующие статусам
+    clients = []
+    for status in request.GET.getlist('status'):
+        statuses.append(status)
+        clients += clients_raw.filter(status=status)
+    if not statuses:
+        clients = clients_raw
+    else:
+        need_url = request.path + '?' + urllib.urlencode([('status', i) for i in statuses])
+        clients.sort(key=lambda x: x.id, reverse=True)
+    clients_number = 5
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
