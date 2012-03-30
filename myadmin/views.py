@@ -67,18 +67,16 @@ def sales(request, when):
 
 @login_required
 def sales_active(request):
-    # Применяю фильтр по статусам
-    if request.method == 'POST':
-        # Выбранные статусы
-        statuses = []
-        # Клиенты соответсвующие статусам
-        clients = []
-        for status in request.POST.getlist('status'):
-            statuses.append(status)
-            clients += Client.objects.filter(status=status)
-        # Сортирую по id - так чтобы последний клиент был сверху
-        clients.sort(key=lambda x: x.id, reverse=True)
-    else:
+    # Выбранные статусы
+    statuses = []
+    # Клиенты соответсвующие статусам
+    clients = []
+    for status in request.GET.getlist('status'):
+        statuses.append(status)
+        clients += Client.objects.filter(status=status)
+    # Сортирую по id - так чтобы последний клиент был сверху
+    clients.sort(key=lambda x: x.id, reverse=True)
+    if not clients:
         clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
         statuses = [u'PROCESS',u'POSTSEND',u'COURIER_SEND',u'BACK',u'CONTACT_AT']
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
