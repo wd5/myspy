@@ -139,7 +139,7 @@ $(function(){
             <div class="pagination">
                 <span class="step-links">
                     {% if clients.has_previous %}
-                        <a href="?page={{ clients.previous_page_number }}">Сюда</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ clients.previous_page_number }}">Туда</a>
                     {% endif %}
 
                     <span class="current">
