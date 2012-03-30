@@ -72,7 +72,6 @@ def sales_active(request):
     # Клиенты соответсвующие статусам
     clients = []
     for status in request.GET.getlist('status'):
-        print status
         statuses.append(status)
         clients += Client.objects.filter(status=status)
     # Сортирую по id - так чтобы последний клиент был сверху
