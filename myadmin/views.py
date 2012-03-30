@@ -66,7 +66,7 @@ def sales(request, when):
     else:
         need_url = request.path + '?' + urllib.urlencode([('status', i) for i in statuses])
         clients.sort(key=lambda x: x.id, reverse=True)
-    clients_number = 5
+    clients_number = 100
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
