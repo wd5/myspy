@@ -51,19 +51,21 @@ def week_boundaries(year, week):
 @login_required
 def sales(request, when):
     # Ожидаемое количество денег
-    money = Waytmoney.objects.get(id=1).wayt_money
+    #money = Waytmoney.objects.get(id=1).wayt_money
     # Список клиентов за запрошеный период
     clients = clients_list(when)
-    if request.method == 'POST':
-        statuses = []
-        # Клиенты соответсвующие статусам
-        clients_post = []
-        for status in request.POST.getlist('status'):
-            statuses.append(status)
-            clients_post += clients.filter(status=status)
-            # Сортирую по id - так чтобы последний клиент был сверху
-        clients_post.sort(key=lambda x: x.id, reverse=True)
-        clients = clients_post
+    clients_number = 100
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        if request.GET.get('page', '1') == 'all':
+            clients_number = len(clients)
+        page = 1
+    paginator = Paginator(clients, clients_number)
+    try:
+        clients = paginator.page(page)
+    except (EmptyPage, InvalidPage) :
+        clients = paginator.page(paginator.num_pages)
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -102,6 +104,18 @@ def search(request):
     except MultiValueDictKeyError:
         return HttpResponseRedirect("/myadmin/sales/")
     clients = Client.objects.filter(Q(name__icontains=search_world) | Q(surname__icontains=search_world) | Q(patronymic__icontains=search_world) | Q(tracking_number__icontains=search_world) | Q(phone__icontains=search_world) | Q(address__icontains=search_world))
+    clients_number = 100
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        if request.GET.get('page', '1') == 'all':
+            clients_number = len(clients)
+        page = 1
+    paginator = Paginator(clients, clients_number)
+    try:
+        clients = paginator.page(page)
+    except (EmptyPage, InvalidPage) :
+        clients = paginator.page(paginator.num_pages)
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
