@@ -1,5 +1,6 @@
           # -*- coding: utf-8 -*-
 from datetime import date, timedelta
+import urllib
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core import urlresolvers
@@ -79,6 +80,7 @@ def sales_active(request):
     if not statuses:
         clients = Client.objects.filter(Q(status="PROCESS") | Q(status="POSTSEND") | Q(status="COURIER_SEND") | Q(status="BACK") | Q(status="CONTACT_AT"))
         statuses = [u'PROCESS',u'POSTSEND',u'COURIER_SEND',u'BACK',u'CONTACT_AT']
+    need_url = request.path + '?' + urllib.urlencode([('status', i) for i in statuses])
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
