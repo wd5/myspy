@@ -3409,13 +3409,17 @@ sub {font-size:.7em;vertical-align: bottom;}
 }
 
 .item-img {
+        width: 152px;
+	vertical-align: top;
 	padding-right:10px;
 	background-color:#fff;
 }
 
 .item-desc {
+	vertical-align: top;
 	font-weight: normal;
 }
+td{vertical-align: top;}
 
 .item-head, .item-desc h2{
 	font-size: 18px;
