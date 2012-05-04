@@ -128,6 +128,7 @@ def search(request):
         clients = paginator.page(page)
     except (EmptyPage, InvalidPage) :
         clients = paginator.page(paginator.num_pages)
+    need_url = request.path + '?q=' + request.GET['q']
     return render_to_response("myadmin/sale/test.html", locals(), context_instance=RequestContext(request))
 
 @login_required
