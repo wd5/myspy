@@ -141,7 +141,11 @@ $(function(){
             <center>
                 <span class="step-links">
                     {% if clients.has_previous %}
-                        <a href="{{ need_url }}&page={{ clients.previous_page_number }}">Туда</a>
+                        {% if not need_url %}
+                            <a href="?page={{ clients.previous_page_number }}">Сюда</a>
+                        {% else %}
+                            <a href="{{ need_url }}&page={{ clients.previous_page_number }}">Сюда</a>
+                        {% endif %}
                     {% endif %}
 
                     <span class="current">
@@ -150,8 +154,8 @@ $(function(){
 
                     {% if clients.has_next %}
                         {% if not need_url %}
-                            <a href="{{ need_url }}?page={{ clients.next_page_number }}">Туда</a>
-                            <a href="{{ need_url }}?page=all">Показать всех</a>
+                            <a href="?page={{ clients.next_page_number }}">Туда</a>
+                            <a href="?page=all">Показать всех</a>
                         {% else %}
                             <a href="{{ need_url }}&page={{ clients.next_page_number }}">Туда</a>
                             <a href="{{ need_url }}&page=all">Показать всех</a>
