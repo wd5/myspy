@@ -35,10 +35,10 @@ def show_cart(request):
             # Отправляем админу смс
             if SEND_SMS:
                 d = datetime.datetime.today()
-                if 0 < d.hour < 8:
-                    add.apply_async(args=[cart_items,form], eta=datetime.datetime.now().replace(hour=9))
-                else:
+                if 7 < d.hour < 23:
                     add.delay(cart_items, form)
+                else:
+                    add.apply_async(args=[cart_items,form], eta=datetime.datetime.now().replace(hour=9))
                 #cart.send_sms(cart_items, form)
             # Отправляем админу email
             if SEND_ADMIN_EMAIL:
