@@ -1,4 +1,4 @@
-		<ul class="menu1">
+        <ul class="menu1">
 			<li{% if request_path == '/' %} class="sel" {% endif %}><a href="/">Каталог товара</a></li>
 			<li{% if request_path == '/delivery' %} class="sel" {% endif %}><a href="{% url catalog.views.delivery %}">Доставка и оплата</a></li>
 			<li{% if request_path == '/about' %} class="sel" {% endif %}><a href="{% url catalog.views.about %}">О Нас</a></li>
