@@ -5,7 +5,7 @@ from forms import OrderForm
 from settings import *
 import cart
 from tasks import *
-from datetime import datetime
+import datetime
 
 def show_cart(request):
     page_title = 'Корзина'
@@ -34,9 +34,9 @@ def show_cart(request):
         if is_order:
             # Отправляем админу смс
             if SEND_SMS:
-                d = datetime.today()
-                if d.hour > 0 and d.hour < 8:
-                    add.apply_async(args=[cart_items,form], eta=datetime.now().replace(hour=9))
+                d = datetime.datetime.today()
+                if 0 < d.hour < 8:
+                    add.apply_async(args=[cart_items,form], eta=datetime.datetime.now().replace(hour=9))
                 else:
                     add.delay(cart_items, form)
                 #cart.send_sms(cart_items, form)
