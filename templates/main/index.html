@@ -14,7 +14,6 @@
 		<a href="mailto:info@my-spy.ru" class="mail">info@my-spy.ru</a>
 	</div>
 	
-{% cache 1000 maincontent %}
     <div id="maincontent">
 		<div id="content">
 			<div class="postwrap fix" style="padding:30px;">
@@ -26,7 +25,8 @@
 	                       	<tr><td colspan="2"><center><a class="cats_discr" href="{{ section.get_absolute_url }}"> <h1>{{ section.name }}</h1></a><br></center></td></tr>
 	                        {% endif %}
 	                       
-	                       {% for cat in section.category_set.all %}
+	                       {% for cat in section.get_active_cats.all %}
+                               {% if cat.is_active %}
 			                   <td style="vertical-align:top; padding:20px;">
 						        	<table cellpadding="0" cellspacing="0" border="0" style="vertical-align:top;">
 						        		<tr>
@@ -64,6 +64,7 @@
 								    	</tr>
 						        	</table>
 					        	</td>
+                               {% endif %}
 					        	{% if not section.name == section.category_set.all.0.name %}
 							        {% if forloop.counter|div:2 == 0 %}
 										</tr><tr>
@@ -84,7 +85,6 @@
         	</div>
         </div>
    </div>
-{% endcache %}
 <div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
 </div><!-- *wrapper -->
 </div><!-- *page -->

@@ -18,6 +18,9 @@ class Section(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_active_cats(self):
+        return self.category_set.filter(is_active=True)
+
     @models.permalink
     def get_absolute_url(self):
         return ('catalog-page', [str(self.slug)])

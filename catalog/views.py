@@ -1,5 +1,6 @@
           # -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404, render_to_response
+from django.http import Http404
 from django.core import urlresolvers
 from django.template import RequestContext
 from catalog.models import Category, Product, Section
@@ -17,7 +18,6 @@ def index(request):
     meta_description = """Интернет магазин, где можно купить шпионские штучки, камеры,
      подслушивающие устройства. Так же у нас в продаже шпионская техника, оборудование,
       глушилка мобильных телефонов, мини камера."""
-    cats = Category.objects.all().order_by('id')
     sections = Section.objects.filter(is_active=True)
     return render_to_response("main/index.html", locals(), context_instance=RequestContext(request))
 
@@ -59,6 +59,8 @@ def show_category(request, category_slug):
 
 def show_product(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
+    if not product.is_active:
+        raise Http404
     photos = product.productphoto_set.all()
     features = product.feature_set.all()
     if request.method == 'POST':
