@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load cache %}
 {% load catalog_filters %}
 {% load cart_filters  %}
 {% block site_wrapper %}
@@ -28,7 +27,6 @@
 		</div>
 
 
-{% cache 1000 catalog_maincontent %}
 		<div id="maincontent">
 			<div id="content">
 				<div class="postwrap fix">
@@ -102,7 +100,6 @@
         {% endif %}
 		</div>
 		</div>
-{% endcache %}
 <div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
 </div><!-- *wrapper -->
 </div><!-- *page -->
