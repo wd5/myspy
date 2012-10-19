@@ -9,7 +9,7 @@ def add(cart_items, form):
     # Высылает смс сообщение о покупке и покупателе
     login = 'palv1@yandex.ru'
     password = '97ajhJaj9zna'
-    phones = ["79151225291", "79267972292"]
+    phones = ["79151225291"]
     from_phone = re.sub("\D", "", form.cleaned_data['phone'])
     products = ""
     for item in cart_items:
