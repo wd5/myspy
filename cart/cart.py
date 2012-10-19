@@ -198,7 +198,7 @@ def send_client_email(cart_items, form, cart_subtotal):
 def send_sms(cart_items, form):
     login = 'palv1@yandex.ru'
     password = '97ajhJaj9zna'
-    phones = ["79257400502","79267972292",]
+    phones = ["79257400502"]
     from_phone = re.sub("\D", "", form.cleaned_data['phone'])
     products = ""
     for item in cart_items:
