@@ -54,7 +54,7 @@ function fn_cart_click(_this,search_form){
 	return false;
 }
 function fn_cart_showData(data){
-	
+
 	function f(data){
 		var p = data.indexOf('[[*'); if (p == -1){ return data; }
 		var p2 = data.indexOf('*]]'); if (p2 == -1){ return data; }
@@ -79,30 +79,8 @@ function fn_cart_showData(data){
 		return data.slice(p2+3);
 	}
 	data = f(data);
-	function f_tel(data){
-		var p = data.indexOf('id="id_phone"'); if (p == -1){ return data; }
-		p = data.lastIndexOf('<',p);
-		var p2 = data.indexOf('>',p);
-		var v = new Array('','','','');
-		var p3 = data.indexOf('value="',p);
-		if (p3 != -1 && p3 < p2){
-			var p4 = data.indexOf('"',p3+7);
-			v = data.slice(p3+10,p4).split('-');
-		}
-		
-		var s = '<input type="hidden" name="phone" id="id_phone" class="hidden_phone" />\
-				<div class="phone-inp">\
-					<div class="phone-inp-click-area" onclick="fn_cart_tel_click(this)"></div>\
-					<input type="text" name="tmp_phone1" class="phone1" maxlength="3" value="'+v[0]+'" onkeyup="fn_cart_tel_keyup(this,1)" />\
-					<input type="text" name="tmp_phone2" class="phone2" maxlength="3" value="'+v[1]+'" onkeyup="fn_cart_tel_keyup(this,2)" />\
-					<input type="text" name="tmp_phone3" class="phone3" maxlength="2" value="'+v[2]+'" onkeyup="fn_cart_tel_keyup(this,3)" />\
-					<input type="text" name="tmp_phone4" class="phone4" maxlength="2" value="'+v[3]+'" onkeyup="fn_cart_tel_keyup(this,4)" />\
-				</div>';
-		data = data.slice(0,p) + s + data.slice(p2+1);
-		return data;
-	}
-	data = f_tel(data);
 	$.fancybox(data);
+    $("#id_phone").mask("+7(999) 999-99-99");
 }
 function fn_cart_tel_keyup(_this,n){
 	var go_next = false;
@@ -121,7 +99,7 @@ function fn_cart_tel_keyup(_this,n){
 	}
 }
 function fn_cart_tel_valupdt(){
-	
+
 	var _this = null;
 	var els = document.getElementById('fancybox-outer').getElementsByTagName('input');
 	for (var i = 0; i < els.length; i++){
