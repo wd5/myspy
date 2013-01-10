@@ -14,6 +14,7 @@
 		<a href="mailto:info@my-spy.ru" class="mail">info@my-spy.ru</a>
 	</div>
 
+{% cache 1000 maincontent %}
     <div id="maincontent">
 		<div id="content">
 			<div class="postwrap fix" style="padding:30px;">
@@ -63,6 +64,7 @@
         	</div>
         </div>
    </div>
+{% endcache %}
 <div id="back-top"><a href="#top"><span class="arrow"></span>Наверх</a></div>
 </div><!-- *wrapper -->
 </div><!-- *page -->
